@@ -1,5 +1,5 @@
 # Easy Page by Shasta Exchange
-### The Disability Internet Browser
+### The Interactivity Display
 
 **Note: Everything is developed for the developers mind until the Release that which is intended for the disabled public to use.**
 ## Triggered Reporting
