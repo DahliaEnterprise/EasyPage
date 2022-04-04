@@ -21,7 +21,7 @@ Everything related to the Shasta Exchange products is considered proprietary and
 Being able to view the interworkings of the product does not authorize use in any way shape or form. The reasoning behind disclosing the interworkings of the products is to 
 - Protect it' longevity(in the event of a server crash, and or malicious and non malicious result of data destruction there is a back up to get it running again)
 
-- Utilize a "Poor man' Copyright" mechanism. (Having witnesses that are not know by the creator and or the business competitors is a great security feature for protecting property rights and most importantly enforcing those property rights.
+- Utilize a "Poor man' Copyright" mechanism. (Having witnesses that are not known by the creator and or the business competitors is a great security feature for protecting property rights and most importantly enforcing those property rights.
 
 Everything is developed for the developers mind until the "**Public Release**" that which is intended for the general public and disabled public use.
 
