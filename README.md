@@ -9,7 +9,7 @@ Facilitate the creation of digital pages that incorporate the workflow and usabi
 
 ## Easy Page Director Instructions
 
-***The*** *Director Instructions* is synonymous with a **programming language** 
+***The*** *Director Instructions* is synonymous with a **programming language**. The Director Instructions will be of only English alphabet symbols understanding, along with English numerical symbols and understanding. This is due to the nessecity of answering questions within the context of determining who is responsible and or liable; Which is the main goal of Shasta Exchange products.
 
 ### Notes and Caution
 Everything is developed for the developers mind until the Release that which is intended for the disabled public to use.
