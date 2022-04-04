@@ -11,6 +11,8 @@ Facilitate the creation of digital pages that incorporate the workflow and usabi
 
 ***The*** *Director Instructions* is synonymous with a **programming language**. The Director Instructions will be of only English alphabet symbols understanding, along with English numerical symbols and understanding. This is due to the nessecity of answering questions within the context of determining who is responsible and or liable; Which is the main goal of Shasta Exchange products.
 
+The Easy Page product will only accept text input within the English symbols, enabling the admittance of liabilities on a trigger basis. This achieves the goals of Shasta Exchange products by facilitating a distinct avenue of questioning regarding liabilities 
+
 ### Notes and Caution
 Everything is developed for the developers mind until the Release that which is intended for the disabled public to use.
 
