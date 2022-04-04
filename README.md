@@ -14,7 +14,7 @@ Facilitate the creation of digital pages that incorporate the workflow and usabi
 The Easy Page, Interactivity Display product, will only accept text input of English symbols, enabling the admittance of liabilities on a trigger basis. This achieves the goals of Shasta Exchange products by facilitating a distinct avenue of questioning regarding liabilities during the event of incurred liabilities.
 
 ### Notes and Caution
-Everything is developed for the developers mind until the Release that which is intended for the general public and disabled public use.
+Everything is developed for the developers mind until the "**Public Release**" that which is intended for the general public and disabled public use.
 
 <br>
 
