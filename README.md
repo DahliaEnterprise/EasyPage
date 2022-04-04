@@ -9,7 +9,7 @@ Facilitate the creation of digital pages that incorporate the workflow and usabi
 
 ## Easy Page Director Instructions
 
-**The** Director Instructions is synonymous with a ***programming language*** 
+***The*** *Director Instructions* is synonymous with a **programming language** 
 
 ### Notes and Caution
 Everything is developed for the developers mind until the Release that which is intended for the disabled public to use.
