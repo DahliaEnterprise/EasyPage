@@ -1,6 +1,9 @@
 # Easy Page by Shasta Exchange
 # The Interactivity Display
 
+##Abstract Decription
+Facilitate the creation of digital pages that incorporate the workflow and usability of physical pages. This can also include but not limited to the incorporation of physical video playback frames, photo frames, and possibly market places and shopping carts.
+
 ### Notes and Caution
 Everything is developed for the developers mind until the Release that which is intended for the disabled public to use.
 
