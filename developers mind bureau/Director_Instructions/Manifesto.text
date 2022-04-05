@@ -1,0 +1,1 @@
+The Director instructions folder is intended for a translation table of Director instructions to pseudo code paired with the result of the pseudo code. The pseudo code will have comments so it can be translated to a working programming language using JavaScript, C, etc.
