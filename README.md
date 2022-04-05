@@ -17,7 +17,9 @@ The Easy Page, Interactivity Display product, will only accept text input of Eng
 
 ## Easy Page, The Interactivity Display: Symbol Integrity
 
+Symbol integrity is an often overlooked attribute when transmitting textual data. The burden is placed on the common usage of ASCII(Now the common usage is UTF8).
 
+ It’s presumed that the signals sent within English speaking countries facilitated by Internet Service Providers and selectively interpreted by the receiving device would be ASCII or UTF8, enforced by encryption and data integrity hash checking. Encryption does not inherently come with this attribute nor does any segment of the pipeline enforce this attribute. It’s often unthought of but ascii binary can maskqurade it self with Chinese and or Russian letters all while producing phonetically English sounds and grammitically correct English phrases.
 <br>
 
 ### Notes and Caution
