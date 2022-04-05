@@ -28,6 +28,14 @@ Links are not of the usual paradigm as seen within browsers, games, and or appli
 Logical functions such as a market and shopping cart pair can be incorporated into an Easy Page book just as a person would order from a physically printed catalogue. Item numbers are copied to the analogy of a list of items to purchase and how many to purchase with their advertised prices, the customer then produces the similarities found within a phone call requesting which items and how many to be ordered and then the negotiation of selecting a payment option.
 
 
+<br>
+
+## Easy Page, What it is not.
+
+Easy Page is not any “Web Version” and does not follow the “Web” crowd or standards, although it may use similar technologies such as TCP(and possibly UDP) to deliver data.
+
+Easy Page has a mission to deliver stationary pages to achieve a sense of accomplishment due to measurable progress; It will not be incorporating the inherent ability to produce video games(The likeness of HTML5 games, and or WebGL games).
+
 
 <br>
 
