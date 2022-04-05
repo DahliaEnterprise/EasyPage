@@ -13,6 +13,12 @@ Facilitate the creation of digital pages that incorporate the workflow and usabi
 
 The Easy Page, Interactivity Display product, will only accept text input of English symbols, enabling the admittance of liabilities on a trigger basis. This achieves the goals of Shasta Exchange products by facilitating a distinct avenue of questioning regarding liabilities during the event of incurred liabilities.
 
+The Easy Page interface within its totality is accepting the textual input that pertains to only the English language along with the digits zero through nine and the use of curly brackets, parentheses, square brackets, single quotes, double quotes, colon, semicolon, and comma to indicate how the page will be displayed upon a digital screen.
+
+To my point, the Easy Page interface will only be an English programming language which is a proverbial choke point for any product issues regarding Easy Page; Most specifically to my point any “appending to” or “new features created” can be held liable as opposed to not having a proverbial choke point which indeed ensures those who are not liable to be held liable due to the obfuscation of liabilities. (Easy Page likes liabilities applied to those whom incurred them).
+
+Programs such as “What you see is what you get” applications will be forced to be compelled to produce Easy Page input that is compliant with its capabilities as opposed to producing a program that which its compliance within an interpreter(analogous to browsers) is non verifiable; This ensure that the intended page is displayed the same across devices and or operating systems.
+
 Programs such as “What you see is what you get” applications will be forced to be compelled to produce Easy Page input that is compliant with its capabilities as opposed to producing a program that which its compliance within an interpreter(analogous to browsers) is non verifiable; This ensure that the intended page is displayed the same across devices and or operating systems.
 
 <br>
@@ -81,7 +87,7 @@ Although an Easy Page search engine cannot claim to be the search engine that is
 
 <br>
 
-## Easy Page, The Interactivity Display: Symbol Integrity
+## Easy Page, Symbol Integrity
 
 Symbol integrity is an often overlooked attribute when transmitting textual data. The burden is placed on the common usage of ASCII(Now the common usage is UTF8).
 
@@ -90,6 +96,17 @@ It’s presumed that the signals sent within English speaking countries facilita
 Symbol integrity would be an always on feature of Easy Page and can ensure that services like dictionary websites and or “American Sign Language” tutorial/education website will be displayed how the producer intended. This symbol integrity methodology can also be applied to other services.
 
 <br>
+
+## Easy Page, Modern example of
+
+### Accounts
+
+A cell structured flow charts. Each column is an account while each row is a change. Cells although are inherently textual with number values and association to changes, they can have triggers based on changes with automate the creation of cells there after the trigger and thus automate the presumed work for the associations between changes between cells.
+
+
+This methodology of automation ensures the developers of the software are not implementing anything that can not be expressed within the programming language(easy page code language) or more precisely not implanting something that cannot and or has not been verbally expressed and consciously interpreted and acknowledged.
+
+This differs from Excel and other name brands due to the flow chart can snap in line amongst columns although does not have to, along with the other never before seen attribute of triggerable automation. Where as all accounting software requires you pick and stay with an accounting paradigm and thus the not seen but presumably known formulas are applied throughout the accounting process during entry.
 
 ### Notes and Caution
 
