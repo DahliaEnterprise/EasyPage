@@ -56,6 +56,10 @@ Easy Page client services have it most difficult within the pipeline of delivery
 
 Easy pages will only allow predictable outcomes using the “deliver the entire book structure” paradigm; Artificial Intelligent based services using Easy Page programming language can exist, it’ outcomes are not predictable however the process is non changing(per delivered book structure).
 
+Knowing the process can delineate a standard for the intended achievable results and can also prevent substitution of stationary content with a curator(a live person or artificial intelligence) with out consent and or knowledge of the recipients.
+
+Predictable outcomes in conjunction with a logical programming language enables dynamic content with the ability to audit the reasoning behind the result of the outcome at (technically) any stage of the proverbial pipeline with the only requirement being a complete snapshot of a stage of the pipeline.
+
 <br>
 
 ## Easy Page, The Interactivity Display: Symbol Integrity
