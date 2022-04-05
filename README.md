@@ -85,7 +85,7 @@ Although an Easy Page search engine cannot claim to be the search engine that is
 
 Symbol integrity is an often overlooked attribute when transmitting textual data. The burden is placed on the common usage of ASCII(Now the common usage is UTF8).
 
-It’s presumed that the signals sent within English speaking countries facilitated by Internet Service Providers and selectively interpreted by the receiving device would be ASCII or UTF8, enforced by encryption and data integrity hash checking. Encryption does not inherently come with this attribute nor does any segment of the pipeline enforce this attribute. It’s often unthought of but ascii binary can maskqurade it self with Chinese and or Russian letters all while producing phonetically English sounds and grammitically correct English phrases.
+It’s presumed that the signals sent within English speaking countries facilitated by Internet Service Providers and selectively interpreted by the receiving device would be ASCII or UTF8, enforced by encryption and data integrity hash checking. Encryption does not inherently come with this attribute nor does any segment of the pipeline enforce this attribute. It’s often unthought of but ascii binary can maskqurade it self with Chinese and or Russian letters all while producing phonetically English sounds and grammatically correct English phrases.
 
 Symbol integrity would be an always on feature of Easy Page and can ensure that services like dictionary websites and or “American Sign Language” tutorial/education website will be displayed how the producer intended. This symbol integrity methodology can also be applied to other services.
 
