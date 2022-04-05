@@ -21,6 +21,12 @@ Programs such as “What you see is what you get” applications will be forced 
 
 The Easy Page, Interactivity Display produces the effect that of only found in a printed book.
 
+Tools can be dropped into the display either physically and or digitally in order to indicate that the viewers are mentally and or physically ready to enlarge a small photo that has a high definition source, including but not limited to beginning the playback of a video that is represented as a stationary image(play, pause, scroll tools).
+
+Links are not of the usual paradigm as seen within browsers, games, and or applications; Instead the reader is referred to another “Book” of Easy Pages(which can have the “go to” precision of page, paragraph, and word).
+
+Logical functions such as a market and shopping cart pair can be incorporated into an Easy Page book just as a person would order from a physically printed catalogue. Item numbers are copied to the analogy of a list of items to purchase and how many to purchase with their advertised prices, the customer then produces the similarities found within a phone call requesting which items and how many to be ordered and then the negotiation of selecting a payment option.
+
 
 
 <br>
