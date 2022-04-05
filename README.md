@@ -52,6 +52,12 @@ Easy Page client services have it most difficult within the pipeline of delivery
 
 <br>
 
+## Easy Page, What digital printed media means for Artifical Intelligence.
+
+Easy pages will only allow predictable outcomes using the “deliver the entire book structure” paradigm; Artificial Intelligent based services using Easy Page programming language can exist, it’ outcomes are not predictable however the process is non changing(per delivered book structure).
+
+<br>
+
 ## Easy Page, The Interactivity Display: Symbol Integrity
 
 Symbol integrity is an often overlooked attribute when transmitting textual data. The burden is placed on the common usage of ASCII(Now the common usage is UTF8).
