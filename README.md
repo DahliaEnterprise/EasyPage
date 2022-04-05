@@ -65,7 +65,7 @@ Perhaps the value and worth of predictable outcomes become more apparent with a 
 <br>
 
 ## Easy Page, Modern example of
-### Easy Page: Search Engine as a Public Utility.
+### Search Engine as a Public Utility.
 
 Results are previously indexed based on their utility within the context of the customers search.
 
