@@ -17,6 +17,14 @@ Programs such as “What you see is what you get” applications will be forced 
 
 <br>
 
+## Easy Page, The digital standard for what would have been printed media
+
+The Easy Page, Interactivity Display produces the effect that of only found in a printed book.
+
+
+
+<br>
+
 ## Easy Page, The Interactivity Display: Symbol Integrity
 
 Symbol integrity is an often overlooked attribute when transmitting textual data. The burden is placed on the common usage of ASCII(Now the common usage is UTF8).
