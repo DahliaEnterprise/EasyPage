@@ -36,6 +36,7 @@ Easy Page is not any “Web Version” and does not follow the “Web” crowd o
 
 Easy Page has a mission to deliver stationary pages to achieve a sense of accomplishment due to measurable progress; It will not be incorporating the inherent ability to produce video games(The likeness of HTML5 games, and or WebGL games).
 
+Easy Page does not have the download or upload paradigm, the entire structure of the book of easy pages is delivered to the recipient and the content is delivered per page request. This ensures that the intended experience does not change unless the recipient acknowledges that their promised content is no longer available and must have the updated book structure(and technically contents) delivered. All while not being proverbial forced to download the entire service content to ensure the “expected experience” quality of a printed book is enforced but digitally instead of physical.
 
 <br>
 
