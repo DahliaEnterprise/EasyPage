@@ -64,14 +64,20 @@ Perhaps the value and worth of predictable outcomes become more apparent with a 
 
 <br>
 
-## Easy Page, Modern example of Easy Page:
-### Search Engine as a Public Utility.
+## Easy Page, Modern example of
+### Easy Page: Search Engine as a Public Utility.
 
 Results are previously indexed based on their utility within the context of the customers search.
 
 Using a hash based checksum, results of a large data bank(thousands of terabytes) can produce the same exact results when searching with the exact text string and parameters allowing the customer to progress within their mission in between service changes and updates as opposed to progressing at the helplessness of seemingly random progress and depressions during service changes and updates.
 
 - Due to the limitations of the hash based checksums and the intended goal, the customer can only be notified that their experience will become of random progress and regression due to the inability for the customer to receive terabytes of a data bank.
+
+Within the context of reproducible results, the goal of an EasyPage search engine is to dedicate human workers to influence a pretedermined “search and result” mechanism. This differs to presumably all modern search engines as they utilize and rely on solely machine learning to produce associated data linked to business pages and personal pages.
+
+There is no such process as Black Hat SEO within a reproduceable results search engine. This is due to the human workers element. Altough results can be reordered based on the proverbial “popularity contests”, the quality of the results are still almost always 100%. For instance searching for a “dictionary” would produce human approved websites that have been determined to be in the business of providing definitions to their associated words. This can be applied to other search terms such as restaurants, theaters, airports, colleges, etc.
+
+Although an Easy Page search engine cannot claim to be the search engine that is aware of its results, it does a very good job at providing that type of intended experience.
 
 <br>
 
