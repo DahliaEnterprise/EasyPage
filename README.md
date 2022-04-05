@@ -62,6 +62,14 @@ Predictable outcomes in conjunction with a logical programming language enables 
 
 Perhaps the value and worth of predictable outcomes become more apparent with a more linear topic such as search engines, which is found within the next paragraph.
 
+## Easy Page, Modern example of Easy Page: Search Engine
+
+Results are previously indexed based on their utility within the context of the customers search.
+
+Using a hash based checksum, results of a large data bank(thousands of terabytes) can produce the same exact results when searching with the exact text string and parameters allowing the customer to progress within their mission in between service changes and updates as opposed to progressing at the helplessness of seemingly random progress and depressions during service changes and updates.
+
+- Due to the limitations of the hash based checksums and the intended goal, the customer can only be notified that their experience will become of random progress and regression due to the inability for the customer to receive terabytes of a data bank.
+
 <br>
 
 ## Easy Page, The Interactivity Display: Symbol Integrity
