@@ -60,6 +60,8 @@ Knowing the process can delineate a standard for the intended achievable results
 
 Predictable outcomes in conjunction with a logical programming language enables dynamic content with the ability to audit the reasoning behind the result of the outcome at (technically) any stage of the proverbial pipeline with the only requirement being a complete snapshot of a stage of the pipeline.
 
+Perhaps the value and worth of predictable outcomes become more apparent with a more linear topic such as search engines, which is found within the next framed content.
+
 <br>
 
 ## Easy Page, The Interactivity Display: Symbol Integrity
