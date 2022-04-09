@@ -112,7 +112,7 @@ A cell structured flow charts. Each column is an account while each row is a cha
 
 This methodology of automation ensures the developers of the software are not implementing anything that can not be expressed within the programming language(easy page code language) or more precisely not implanting something that cannot and or has not been verbally expressed and consciously interpreted and acknowledged.
 
-This differs from Excel and other name brands due to the flow chart can snap in line amongst columns although does not have to, along with the other never before seen attribute of triggerable automation. Where as all accounting software requires you pick and stay with an accounting paradigm and thus the not seen but presumably known formulas are applied throughout the accounting process during entry.
+This differs from Excel and other name brands due to the elements of a flow chart having the ability to snap "in-line" amongst columns although does not have to, along with the other never before seen attribute of triggerable automation. Where as all accounting software requires you pick and stay with an accounting paradigm and thus the not seen but presumably known formulas are applied throughout the accounting process during entry.
 
 ### Notes and Caution
 
