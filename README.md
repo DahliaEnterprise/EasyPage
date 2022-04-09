@@ -19,8 +19,6 @@ To my point, the Easy Page interface will only be an English programming languag
 
 Programs such as “What you see is what you get” applications will be forced to be compelled to produce Easy Page input that is compliant with its capabilities as opposed to producing a program that which its compliance within an interpreter(analogous to browsers) is non verifiable; This ensure that the intended page is displayed the same across devices and or operating systems.
 
-Programs such as “What you see is what you get” applications will be forced to be compelled to produce Easy Page input that is compliant with its capabilities as opposed to producing a program that which its compliance within an interpreter(analogous to browsers) is non verifiable; This ensure that the intended page is displayed the same across devices and or operating systems.
-
 <br>
 
 ## Easy Page, The digital standard for what would have been printed media
