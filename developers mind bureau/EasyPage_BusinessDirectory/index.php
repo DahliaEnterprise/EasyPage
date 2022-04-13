@@ -1,4 +1,3 @@
-
 <?php
 //to be replaced by a alternative database method.
  $simulated_index_folder[0]["title"] = "Sports Shop";
@@ -12,6 +11,8 @@
   $simulated_index_folder[1]["search_phrases"][0] = "bread";
   $simulated_index_folder[1]["search_phrases"][1] = "meat";
    
+ 
+ 
  
 ?><html>
  <head>
@@ -126,6 +127,28 @@
      <div id="directory_heading">Directory</div>
   
   <?php
+ 
+ 
+ if(!($sock = socket_create(AF_INET, SOCK_STREAM, 0)))
+{
+	$errorcode = socket_last_error();
+    $errormsg = socket_strerror($errorcode);
+    
+    die("Couldn't create socket: [$errorcode] $errormsg \n");
+}
+
+echo "Socket created \n";
+
+if(!socket_connect($sock , '' , 3456))
+{
+	$errorcode = socket_last_error();
+    $errormsg = socket_strerror($errorcode);
+    
+    die("Could not connect: [$errorcode] $errormsg \n");
+}
+
+echo "Connection established \n";
+ 
  
    //has a search been invoked by the user/customer?
  if(isset($_GET["search_activated"]) == true)
