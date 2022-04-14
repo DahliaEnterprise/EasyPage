@@ -16,7 +16,8 @@
 int nanosleep(const struct timespec *req, struct timespec *rem);
 
 //global variables
-int server_socket_filedescriptor;
+  //service connection
+  int server_socket_filedescriptor;
 
   //constant time period
   struct timespec time_to_suspend_shasta_exchange_iteration_remaining;
@@ -68,11 +69,24 @@ int main()
   }
   
   //begin shasta exchange iteration of trigger based automated work.
+    //initialize temporary array to account for connections and their associated states.
+      //define a number to be used within a manner consensus pertaining to concurrent connections
+      int size_of_concurrent_connections = 1024;
+      
+      //initialize and zero an array of client socket file descriptors.
+      int * list_of_client_socket_file_descriptors = (int *)malloc(size_of_concurrent_connections * sizeof(int));
+      memset(list_of_client_socket_file_descriptors, 0, size_of_concurrent_connections);
+    
+      //initialize and zero an array of client address info.(this/these address infor handles signal the network card that the program has not let go)
+      struct sockaddr_in * list_of_client_address_info = (struct sockaddr_in *)malloc(size_of_concurrent_connections * sizeof(struct sockaddr_in));
+      memset(list_of_client_address_info, 0, size_of_concurrent_connections);
+      
+      //initialize and zero an array of flags that indicate which associated data slots are being used by the program or are available.
+      unsigned short int list 
+    
     //initialize temporary holder for newly accepted connections.
     int temporary_socket_file_descriptor = -1;
     socklen_t length = 0;
-    temporary_socket_file_descriptor = accept(server_socket_filedescriptor, (struct sockaddr *)&server_address, &length);
-     
     
     struct sockaddr_in client_address_info;
     
@@ -90,6 +104,8 @@ int main()
        
      }else{
        printf("client detected. \n");
+       
+       //
      }
        
      //cpu gets hot during while loops with zero load.
