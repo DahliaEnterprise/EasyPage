@@ -12,11 +12,17 @@
   $simulated_index_folder[1]["search_phrases"][1] = "meat";
    
  
- 
+ /* to do: create a connection here and "read" from the network
+           that has all the data pertaining to the respective search.
+           
+           placement is so the page isnt present until it is determined what
+           the page will display, the directory listing, search results, 
+           and or search results with error response.
+ */
  
 ?><html>
  <head>
-  <title>Search Engine</title>
+  <title>Shasta Exchange, Business Directory</title>
   <style>
   * {
         
@@ -56,12 +62,12 @@
   }
   
   #search_phrase_div {
-   width: 99.999999%
+   width: 99.999999%;
    text-align:center;
   }
   
   #search_phrase_input {
-   width:93%;
+   width:94%;
    border-radius: 20px;
    font-size: 5em;
    border:5px solid black;
@@ -128,8 +134,7 @@
   
   <?php
  
- 
- if(!($sock = socket_create(AF_INET, SOCK_STREAM, 0)))
+if(!($sock = socket_create(AF_INET, SOCK_STREAM, 0)))
 {
 	$errorcode = socket_last_error();
     $errormsg = socket_strerror($errorcode);
@@ -137,9 +142,11 @@
     die("Couldn't create socket: [$errorcode] $errormsg \n");
 }
 
+socket_set_block($sock);
+
 echo "Socket created \n";
 
-if(!socket_connect($sock , '' , 3456))
+if(!socket_connect($sock , 'localhost' , 3456))
 {
 	$errorcode = socket_last_error();
     $errormsg = socket_strerror($errorcode);
@@ -149,8 +156,40 @@ if(!socket_connect($sock , '' , 3456))
 
 echo "Connection established \n";
  
+$continue_reading = 1;
+$timestamp_since_last_recieved = microtime();
+$complete_string_read = "";
+while($continue_reading == 1)
+{
+  $read_as_string = socket_read($sock, 1048576, PHP_BINARY_READ);
+  echo $read_as_string;
+  if($read_as_string != "")
+  {
+    $complete_string_read = $complete_string_read + $read_as_string;
+    $timestamp_since_last_recieved = microtime();
+  }else if($read_as_string == "")
+  {
+    //break out of while loop if time out reached.
+    if(time() >= ($timestamp_since_last_recieved+1000))
+    {
+      $continue_reading = 0;
+    }
+  }
+}
+
+//shut down (stop read writing) and close socket.
+socket_shutdown($sock, 2);
+socket_close($sock);
+
+
+//print_f(explode($complete_string_read, "1B480158E1F30E0B6CEE7813E9ECF094BD6B3745");
+
+//interpret data
+
+// print data for now.
+echo $complete_string_read;
  
-   //has a search been invoked by the user/customer?
+ //has a search been invoked by the user/customer?
  if(isset($_GET["search_activated"]) == true)
  {
  $search_activated = $_GET["search_activated"];
@@ -182,6 +221,8 @@ echo "Connection established \n";
    }
    }
    }
+   
+   
   ?>
   
     <div class="horizontal_spacer_threeem">&nbsp;</div>
