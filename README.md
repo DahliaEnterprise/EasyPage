@@ -17,7 +17,7 @@ The Easy Page interface within its totality is accepting the textual input that 
 
 To my point, the Easy Page interface will only be an English programming language which is a proverbial choke point for any product issues regarding Easy Page; Most specifically to my point any “appending to” or “new features created” can be held liable as opposed to not having a proverbial choke point which indeed ensures those who are not liable to be held liable due to the obfuscation of liabilities. (Easy Page likes liabilities applied to those whom incurred them).
 
-Programs such as “What you see is what you get” applications will be forced to be compelled to produce Easy Page input that is compliant with its capabilities as opposed to producing a program that which its compliance within an interpreter(analogous to browsers) is non verifiable; This ensure that the intended page is displayed the same across devices and or operating systems.
+Programs such as “What you see is what you get” applications will be forced to be compelled to produce Easy Page input that is compliant with its capabilities as opposed to producing a program that which its compliance within an interpreter(analogous to browsers) is non verifiable; This ensures that the intended page is displayed the same across devices and or operating systems.
 
 <br>
 
