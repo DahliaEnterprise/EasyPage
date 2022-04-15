@@ -1,3 +1,5 @@
+
+
 //prerequisite
 #include <stdio.h>
 #include <sys/socket.h>
@@ -16,6 +18,7 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
 
 //shasta exchange
   //shasta exchange headers
+  #include "./produce_available_index_of_list_of_client_connection_slots/produce_available_index_of_list_of_client_connection_slots.h"
   #include "./structure_string/structure_string.h"
 
   //shasta exchanbe definitions
