@@ -1,4 +1,3 @@
-
 //prerequisite
 #include <stdio.h>
 #include <sys/socket.h>
@@ -15,10 +14,13 @@
 //nanosleep requires implicit header delcaration.
 int nanosleep(const struct timespec *req, struct timespec *rem);
 
-//shasta exchange headers
+//shasta exchange
+  //shasta exchange headers
+  #include "./structure_string/structure_string.h"
 
-//shasta exchanbe definitions
-#include "./produce_available_index_of_list_of_client_connection_slots/produce_available_index_of_list_of_client_connection_slots.c"
+  //shasta exchanbe definitions
+  #include "./produce_available_index_of_list_of_client_connection_slots/produce_available_index_of_list_of_client_connection_slots.c"
+  #include "./structure_string/structure_string.c"
 
 //global variables
   //service connection
@@ -144,6 +146,17 @@ int main()
       unsigned short int * list_of_flags_indicating_active_clients = (unsigned short int *)malloc(size_of_concurrent_connections * sizeof(unsigned short int));
       memset(list_of_flags_indicating_active_clients, 0, size_of_concurrent_connections);
       
+      //initialize and zero an array of eqch respective clients current stage within the request response stage.
+      /*
+        every client gets one response(non delisional, to be clear: not a literal-technical one); 
+        if events are required to occur beyond one response the database event system will create and manage changes, and the client can submit a second request after the first request has been commited for the database event changes to occur.
+      */
+      unsigned short int * list_of_current_stage = (unsigned short int *)malloc(size_of_concurrent_connections * sizeof(unsigned short int));
+      
+      //initialize recieve "ring buffer".
+      char ** list_of_receive_ring_buffer = (char **)malloc(size_of_concurrent_connections * sizeof(char *));
+      
+      
       //initialize and set count of active clients. (this reduces a need for counting every check, necessary efficiency).
       unsigned short int current_total_active_clients = 0;
     
@@ -227,8 +240,14 @@ int main()
          //flag slot is not available.
          list_of_flags_indicating_active_clients[empty_slot_by_index] = 1;
          
+         //define current stage of the connection.
+         list_of_current_stage[empty_slot_by_index] = 0;
+         
+         
+         
+         
          //transmit ready to accept request
-         framed_message_segment[0] = 'r';
+         /*framed_message_segment[0] = 'r';
          framed_message_segment[1] = 'e';
          framed_message_segment[2] = 'a';
          framed_message_segment[3] = 'd';
@@ -253,20 +272,20 @@ int main()
          framed_message_segment[22] = 't';
          framed_message_segment[23] = '\0';
          printf("%s \n", framed_message_segment);
-         write(temporary_socket_file_descriptor, framed_message_segment, 24);
+         write(list_of_client_socket_file_descriptors[empty_slot_by_index], framed_message_segment, 24);
          
-         
+         */
          //copy whole_message_transmitted_flag to the network card with the attached signal to send over the network.
-         write(temporary_socket_file_descriptor, whole_message_transmitted_flag, 41);
+         //write(list_of_client_socket_file_descriptors[empty_slot_by_index], whole_message_transmitted_flag, 40);
      
      
          //shutdown and drop connection. (frees network card resources)
-         shutdown(temporary_socket_file_descriptor, SHUT_RDWR);
-         close(temporary_socket_file_descriptor);
+         //shutdown(temporary_socket_file_descriptor, SHUT_RDWR);
+        // close(temporary_socket_file_descriptor);
          
          
          //reset temporary socket file descriptor.
-         temporary_socket_file_descriptor = -1;
+         //temporary_socket_file_descriptor = -1;
          
        }
      }
@@ -277,7 +296,5 @@ int main()
     
   return 0;
 }
-
-
 
 
