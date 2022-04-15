@@ -22,10 +22,11 @@
  
 ?><html>
  <head>
-  <title>Shasta Exchange, Business Directory</title>
+  <title>Business Directory, Shasta Exchange</title>
   <style>
   * {
-        
+     padding: 0;
+     margin: 0;
   }
 	
   #doing_business_as_heading {
@@ -67,11 +68,11 @@
   }
   
   #search_phrase_input {
-   width:94%;
+   width:94.1%;
    border-radius: 20px;
    font-size: 5em;
    border:5px solid black;
-   margin: 0 0 0 0.38em;
+   margin: 0 0 0 0em;
    background-color: white;
   }
   
@@ -124,7 +125,7 @@
 
   <form onSubmit="event.preventDefault(); initiate_manual_submit();">
   <div id="search_phrase_div">
-  <input type="text" placeholder="" id="search_phrase_input" size="33"/>
+   <input type="text" placeholder="" id="search_phrase_input" size="33"/>
   </div>
   </form>
   
@@ -132,9 +133,9 @@
    
      <div id="directory_heading">Directory</div>
   
-  <?php
+<?php
  
-if(!($sock = socket_create(AF_INET, SOCK_STREAM, 0)))
+if(!($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)))
 {
 	$errorcode = socket_last_error();
     $errormsg = socket_strerror($errorcode);
@@ -149,46 +150,50 @@ echo "Socket created \n";
 if(!socket_connect($sock , 'localhost' , 3456))
 {
 	$errorcode = socket_last_error();
-    $errormsg = socket_strerror($errorcode);
+  $errormsg = socket_strerror($errorcode);
     
     die("Could not connect: [$errorcode] $errormsg \n");
 }
 
+ socket_send($sock, "directory1B480158E1F30E0B6CEE7813E9ECF094BD6B3745", NULL);
+
 echo "Connection established \n";
  
 $continue_reading = 1;
-$timestamp_since_last_recieved = microtime();
+$timestamp_since_last_recieved = microtime(true);
 $complete_string_read = "";
 while($continue_reading == 1)
 {
-  $read_as_string = socket_read($sock, 1048576, PHP_BINARY_READ);
-  echo $read_as_string;
-  if($read_as_string != "")
+  $read_as_string = "";
+  $recv_status = socket_recv($sock, $read_as_string, 1024);
+  //echo $read_as_string;
+  if($recv_status > 0)
   {
+    echo "echo:".$read_as_string;
     $complete_string_read = $complete_string_read + $read_as_string;
-    $timestamp_since_last_recieved = microtime();
-  }else if($read_as_string == "")
+    $timestamp_since_last_recieved = microtime(true);
+  }else if($recv_status == 0 || $recv_status == false)
   {
-    //break out of while loop if time out reached.
-    if(time() >= ($timestamp_since_last_recieved+1000))
+    if(microtime(true) >= ($timestamp_since_last_recieved+1))
     {
-      $continue_reading = 0;
+     //break out of while loop 
+     $continue_reading = 0;
     }
   }
 }
-
+echo "escaped loop";
 //shut down (stop read writing) and close socket.
 socket_shutdown($sock, 2);
 socket_close($sock);
 
-
-//print_f(explode($complete_string_read, "1B480158E1F30E0B6CEE7813E9ECF094BD6B3745");
+echo "socket closed";
 
 //interpret data
 
 // print data for now.
 echo $complete_string_read;
- 
+
+
  //has a search been invoked by the user/customer?
  if(isset($_GET["search_activated"]) == true)
  {
@@ -222,10 +227,9 @@ echo $complete_string_read;
    }
    }
    
-   
   ?>
   
     <div class="horizontal_spacer_threeem">&nbsp;</div>
-  
+  <div style="border:1px solid #000000;">&nbsp;</div>
  </body>
 </html>
