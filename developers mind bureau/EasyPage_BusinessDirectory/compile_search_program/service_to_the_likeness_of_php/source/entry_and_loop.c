@@ -1,5 +1,4 @@
 
-
 //prerequisite
 #include <stdio.h>
 #include <sys/socket.h>
@@ -38,6 +37,12 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
   //constant time period
   struct timespec time_to_suspend_shasta_exchange_iteration_remaining;
   struct timespec time_to_suspend_shasta_exchange_iteration_request;
+
+  //receive buffer string size.
+  unsigned short int send_string_max_size;
+  
+  //send buffer string size.
+  unsigned short int receive_string_max_size;
 
 
 //entry to program.
@@ -156,17 +161,46 @@ int main()
       */
       unsigned short int * list_of_current_stage = (unsigned short int *)malloc(size_of_concurrent_connections * sizeof(unsigned short int));
       
-      //initialize recieve "ring buffer".
-      char ** list_of_receive_ring_buffer = (char **)malloc(size_of_concurrent_connections * sizeof(char *));
+    
+      //initialize send "ring buffer".
+      struct string * list_of_send_ring_buffer = (struct string *)malloc(size_of_concurrent_connections * sizeof(struct string));
+      send_string_max_size = (1024 * 1024);
+      send_string_max_size = (send_string_max_size * 1024);
+      send_string_max_size = (send_string_max_size * 8); //eight megabytes.
+      unsigned short int index = 0;
+      while(index < size_of_concurrent_connections)
+      {
+        list_of_send_ring_buffer[index].string_buffer = (char *)malloc(send_string_max_size * sizeof(char));
+        list_of_send_ring_buffer[index].string_buffer_memory_size = send_string_max_size;
+        
+        index = index + 1;
+      }
       
+      //initialize receive "ring buffer".
+      struct string * list_of_receive_ring_buffer = (struct string *)malloc(size_of_concurrent_connections * sizeof(struct string));
+      receive_string_max_size = (1024 * 1024);
+      receive_string_max_size = (receive_string_max_size * 1024); //one megabyte.
+      unsigned short int index = 0;
+      while(index < size_of_concurrent_connections)
+      {
+        list_of_receive_ring_buffer[index].string_buffer = (char *)malloc(receive_string_max_size * sizeof(char));
+        list_of_receive_ring_buffer[index].string_buffer_memory_size = receive_string_max_size;
+        
+        index = index + 1;
+      }
       
       //initialize and set count of active clients. (this reduces a need for counting every check, necessary efficiency).
       unsigned short int current_total_active_clients = 0;
+    
     
     //initialize temporary holder for newly accepted connections.
     int temporary_socket_file_descriptor = -1;
     struct sockaddr_in client_address_information;
     socklen_t length = 0;
+    
+    char * temporary_receive_buffer = (char *)malloc(receive_string_max_size * sizeof(char));
+    memset(temporary_receive_buffer, 0, receive_string_max_size);
+    
     
     //do begin while loop
     printf("Shasta Exchange\n");
@@ -175,6 +209,40 @@ int main()
     int shasta_exchange_iteration_continue_loop = 1;
     while(shasta_exchange_iteration_continue_loop == 1)
     {
+     /*
+        Multithread on a single thread.
+        
+        1) Accept one new connection.
+           a) drop if max concurrent connections accepted.
+           b) allocate client associations to proceed with the
+              one time request then respond paradigm.
+        
+        2) Iterate through each client connection.
+           a) if stage is zero then wait for request.
+              note: this is a local connection so we can
+                    trust the server is not hacked or being
+                    infiltrated, thus no need to enforce timeout.
+           a.1) while receiving partially or all of the request
+                append to the receive buffer associated with the client.
+                change stage to one when the entire message is received.
+               
+           b) if stage is one then a response has not yet
+              been calculated and or determined. calculate or
+              determine response and place the whole response
+              within the send ring buffer associated with the client.
+              change stage to two, indicating that parts of the 
+              response will transmitted per turn.
+              
+           c) transmit part of the response then break away
+              for the next client connected to the service
+              to be attended to.
+              if the entire response has been transmitted, 
+              close the connection and delete the associated
+              client  variables.
+              
+     */
+    
+     /* Route: Accept connection */
      //determine if a connection is awaiting to be accepted.
      temporary_socket_file_descriptor = accept(server_socket_filedescriptor, (struct sockaddr *)&client_address_information, &length);
      if(temporary_socket_file_descriptor < 0)
@@ -182,7 +250,7 @@ int main()
       // printf("accept() %s \n", strerror(errno));
        
      }else{
-       //set this client socket as not blocking immediately, as to not be required to do so just before the accept command.
+       //set this client socket as not blocking immediately.
        fcntl(temporary_socket_file_descriptor, F_SETFL, O_NONBLOCK);
     
        
@@ -227,7 +295,7 @@ int main()
          
        }else if(current_total_active_clients < size_of_concurrent_connections)
        {
-       printf("new active client\n");
+         printf("new active client\n");
          //increase total active clients count by one.
          current_total_active_clients = current_total_active_clients + 1;
          
@@ -245,9 +313,17 @@ int main()
          
          //define current stage of the connection.
          list_of_current_stage[empty_slot_by_index] = 0;
+        }
+        
+        
+         //recieve whole message up to one megabyte.
+           //zero temporary receive buffer.
+           memset(temporary_receive_buffer, 0, receive_string_max_size);
+           
+           //do receive operation.
+           int total_recieved = recv(list_of_client_socket_file_descriptors[empty_slot_by_index], temporary_receive_buffer, receive_string_max_size, 0);
          
-         
-         
+           //append to 
          
          //transmit ready to accept request
          /*framed_message_segment[0] = 'r';
@@ -299,5 +375,7 @@ int main()
     
   return 0;
 }
+
+
 
 
