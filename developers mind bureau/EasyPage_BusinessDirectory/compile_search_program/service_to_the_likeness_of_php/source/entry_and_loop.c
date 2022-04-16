@@ -212,14 +212,16 @@ int main()
                 append to the receive buffer associated with the client.
                 change stage to one when the entire message is received.
                
-           b) if stage is one then a response has not yet
+           b) if stage is one,
+              then a response has not yet
               been calculated and or determined. calculate or
               determine response and place the whole response
               within the send ring buffer associated with the client.
               change stage to two, indicating that parts of the 
               response will transmitted per turn.
               
-           c) transmit part of the response then break away
+           c) if stage is two,
+              transmit part of the response then break away
               for the next client connected to the service
               to be attended to.
               if the entire response has been transmitted, 
@@ -345,7 +347,24 @@ int main()
                                       & list_of_current_stage[index_of_client_connections]);
            }else if(list_of_current_stage[index_of_client_connections] == 1)
            {
-             printf("stage one\n");
+             //determine what the request is by being able to ignore the whole meassge received flag segment.
+             unsigned int end_of_string_character_position = strlen(list_of_receive_buffer[index_of_client_connections].string_buffer) - 40; //exact position before begining of whole mesaage received flag segment.
+             
+             //isolate the "request" message.
+             char * request_message = 0;
+             while(request_message == 0){ request_message = (char *)malloc((end_of_string_character_position * sizeof(char))+1); }
+             memset(request_message, '\0', (end_of_string_character_position+1)); //how to set as null instead of (void)zero.... c is like putting together a puzzle while blind. but its still the best.
+             unsigned int request_message_index = 0;
+             while(request_message_index < end_of_string_character_position)
+             {
+               request_message[request_message_index] = list_of_receive_buffer[index_of_client_connections].string_buffer[request_message_index];
+             
+               //next character position.
+               request_message_index = request_message_index + 1;
+             }
+             
+             printf("%s\n", request_message);
+             free(request_message);
            }
          }
            
@@ -360,6 +379,8 @@ int main()
    
   return 0;
 }
+
+
 
 
 
