@@ -39,11 +39,13 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
   struct timespec time_to_suspend_shasta_exchange_iteration_request;
 
   //receive buffer string size.
-  unsigned short int send_string_max_size;
+  unsigned int send_string_max_size;
   
   //send buffer string size.
-  unsigned short int receive_string_max_size;
-
+  unsigned int receive_string_max_size;
+  
+  //temporary receive buffer.
+  char * temporary_receive_buffer;
 
 //entry to program.
 int main()
@@ -143,52 +145,68 @@ int main()
       unsigned short int size_of_concurrent_connections = 1024;
       
       //initialize and zero an array of client socket file descriptors.
-      int * list_of_client_socket_file_descriptors = (int *)malloc(size_of_concurrent_connections * sizeof(int));
+      int * list_of_client_socket_file_descriptors = 0;
+      while(list_of_client_socket_file_descriptors == 0){ list_of_client_socket_file_descriptors = (int *)malloc(size_of_concurrent_connections * sizeof(int)); }
       memset(list_of_client_socket_file_descriptors, 0, size_of_concurrent_connections);
     
       //initialize and zero an array of client address info.(this/these address infor handles signal the network card that the program has not let go)
-      struct sockaddr_in * list_of_client_address_info = (struct sockaddr_in *)malloc(size_of_concurrent_connections * sizeof(struct sockaddr_in));
-      memset(list_of_client_address_info, 0, size_of_concurrent_connections);
+      struct sockaddr_in * list_of_client_address_info = 0;
+      while(list_of_client_address_info == 0){ list_of_client_address_info = (struct sockaddr_in *)malloc(size_of_concurrent_connections * sizeof(struct sockaddr_in)); }
+      //memset(list_of_client_address_info, 0, size_of_concurrent_connections);
       
       //initialize and zero an array of flags that indicate which associated data slots are being used by the program or are available.
-      unsigned short int * list_of_flags_indicating_active_clients = (unsigned short int *)malloc(size_of_concurrent_connections * sizeof(unsigned short int));
+      unsigned short int * list_of_flags_indicating_active_clients = 0;
+      while(list_of_flags_indicating_active_clients == 0){ list_of_flags_indicating_active_clients = (unsigned short int *)malloc(size_of_concurrent_connections * sizeof(unsigned short int)); }
       memset(list_of_flags_indicating_active_clients, 0, size_of_concurrent_connections);
+      unsigned short int list_of_flags_indicating_active_clients_index = 0;
+      while(list_of_flags_indicating_active_clients_index < size_of_concurrent_connections)
+      {
+        //this step appears nessecary as memset is a (void)zero and or NULL, where as an equal(set) zero is a integer zero.
+        list_of_flags_indicating_active_clients[list_of_flags_indicating_active_clients_index] = 0;
+        
+        list_of_flags_indicating_active_clients_index = list_of_flags_indicating_active_clients_index + 1;
+      }
       
       //initialize and zero an array of eqch respective clients current stage within the request response stage.
       /*
         every client gets one response(non delisional, to be clear: not a literal-technical one); 
         if events are required to occur beyond one response the database event system will create and manage changes, and the client can submit a second request after the first request has been commited for the database event changes to occur.
       */
-      unsigned short int * list_of_current_stage = (unsigned short int *)malloc(size_of_concurrent_connections * sizeof(unsigned short int));
+      unsigned short int * list_of_current_stage = 0;
+      while(list_of_current_stage == 0){ list_of_current_stage = (unsigned short int *)malloc(size_of_concurrent_connections * sizeof(unsigned short int)); }
       
     
       //initialize send "ring buffer".
-      struct string * list_of_send_ring_buffer = (struct string *)malloc(size_of_concurrent_connections * sizeof(struct string));
-      send_string_max_size = (1024 * 1024);
-      send_string_max_size = (send_string_max_size * 1024);
-      send_string_max_size = (send_string_max_size * 8); //eight megabytes.
-      unsigned short int index = 0;
-      while(index < size_of_concurrent_connections)
+      struct string * list_of_send_ring_buffer = 0;
+      while(list_of_send_ring_buffer == 0){ list_of_send_ring_buffer = (struct string *)malloc(size_of_concurrent_connections * sizeof(struct string)); }
+      
+      send_string_max_size = 32000;
+      unsigned short int index_of_list_of_send_ring_buffer = 0;
+      while(index_of_list_of_send_ring_buffer < size_of_concurrent_connections)
       {
-        list_of_send_ring_buffer[index].string_buffer = (char *)malloc(send_string_max_size * sizeof(char));
-        list_of_send_ring_buffer[index].string_buffer_memory_size = send_string_max_size;
+        list_of_send_ring_buffer[index_of_list_of_send_ring_buffer].string_buffer = 0;
+        while(list_of_send_ring_buffer[index_of_list_of_send_ring_buffer].string_buffer == 0){ list_of_send_ring_buffer[index_of_list_of_send_ring_buffer].string_buffer = (char *)malloc(send_string_max_size * sizeof(char)); }
+        list_of_send_ring_buffer[index_of_list_of_send_ring_buffer].string_buffer_memory_size = send_string_max_size;
         
-        index = index + 1;
+        index_of_list_of_send_ring_buffer = index_of_list_of_send_ring_buffer + 1;
       }
       
+   
       //initialize receive "ring buffer".
-      struct string * list_of_receive_ring_buffer = (struct string *)malloc(size_of_concurrent_connections * sizeof(struct string));
-      receive_string_max_size = (1024 * 1024);
-      receive_string_max_size = (receive_string_max_size * 1024); //one megabyte.
-      unsigned short int index = 0;
-      while(index < size_of_concurrent_connections)
-      {
-        list_of_receive_ring_buffer[index].string_buffer = (char *)malloc(receive_string_max_size * sizeof(char));
-        list_of_receive_ring_buffer[index].string_buffer_memory_size = receive_string_max_size;
-        
-        index = index + 1;
-      }
+      struct string * list_of_receive_ring_buffer = 0;
+      while(list_of_receive_ring_buffer == 0){ list_of_receive_ring_buffer = (struct string *)malloc(size_of_concurrent_connections * sizeof(struct string)); }
       
+      receive_string_max_size = 32000;
+      unsigned short int index_of_list_of_receive_ring_buffer = 0;
+      while(index_of_list_of_receive_ring_buffer < size_of_concurrent_connections)
+      {
+        list_of_receive_ring_buffer[index_of_list_of_receive_ring_buffer].string_buffer = 0;
+        while(list_of_receive_ring_buffer[index_of_list_of_receive_ring_buffer].string_buffer == 0){ list_of_receive_ring_buffer[index_of_list_of_receive_ring_buffer].string_buffer = (char *)malloc(receive_string_max_size * sizeof(char)); }
+        list_of_receive_ring_buffer[index_of_list_of_receive_ring_buffer].string_buffer_memory_size = receive_string_max_size;
+        
+        index_of_list_of_receive_ring_buffer = index_of_list_of_receive_ring_buffer + 1;
+      }
+   
       //initialize and set count of active clients. (this reduces a need for counting every check, necessary efficiency).
       unsigned short int current_total_active_clients = 0;
     
@@ -198,13 +216,15 @@ int main()
     struct sockaddr_in client_address_information;
     socklen_t length = 0;
     
-    char * temporary_receive_buffer = (char *)malloc(receive_string_max_size * sizeof(char));
+    char * temporary_receive_buffer = 0;
+    while(temporary_receive_buffer == 0){ temporary_receive_buffer = (char *)malloc(receive_string_max_size * sizeof(char)); }
+    
     memset(temporary_receive_buffer, 0, receive_string_max_size);
     
     
     //do begin while loop
     printf("Shasta Exchange\n");
-    time_to_suspend_shasta_exchange_iteration_request.tv_nsec = 10000000; //ten miliseconds.
+    time_to_suspend_shasta_exchange_iteration_request.tv_nsec = 100000000; //one hundred miliseconds.
     
     int shasta_exchange_iteration_continue_loop = 1;
     while(shasta_exchange_iteration_continue_loop == 1)
@@ -242,21 +262,18 @@ int main()
               
      */
     
-     /* Route: Accept connection */
+     /* Route 1) Accept one connection */
      //determine if a connection is awaiting to be accepted.
      temporary_socket_file_descriptor = accept(server_socket_filedescriptor, (struct sockaddr *)&client_address_information, &length);
      if(temporary_socket_file_descriptor < 0)
      {
       // printf("accept() %s \n", strerror(errno));
-       
+      //error occurrd.
      }else{
-       //set this client socket as not blocking immediately.
-       fcntl(temporary_socket_file_descriptor, F_SETFL, O_NONBLOCK);
-    
-       
        //Has the maximum amount of concurrent users been reached?
        if(current_total_active_clients >= size_of_concurrent_connections)
        {
+         /*
          //tell the (presumably php script) that the total concurrent connections has been reached.
          framed_message_segment[0] = 'm';
          framed_message_segment[1] = 'a';
@@ -276,6 +293,9 @@ int main()
          framed_message_segment[15] = '.';
          framed_message_segment[16] = '\0'; //null is presumbly set previously, it' best to influence the network card to include it with the message.
          
+         //set this client socket as not blocking immediately.
+         //fcntl(temporary_socket_file_descriptor, F_SETFL, O_NONBLOCK);
+    
          //copy framed message segment to the network card with the attached signal to send over the network.
          write(temporary_socket_file_descriptor, framed_message_segment, 17);
          
@@ -287,15 +307,16 @@ int main()
          memset(framed_message_segment, '\0', 17);
           
          //shutdown and drop connection. (frees network card resources)
-         shutdown(temporary_socket_file_descriptor, SHUT_RDWR);
+         //shutdown(temporary_socket_file_descriptor, SHUT_RDWR);
          close(temporary_socket_file_descriptor);
          
          //reset temporary socket file descriptor.
          temporary_socket_file_descriptor = -1;
-         
+         */
        }else if(current_total_active_clients < size_of_concurrent_connections)
        {
          printf("new active client\n");
+        
          //increase total active clients count by one.
          current_total_active_clients = current_total_active_clients + 1;
          
@@ -304,6 +325,7 @@ int main()
          
          //assign temporary socket file descriptor to the respective associated slot.
          list_of_client_socket_file_descriptors[empty_slot_by_index] = temporary_socket_file_descriptor;
+         fcntl(list_of_client_socket_file_descriptors[empty_slot_by_index], F_SETFL, O_NONBLOCK);
          
          //prevent handle loss of client address information.
          list_of_client_address_info[empty_slot_by_index] = client_address_information;
@@ -313,69 +335,116 @@ int main()
          
          //define current stage of the connection.
          list_of_current_stage[empty_slot_by_index] = 0;
-        }
-        
-        
-         //recieve whole message up to one megabyte.
-           //zero temporary receive buffer.
-           memset(temporary_receive_buffer, 0, receive_string_max_size);
+         
+         //zero send message buffer.
+         unsigned short int list_of_send_ring_buffer_index = 0;
+         while(list_of_send_ring_buffer_index < send_string_max_size)
+         {
+           list_of_send_ring_buffer[empty_slot_by_index].string_buffer[list_of_send_ring_buffer_index] = '\0';
+         
+           //next character slot.
+           list_of_send_ring_buffer_index = list_of_send_ring_buffer_index + 1;
+         }
+         //memset(list_of_send_ring_buffer[empty_slot_by_index].string_buffer, 0, send_string_max_size);
+         
+         //zero receive message buffer.
+         //memset(list_of_receive_ring_buffer[empty_slot_by_index].string_buffer, 0, receive_string_max_size);
+         unsigned short int list_of_receive_ring_buffer_index = 0;
+         while(list_of_receive_ring_buffer_index < receive_string_max_size)
+         {
+           list_of_receive_ring_buffer[empty_slot_by_index].string_buffer[list_of_receive_ring_buffer_index] = '\0';
+         
+           //next character slot.
+           list_of_receive_ring_buffer_index = list_of_receive_ring_buffer_index + 1;
+         }
+       }
+     }
+     
+     
+     /* Route 2) Iterate through each connection within the list. */
+     if(current_total_active_clients > 0)
+     {
+       unsigned short int index_of_client_connections = 0;
+       while(index_of_client_connections < size_of_concurrent_connections)
+       {
+         //ensure a connection is active before applying connection logic.
+         if(list_of_flags_indicating_active_clients[index_of_client_connections] == 1)
+         {
+           //take action based on what the current stage is.
+           if(list_of_current_stage[index_of_client_connections] == 0)
+           {
+             //stage zero, expecting to receive the nature of the request.
+               //zero temporary receive buffer.
+               //memset(temporary_receive_buffer, 0, receive_string_max_size);
+               unsigned short int temporary_receive_buffer_index = 0;
+               while(temporary_receive_buffer_index < receive_string_max_size)
+               {
+                 temporary_receive_buffer[temporary_receive_buffer_index] = '\0';
+         
+                 //next character slot.
+                 temporary_receive_buffer_index = temporary_receive_buffer_index + 1;
+               }
+               
+               //do receive operation.
+               int total_received = recv(list_of_client_socket_file_descriptors[index_of_client_connections], temporary_receive_buffer, receive_string_max_size, 0);
+               if(total_received == -1)
+               {
+                 printf("error: %s\n", strerror(errno));
+               }else if(total_received == 0){
+                printf("none\n");
+               }else if(total_received > 0)
+               {
+                printf("received: %s \n", temporary_receive_buffer);
+               }
+           }
+         }
+           /*
+           //stage zero.
+           //append to receive ring buffer.
+             //zero temporary receive buffer.
+             memset(temporary_receive_buffer, 0, receive_string_max_size);
            
-           //do receive operation.
-           int total_recieved = recv(list_of_client_socket_file_descriptors[empty_slot_by_index], temporary_receive_buffer, receive_string_max_size, 0);
-         
-           //append to 
-         
-         //transmit ready to accept request
-         /*framed_message_segment[0] = 'r';
-         framed_message_segment[1] = 'e';
-         framed_message_segment[2] = 'a';
-         framed_message_segment[3] = 'd';
-         framed_message_segment[4] = 'y';
-         framed_message_segment[5] = ' ';
-         framed_message_segment[6] = 't';
-         framed_message_segment[7] = 'o';
-         framed_message_segment[8] = ' ';
-         framed_message_segment[9] = 'a';
-         framed_message_segment[10] = 'c';
-         framed_message_segment[11] = 'c';
-         framed_message_segment[12] = 'e';
-         framed_message_segment[13] = 'p';
-         framed_message_segment[14] = 't';
-         framed_message_segment[15] = ' ';
-         framed_message_segment[16] = 'r';
-         framed_message_segment[17] = 'e';
-         framed_message_segment[18] = 'q';
-         framed_message_segment[19] = 'u';
-         framed_message_segment[20] = 'e';
-         framed_message_segment[21] = 's';
-         framed_message_segment[22] = 't';
-         framed_message_segment[23] = '\0';
-         printf("%s \n", framed_message_segment);
-         write(list_of_client_socket_file_descriptors[empty_slot_by_index], framed_message_segment, 24);
-         
+             //do receive operation.
+             int total_received = read(list_of_client_socket_file_descriptors[index_of_client_connections], temporary_receive_buffer, receive_string_max_size);
+             if(total_received == -1)
+             {
+               printf("%s\n", strerror(errno));
+             }
+           //  printf("total received: %d \n", total_recieved);
+             /*
+             //get current string length of recieve buffer.
+             unsigned short int current_string_length = strlen(list_of_receive_ring_buffer[index_of_client_connections].string_buffer);
+           
+             //do append
+             strncat(list_of_receive_ring_buffer[index_of_client_connections].string_buffer, temporary_receive_buffer, strlen(temporary_receive_buffer));
+             
+             //determine if stage zero can motion to stage one.
+             //this is determined by string matching for stop sequence.
+             if(current_string_length > 40)
+             {
+               unsigned int whole_message_transmitted_flag_index = 0;
+               unsigned int stop_sequence_detected = 0;
+               unsigned int stop_sequence_detected_index = current_string_length - 40;
+               while(stop_sequence_detected_index < current_string_length)
+               {
+                int match_detected = strncmp(list_of_receive_ring_buffer[index_of_client_connections].string_buffer+stop_sequence_detected_index, whole_message_transmitted_flag+whole_message_transmitted_flag_index, 1);
+                printf("%d \n", match_detected);
+             
+                //next character to check for matching stop sequence.
+                stop_sequence_detected_index = stop_sequence_detected_index + 1;
+               }
+             }*
+           }
+        }
          */
-         //copy whole_message_transmitted_flag to the network card with the attached signal to send over the network.
-         //write(list_of_client_socket_file_descriptors[empty_slot_by_index], whole_message_transmitted_flag, 40);
-     
-     
-         //shutdown and drop connection. (frees network card resources)
-         //shutdown(temporary_socket_file_descriptor, SHUT_RDWR);
-        // close(temporary_socket_file_descriptor);
-         
-         
-         //reset temporary socket file descriptor.
-         //temporary_socket_file_descriptor = -1;
-         
+         //next client to attend to...
+         index_of_client_connections = index_of_client_connections + 1;
        }
      }
        
      //cpu gets hot during while-loops with zero computation being commited due to no resistance during proverbial pathway finding amongst transistors, this will signal cool down time during high heat.
      nanosleep(&time_to_suspend_shasta_exchange_iteration_request, &time_to_suspend_shasta_exchange_iteration_remaining);
     }
-    
+   
   return 0;
 }
-
-
-
-
