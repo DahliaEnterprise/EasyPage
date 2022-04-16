@@ -19,10 +19,12 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
   //shasta exchange headers
   #include "./produce_available_index_of_list_of_client_connection_slots/produce_available_index_of_list_of_client_connection_slots.h"
   #include "./structure_string/structure_string.h"
-
-  //shasta exchanbe definitions
+  #include "./client_routine_stage_one/client_routine_stage_one.h"
+  
+  //shasta exchange definitions
   #include "./produce_available_index_of_list_of_client_connection_slots/produce_available_index_of_list_of_client_connection_slots.c"
   #include "./structure_string/structure_string.c"
+  #include "./client_routine_stage_one/client_routine_stage_one.c"
 
 //global variables
   //service connection
@@ -103,50 +105,6 @@ int main()
   //define the whole message transmitted flag.
   strcat(whole_message_transmitted_flag, "1B480158E1F30E0B6CEE7813E9ECF094BD6B3745");
   
-  /*
-  whole_message_transmitted_flag[0] = '1';
-  whole_message_transmitted_flag[1] = 'B';
-  whole_message_transmitted_flag[2] = '4';
-  whole_message_transmitted_flag[3] = '8';
-  whole_message_transmitted_flag[4] = '0';
-  whole_message_transmitted_flag[5] = '1';
-  whole_message_transmitted_flag[6] = '5';
-  whole_message_transmitted_flag[7] = '8';
-  whole_message_transmitted_flag[8] = 'E';
-  whole_message_transmitted_flag[9] = '1';
-  whole_message_transmitted_flag[10] = 'F';
-  whole_message_transmitted_flag[11] = '3';
-  whole_message_transmitted_flag[12] = '0';
-  whole_message_transmitted_flag[13] = 'E';
-  whole_message_transmitted_flag[14] = '0';
-  whole_message_transmitted_flag[15] = 'B';
-  whole_message_transmitted_flag[16] = '6';
-  whole_message_transmitted_flag[17] = 'C';
-  whole_message_transmitted_flag[18] = 'E';
-  whole_message_transmitted_flag[19] = 'E';
-  whole_message_transmitted_flag[20] = '7';
-  whole_message_transmitted_flag[21] = '8';
-  whole_message_transmitted_flag[22] = '1';
-  whole_message_transmitted_flag[23] = '3';
-  whole_message_transmitted_flag[24] = 'E';
-  whole_message_transmitted_flag[25] = '9';
-  whole_message_transmitted_flag[26] = 'E'; 
-  whole_message_transmitted_flag[27] = 'C';
-  whole_message_transmitted_flag[28] = 'F';
-  whole_message_transmitted_flag[29] = '0';
-  whole_message_transmitted_flag[30] = '9';
-  whole_message_transmitted_flag[31] = '4';
-  whole_message_transmitted_flag[32] = 'B';
-  whole_message_transmitted_flag[33] = 'D';
-  whole_message_transmitted_flag[34] = '6';
-  whole_message_transmitted_flag[35] = 'B';
-  whole_message_transmitted_flag[36] = '3';
-  whole_message_transmitted_flag[37] = '7';
-  whole_message_transmitted_flag[38] = '4';
-  whole_message_transmitted_flag[39] = '5';
-  whole_message_transmitted_flag[40] = '\0';
-  */
-  
   //begin shasta exchange iteration of trigger based automated work.
     //initialize temporary array to account for connections and their associated states.
       //define a number to be used within a manner consensus pertaining to concurrent connections
@@ -185,18 +143,18 @@ int main()
       
     
       //initialize send "ring buffer".
-      struct string * list_of_send_ring_buffer = 0;
-      while(list_of_send_ring_buffer == 0){ list_of_send_ring_buffer = (struct string *)malloc(size_of_concurrent_connections * sizeof(struct string)); }
+      struct string * list_of_send_buffer = 0;
+      while(list_of_send_buffer == 0){ list_of_send_buffer = (struct string *)malloc(size_of_concurrent_connections * sizeof(struct string)); }
       
       send_string_max_size = 32000;
-      unsigned short int index_of_list_of_send_ring_buffer = 0;
-      while(index_of_list_of_send_ring_buffer < size_of_concurrent_connections)
+      unsigned short int index_of_list_of_send_buffer = 0;
+      while(index_of_list_of_send_buffer < size_of_concurrent_connections)
       {
-        list_of_send_ring_buffer[index_of_list_of_send_ring_buffer].string_buffer = 0;
-        while(list_of_send_ring_buffer[index_of_list_of_send_ring_buffer].string_buffer == 0){ list_of_send_ring_buffer[index_of_list_of_send_ring_buffer].string_buffer = (char *)malloc(send_string_max_size * sizeof(char)); }
-        list_of_send_ring_buffer[index_of_list_of_send_ring_buffer].string_buffer_memory_size = send_string_max_size;
+        list_of_send_buffer[index_of_list_of_send_buffer].string_buffer = 0;
+        while(list_of_send_buffer[index_of_list_of_send_buffer].string_buffer == 0){ list_of_send_buffer[index_of_list_of_send_buffer].string_buffer = (char *)malloc(send_string_max_size * sizeof(char)); }
+        list_of_send_buffer[index_of_list_of_send_buffer].string_buffer_memory_size = send_string_max_size;
         
-        index_of_list_of_send_ring_buffer = index_of_list_of_send_ring_buffer + 1;
+        index_of_list_of_send_buffer = index_of_list_of_send_buffer + 1;
       }
       
    
@@ -345,16 +303,15 @@ int main()
          list_of_current_stage[empty_slot_by_index] = 0;
          
          //zero send message buffer.
-         unsigned short int list_of_send_ring_buffer_index = 0;
-         while(list_of_send_ring_buffer_index < send_string_max_size)
+         unsigned short int list_of_send_buffer_index = 0;
+         while(list_of_send_buffer_index < send_string_max_size)
          {
-           list_of_send_ring_buffer[empty_slot_by_index].string_buffer[list_of_send_ring_buffer_index] = '\0';
+           list_of_send_buffer[empty_slot_by_index].string_buffer[list_of_send_buffer_index] = '\0';
          
            //next character slot.
-           list_of_send_ring_buffer_index = list_of_send_ring_buffer_index + 1;
+           list_of_send_buffer_index = list_of_send_buffer_index + 1;
          }
-         //memset(list_of_send_ring_buffer[empty_slot_by_index].string_buffer, 0, send_string_max_size);
-         
+        
          //zero receive message buffer.
          unsigned short int list_of_receive_buffer_index = 0;
          while(list_of_receive_buffer_index < receive_string_max_size)
@@ -380,74 +337,15 @@ int main()
            //take action based on what the current stage is.
            if(list_of_current_stage[index_of_client_connections] == 0)
            {
-             //stage zero, expecting to receive the nature of the request.
-               //zero temporary receive buffer.
-               unsigned short int temporary_receive_buffer_index = 0;
-               while(temporary_receive_buffer_index < receive_string_max_size)
-               {
-                 temporary_receive_buffer[temporary_receive_buffer_index] = '\0';
-         
-                 //next character slot.
-                 temporary_receive_buffer_index = temporary_receive_buffer_index + 1;
-               }
-               
-               //do receive operation.
-               int total_received = recv(list_of_client_socket_file_descriptors[index_of_client_connections], temporary_receive_buffer, receive_string_max_size, 0);
-               if(total_received == -1)
-               {
-                //error occurrd durinf received.
-                printf("error: %s\n", strerror(errno));
-                
-                
-               }else if(total_received == 0){
-                //do nothing when in stage zero and received no message.
-                
-                
-               }else if(total_received > 0)
-               {
-                 //received partial or whole message just now.
-                 printf("received: %s \n", temporary_receive_buffer);
-               
-                 //do append
-                 strncat(list_of_receive_buffer[index_of_client_connections].string_buffer, temporary_receive_buffer, total_received);
-                 printf("received: %s\n", list_of_receive_buffer[index_of_client_connections].string_buffer);
-                
-                 //get current string length of recieve buffer.
-                 unsigned short int current_string_length = strlen(list_of_receive_buffer[index_of_client_connections].string_buffer);
-              
-                
-                 //determine if stage zero can motion to stage one.
-                 //this is determined by string matching for stop sequence.
-                 if(current_string_length > 40)
-                 {
-                   unsigned short int consecutive_matches = 0;
-                   unsigned int whole_message_transmitted_flag_index = 0;
-                   unsigned int stop_sequence_detected = 0;
-                   unsigned int stop_sequence_detected_index = current_string_length - 40;
-                   while(stop_sequence_detected_index < current_string_length)
-                   {
-                     int match_detected = strncmp(list_of_receive_buffer[index_of_client_connections].string_buffer+stop_sequence_detected_index, whole_message_transmitted_flag+whole_message_transmitted_flag_index, 1);
-                     if(match_detected != 0)
-                     {
-                       //stop comparing (purpose: to prevent known what would hve been loss).
-                       stop_sequence_detected_index = current_string_length;
-                     }else if(match_detected == 0)
-                     {
-                       consecutive_matches = consecutive_matches + 1;
-                     
-                       //next character to check for matching stop sequence.
-                       whole_message_transmitted_flag_index = whole_message_transmitted_flag_index + 1;
-                       stop_sequence_detected_index = stop_sequence_detected_index + 1;
-                     }
-                   }
-                   
-                   //determine if the "whole message transmitted flag was transmitted".
-                   if(consecutive_matches == 40)
-                   {
-                     list_of_current_stage[index_of_client_connections] = 1;
-                   }
-                 }
-               }
+             client_routine_stage_one(temporary_receive_buffer, 
+                                      receive_string_max_size, 
+                                      list_of_client_socket_file_descriptors[index_of_client_connections], 
+                                      list_of_receive_buffer[index_of_client_connections].string_buffer,
+                                      whole_message_transmitted_flag,
+                                      & list_of_current_stage[index_of_client_connections]);
+           }else if(list_of_current_stage[index_of_client_connections] == 1)
+           {
+             printf("stage one\n");
            }
          }
            
@@ -462,5 +360,8 @@ int main()
    
   return 0;
 }
+
+
+
 
 
