@@ -1,5 +1,4 @@
 
-
 //prerequisite
 #include <stdio.h>
 #include <sys/socket.h>
@@ -30,7 +29,7 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
   int server_socket_filedescriptor;
   
   //framed message segment
-  char framed_message_segment[1023]; //setting to 1024 is presumed to allocate within ram the amount of 1023+minimum next ram slot available. its probly just 1023 plus 8 bytes on a 64 bit ram configuration.
+  char framed_message_segment[1023]; //setting to 1024 is presumed to allocate within ram the amount of 1023+minimum next ram slot available. its probly just 1023 plus 8 bytes on a 64 bit ram configuration. some say it does what mysql does which is times two or the base number plus a minimum large number such as 128
 
   //flag of whole message completed.
   char whole_message_transmitted_flag[41];
@@ -92,12 +91,19 @@ int main()
   }
   
   //zero the framed message segment.
-  memset(framed_message_segment, 0, 1024);
-  
-  //zero the whole_message_transmitted_flag
-  memset(whole_message_transmitted_flag, 0, 32);
+  unsigned short int frame_message_segment_index = 0;
+  while(frame_message_segment_index < 1024)
+  {
+    framed_message_segment[frame_message_segment_index] = '\0';
+    
+    //next character slot.
+    frame_message_segment_index = frame_message_segment_index + 1;
+  }
   
   //define the whole message transmitted flag.
+  strcat(whole_message_transmitted_flag, "1B480158E1F30E0B6CEE7813E9ECF094BD6B3745");
+  
+  /*
   whole_message_transmitted_flag[0] = '1';
   whole_message_transmitted_flag[1] = 'B';
   whole_message_transmitted_flag[2] = '4';
@@ -139,6 +145,7 @@ int main()
   whole_message_transmitted_flag[38] = '4';
   whole_message_transmitted_flag[39] = '5';
   whole_message_transmitted_flag[40] = '\0';
+  */
   
   //begin shasta exchange iteration of trigger based automated work.
     //initialize temporary array to account for connections and their associated states.
@@ -390,8 +397,11 @@ int main()
                {
                 //error occurrd durinf received.
                 printf("error: %s\n", strerror(errno));
+                
+                
                }else if(total_received == 0){
                 //do nothing when in stage zero and received no message.
+                
                 
                }else if(total_received > 0)
                {
@@ -429,6 +439,12 @@ int main()
                        whole_message_transmitted_flag_index = whole_message_transmitted_flag_index + 1;
                        stop_sequence_detected_index = stop_sequence_detected_index + 1;
                      }
+                   }
+                   
+                   //determine if the "whole message transmitted flag was transmitted".
+                   if(consecutive_matches == 40)
+                   {
+                     list_of_current_stage[index_of_client_connections] = 1;
                    }
                  }
                }
