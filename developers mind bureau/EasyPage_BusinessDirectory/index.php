@@ -74,6 +74,7 @@
    border:5px solid black;
    margin: 0 0 0 0em;
    background-color: white;
+   padding: 0.3em;
   }
   
   #search_heading {
@@ -155,7 +156,8 @@ if(!socket_connect($sock , 'localhost' , 3456))
     die("Could not connect: [$errorcode] $errormsg \n");
 }
 
- socket_send($sock, "directory1B480158E1F30E0B6CEE7813E9ECF094BD6B3745", NULL);
+$request_to_send = "directory1B480158E1F30E0B6CEE7813E9ECF094BD6B3745";
+ socket_write($sock, $request_to_send, strlen($request_to_send));
 
 echo "Connection established \n";
  
