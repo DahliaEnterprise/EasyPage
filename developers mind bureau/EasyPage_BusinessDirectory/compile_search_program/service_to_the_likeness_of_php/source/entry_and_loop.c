@@ -1,4 +1,5 @@
 
+
 //prerequisite
 #include <stdio.h>
 #include <sys/socket.h>
@@ -193,18 +194,18 @@ int main()
       
    
       //initialize receive "ring buffer".
-      struct string * list_of_receive_ring_buffer = 0;
-      while(list_of_receive_ring_buffer == 0){ list_of_receive_ring_buffer = (struct string *)malloc(size_of_concurrent_connections * sizeof(struct string)); }
+      struct string * list_of_receive_buffer = 0;
+      while(list_of_receive_buffer == 0){ list_of_receive_buffer = (struct string *)malloc(size_of_concurrent_connections * sizeof(struct string)); }
       
       receive_string_max_size = 32000;
-      unsigned short int index_of_list_of_receive_ring_buffer = 0;
-      while(index_of_list_of_receive_ring_buffer < size_of_concurrent_connections)
+      unsigned short int index_of_list_of_receive_buffer = 0;
+      while(index_of_list_of_receive_buffer < size_of_concurrent_connections)
       {
-        list_of_receive_ring_buffer[index_of_list_of_receive_ring_buffer].string_buffer = 0;
-        while(list_of_receive_ring_buffer[index_of_list_of_receive_ring_buffer].string_buffer == 0){ list_of_receive_ring_buffer[index_of_list_of_receive_ring_buffer].string_buffer = (char *)malloc(receive_string_max_size * sizeof(char)); }
-        list_of_receive_ring_buffer[index_of_list_of_receive_ring_buffer].string_buffer_memory_size = receive_string_max_size;
+        list_of_receive_buffer[index_of_list_of_receive_buffer].string_buffer = 0;
+        while(list_of_receive_buffer[index_of_list_of_receive_buffer].string_buffer == 0){ list_of_receive_buffer[index_of_list_of_receive_buffer].string_buffer = (char *)malloc(receive_string_max_size * sizeof(char)); }
+        list_of_receive_buffer[index_of_list_of_receive_buffer].string_buffer_memory_size = receive_string_max_size;
         
-        index_of_list_of_receive_ring_buffer = index_of_list_of_receive_ring_buffer + 1;
+        index_of_list_of_receive_buffer = index_of_list_of_receive_buffer + 1;
       }
    
       //initialize and set count of active clients. (this reduces a need for counting every check, necessary efficiency).
@@ -348,14 +349,13 @@ int main()
          //memset(list_of_send_ring_buffer[empty_slot_by_index].string_buffer, 0, send_string_max_size);
          
          //zero receive message buffer.
-         //memset(list_of_receive_ring_buffer[empty_slot_by_index].string_buffer, 0, receive_string_max_size);
-         unsigned short int list_of_receive_ring_buffer_index = 0;
-         while(list_of_receive_ring_buffer_index < receive_string_max_size)
+         unsigned short int list_of_receive_buffer_index = 0;
+         while(list_of_receive_buffer_index < receive_string_max_size)
          {
-           list_of_receive_ring_buffer[empty_slot_by_index].string_buffer[list_of_receive_ring_buffer_index] = '\0';
+           list_of_receive_buffer[empty_slot_by_index].string_buffer[list_of_receive_buffer_index] = '\0';
          
            //next character slot.
-           list_of_receive_ring_buffer_index = list_of_receive_ring_buffer_index + 1;
+           list_of_receive_buffer_index = list_of_receive_buffer_index + 1;
          }
        }
      }
@@ -375,7 +375,6 @@ int main()
            {
              //stage zero, expecting to receive the nature of the request.
                //zero temporary receive buffer.
-               //memset(temporary_receive_buffer, 0, receive_string_max_size);
                unsigned short int temporary_receive_buffer_index = 0;
                while(temporary_receive_buffer_index < receive_string_max_size)
                {
@@ -389,54 +388,52 @@ int main()
                int total_received = recv(list_of_client_socket_file_descriptors[index_of_client_connections], temporary_receive_buffer, receive_string_max_size, 0);
                if(total_received == -1)
                {
-                 printf("error: %s\n", strerror(errno));
+                //error occurrd durinf received.
+                printf("error: %s\n", strerror(errno));
                }else if(total_received == 0){
-                printf("none\n");
+                //do nothing when in stage zero and received no message.
+                
                }else if(total_received > 0)
                {
+                //received partial or whole message just now.
                 printf("received: %s \n", temporary_receive_buffer);
+               
+                //do append
+                strncat(list_of_receive_buffer[index_of_client_connections].string_buffer, temporary_receive_buffer, total_received);
+                printf("received: %s\n", list_of_receive_buffer[index_of_client_connections].string_buffer);
+                
+                //get current string length of recieve buffer.
+                unsigned short int current_string_length = strlen(list_of_receive_buffer[index_of_client_connections].string_buffer);
+              
+                
+                //determine if stage zero can motion to stage one.
+                //this is determined by string matching for stop sequence.
+                if(current_string_length > 40)
+                {
+                  unsigned short int consecutive_matches = 0;
+                  unsigned int whole_message_transmitted_flag_index = 0;
+                  unsigned int stop_sequence_detected = 0;
+                  unsigned int stop_sequence_detected_index = current_string_length - 40;
+                  while(stop_sequence_detected_index < current_string_length)
+                  {
+                     int match_detected = strncmp(list_of_receive_buffer[index_of_client_connections].string_buffer+stop_sequence_detected_index, whole_message_transmitted_flag+whole_message_transmitted_flag_index, 1);
+                     if(match_detected != 0)
+                     {
+                       //
+                     }else if(match_detected == 0)
+                     {
+                       consecutive_matches = consecutive_matches + 1;
+                     
+                       //next character to check for matching stop sequence.
+                       whole_message_transmitted_flag_index = whole_message_transmitted_flag_index + 1;
+                       stop_sequence_detected_index = stop_sequence_detected_index + 1;
+                     }
+                   }
+                 }
                }
            }
          }
-           /*
-           //stage zero.
-           //append to receive ring buffer.
-             //zero temporary receive buffer.
-             memset(temporary_receive_buffer, 0, receive_string_max_size);
            
-             //do receive operation.
-             int total_received = read(list_of_client_socket_file_descriptors[index_of_client_connections], temporary_receive_buffer, receive_string_max_size);
-             if(total_received == -1)
-             {
-               printf("%s\n", strerror(errno));
-             }
-           //  printf("total received: %d \n", total_recieved);
-             /*
-             //get current string length of recieve buffer.
-             unsigned short int current_string_length = strlen(list_of_receive_ring_buffer[index_of_client_connections].string_buffer);
-           
-             //do append
-             strncat(list_of_receive_ring_buffer[index_of_client_connections].string_buffer, temporary_receive_buffer, strlen(temporary_receive_buffer));
-             
-             //determine if stage zero can motion to stage one.
-             //this is determined by string matching for stop sequence.
-             if(current_string_length > 40)
-             {
-               unsigned int whole_message_transmitted_flag_index = 0;
-               unsigned int stop_sequence_detected = 0;
-               unsigned int stop_sequence_detected_index = current_string_length - 40;
-               while(stop_sequence_detected_index < current_string_length)
-               {
-                int match_detected = strncmp(list_of_receive_ring_buffer[index_of_client_connections].string_buffer+stop_sequence_detected_index, whole_message_transmitted_flag+whole_message_transmitted_flag_index, 1);
-                printf("%d \n", match_detected);
-             
-                //next character to check for matching stop sequence.
-                stop_sequence_detected_index = stop_sequence_detected_index + 1;
-               }
-             }*
-           }
-        }
-         */
          //next client to attend to...
          index_of_client_connections = index_of_client_connections + 1;
        }
@@ -448,3 +445,5 @@ int main()
    
   return 0;
 }
+
+
