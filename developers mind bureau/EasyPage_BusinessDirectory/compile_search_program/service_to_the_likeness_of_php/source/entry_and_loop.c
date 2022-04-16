@@ -395,31 +395,32 @@ int main()
                 
                }else if(total_received > 0)
                {
-                //received partial or whole message just now.
-                printf("received: %s \n", temporary_receive_buffer);
+                 //received partial or whole message just now.
+                 printf("received: %s \n", temporary_receive_buffer);
                
-                //do append
-                strncat(list_of_receive_buffer[index_of_client_connections].string_buffer, temporary_receive_buffer, total_received);
-                printf("received: %s\n", list_of_receive_buffer[index_of_client_connections].string_buffer);
+                 //do append
+                 strncat(list_of_receive_buffer[index_of_client_connections].string_buffer, temporary_receive_buffer, total_received);
+                 printf("received: %s\n", list_of_receive_buffer[index_of_client_connections].string_buffer);
                 
-                //get current string length of recieve buffer.
-                unsigned short int current_string_length = strlen(list_of_receive_buffer[index_of_client_connections].string_buffer);
+                 //get current string length of recieve buffer.
+                 unsigned short int current_string_length = strlen(list_of_receive_buffer[index_of_client_connections].string_buffer);
               
                 
-                //determine if stage zero can motion to stage one.
-                //this is determined by string matching for stop sequence.
-                if(current_string_length > 40)
-                {
-                  unsigned short int consecutive_matches = 0;
-                  unsigned int whole_message_transmitted_flag_index = 0;
-                  unsigned int stop_sequence_detected = 0;
-                  unsigned int stop_sequence_detected_index = current_string_length - 40;
-                  while(stop_sequence_detected_index < current_string_length)
-                  {
+                 //determine if stage zero can motion to stage one.
+                 //this is determined by string matching for stop sequence.
+                 if(current_string_length > 40)
+                 {
+                   unsigned short int consecutive_matches = 0;
+                   unsigned int whole_message_transmitted_flag_index = 0;
+                   unsigned int stop_sequence_detected = 0;
+                   unsigned int stop_sequence_detected_index = current_string_length - 40;
+                   while(stop_sequence_detected_index < current_string_length)
+                   {
                      int match_detected = strncmp(list_of_receive_buffer[index_of_client_connections].string_buffer+stop_sequence_detected_index, whole_message_transmitted_flag+whole_message_transmitted_flag_index, 1);
                      if(match_detected != 0)
                      {
-                       //
+                       //stop comparing (purpose: to prevent known what would hve been loss).
+                       stop_sequence_detected_index = current_string_length;
                      }else if(match_detected == 0)
                      {
                        consecutive_matches = consecutive_matches + 1;
