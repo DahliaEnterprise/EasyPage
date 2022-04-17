@@ -23,6 +23,7 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
     #include "./structure_string/structure_string.h"
     
     //major functions
+    #include "./extract_list_of_business_filenames_to_parseable_ram/extract_list_of_business_filenames_to_parseable_ram.h"
     #include "./produce_available_index_of_list_of_client_connection_slots/produce_available_index_of_list_of_client_connection_slots.h"
     #include "./client_routine_stage_one/client_routine_stage_one.h"
   
@@ -69,15 +70,11 @@ int main()
   //extract text file style list(characters) into a c style array of string names that which make it parseable.
     //initialize nessecsary memory spaces.
     struct string * list_of_business_records = 0;
-    
+    unsigned long int list_of_business_records_total = 0;
     //do extract and convert to ram parseabme list.
-    int extract_business_name_list_return_code = extract_list_of_business_filenames_to_parseable_ram(list_of_business_records);
-    
-    if(extract_business_name_list_return_code < 1)
-    {
-      return -1;
-    }
-
+    int extract_business_name_list_return_code = extract_list_of_business_filenames_to_parseable_ram(list_of_business_records, &list_of_business_records_total);
+    if(extract_business_name_list_return_code < 1){ return -1; }
+    printf("%d\n", list_of_business_records_total);
 
   //initate socket
   server_socket_filedescriptor = -1;
@@ -366,12 +363,9 @@ int main()
            //take action based on what the current stage is.
            if(list_of_current_stage[index_of_client_connections] == 0)
            {
-             client_routine_stage_one(temporary_receive_buffer, 
-                                      receive_string_max_size, 
-                                      list_of_client_socket_file_descriptors[index_of_client_connections], 
-                                      list_of_receive_buffer[index_of_client_connections].string_buffer,
-                                      whole_message_transmitted_flag,
-                                      & list_of_current_stage[index_of_client_connections]);
+           
+             client_routine_stage_one(temporary_receive_buffer, receive_string_max_size,  list_of_client_socket_file_descriptors[index_of_client_connections], list_of_receive_buffer[index_of_client_connections].string_buffer, whole_message_transmitted_flag, & list_of_current_stage[index_of_client_connections]);
+             
            }else if(list_of_current_stage[index_of_client_connections] == 1)
            {
              //determine what the request is by being able to ignore the whole meassge received flag segment.
@@ -390,9 +384,15 @@ int main()
                request_message_index = request_message_index + 1;
              }
              
-             
-             
-             printf("%s\n", request_message);
+             //determine which action to ensue.
+             int is_directory_request = strcmp(request_message, "directory");
+             if(is_directory_request == 0)
+             {
+               //get the list of businesses by name.
+               
+             }
+            
+             // printf("%s\n", request_message);
              free(request_message);
            }
          }
@@ -408,10 +408,5 @@ int main()
    
   return 0;
 }
-
-
-
-
-
 
 
