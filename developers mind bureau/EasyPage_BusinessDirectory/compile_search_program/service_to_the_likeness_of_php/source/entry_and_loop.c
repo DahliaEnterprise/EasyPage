@@ -11,6 +11,8 @@
 #include <fcntl.h>
 #include <netinet/in.h>
 #include <time.h>
+#include <sys/types.h>
+#include <dirent.h>
 
 //nanosleep requires implicit header delcaration.
 int nanosleep(const struct timespec *req, struct timespec *rem);
@@ -52,6 +54,39 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
 //entry to program.
 int main()
 {
+  //define root directory to transmit content.
+  //root_directory_of_content "/var/www/business_directory_content/";
+  //"/var/www/business_directory_content/list_of_businesses/";
+
+  //have a list of filenames representing business names at tbe ready.
+  char * absolute_file_path_directory_list_of_businesses = "/var/www/business_directory_content/list_of_businesses/list_of_businesses.text";
+  FILE * list_of_businesses_dot_text = fopen(absolute_file_path_directory_list_of_businesses, "r");
+  long int total_characters = 0;
+  if(list_of_businesses_dot_text != NULL)
+  {
+    fseek(list_of_businesses_dot_text, 0, SEEK_END);
+    total_characters = ftell(list_of_businesses_dot_text);
+    fseek(list_of_businesses_dot_text, 0, SEEK_SET);
+    printf("%d\n", total_characters);
+    //determine total new lines. ";" is the delimter.
+    char character[2] = "\0\0";
+    unsigned long int total_delimeters = 0;
+    unsigned long int list_of_businesses_dot_text_index = 0;
+    while(list_of_businesses_dot_text_index < total_characters)
+    {
+     fread(character, 1, 1, list_of_businesses_dot_text);
+     printf("%s \n", character);
+     // strncmp(
+      
+      //next character within index.
+      list_of_businesses_dot_text_index = list_of_businesses_dot_text_index + 1;
+    }
+    
+  }else if(list_of_businesses_dot_text == NULL)
+  {
+    return 1;
+  } 
+
   //initate socket
   server_socket_filedescriptor = -1;
   server_socket_filedescriptor = socket(AF_INET, SOCK_STREAM, 0);
@@ -363,6 +398,8 @@ int main()
                request_message_index = request_message_index + 1;
              }
              
+             
+             
              printf("%s\n", request_message);
              free(request_message);
            }
@@ -379,8 +416,6 @@ int main()
    
   return 0;
 }
-
-
 
 
 
