@@ -1,4 +1,5 @@
 
+
 //prerequisite
 #include <stdio.h>
 #include <sys/socket.h>
@@ -67,7 +68,7 @@ int main()
     fseek(list_of_businesses_dot_text, 0, SEEK_END);
     total_characters = ftell(list_of_businesses_dot_text);
     fseek(list_of_businesses_dot_text, 0, SEEK_SET);
-    printf("%d\n", total_characters);
+   
     //determine total new lines. ";" is the delimter.
     char character[2] = "\0\0";
     unsigned long int total_delimeters = 0;
@@ -75,12 +76,64 @@ int main()
     while(list_of_businesses_dot_text_index < total_characters)
     {
      fread(character, 1, 1, list_of_businesses_dot_text);
-     printf("%s \n", character);
-     // strncmp(
-      
+     int character_matches = strncmp(character, ";", 1);
+     if(character_matches == 0)
+     {
+       total_delimeters = total_delimeters + 1;
+     }
+    
       //next character within index.
       list_of_businesses_dot_text_index = list_of_businesses_dot_text_index + 1;
     }
+    
+    //extract as many lines as their are delimeters detected.
+      //rewind the proverbial tape.
+      fseek(list_of_businesses_dot_text, 0, SEEK_SET);
+  
+      //allocate as many string structures as their are total delemiters
+      struct string * list_of_business_records = 0;
+      while(list_of_business_records == 0){ list_of_business_records = (struct string *)malloc(total_delimeters * sizeof(struct string)); }
+    
+      //for each business filename, store that file name into the list of business records.
+      unsigned int start_of_business_filename = 0;
+      unsigned int end_of_business_filename = 0;
+      unsigned int list_of_business_records_index = 0;
+      list_of_businesses_dot_text_index = 0;
+      while(list_of_business_records_index < total_delimeters)
+      {
+        //keep reading until end of file or delmiter found.
+        unsigned short int keep_reading_character = 1;
+        while(keep_reading_character == 1)
+        {
+          fread(character, 1, 1, list_of_businesses_dot_text);
+          int character_matches = strncmp(character, ";", 1);
+          if(character_matches == 0)
+          {
+            end_of_business_filename = end_of_business_filename + 1;
+            //list_of_businesses_dot_text_index = list_of_businesses_dot_text_index + 1;
+            
+            char * business_filename = 0;
+            unsigned int filename_length = end_of_business_filename - start_of_business_filename;
+            while(business_filename == 0){ business_filename = (char *)malloc((filename_length * sizeof(char))+1); }
+            memset(business_filename, '\0', (filename_length+1));
+            fseek(list_of_businesses_dot_text, start_of_business_filename, SEEK_SET);
+            fread(business_filename, 1, filename_length, list_of_businesses_dot_text);
+            printf("%s \n", business_filename);
+            keep_reading_character = 0;
+            free(business_filename);
+          }else if(character_matches != 0)
+          {
+            end_of_business_filename = end_of_business_filename + 1;
+            
+          }
+        }
+        
+        //char * business_filename = readline(
+        
+        //next line
+        list_of_business_records_index = list_of_business_records_index + 1;
+      }
+    
     
   }else if(list_of_businesses_dot_text == NULL)
   {
@@ -416,6 +469,7 @@ int main()
    
   return 0;
 }
+
 
 
 
