@@ -1,5 +1,4 @@
 
-
 //prerequisite
 #include <stdio.h>
 #include <sys/socket.h>
@@ -109,18 +108,42 @@ int main()
           int character_matches = strncmp(character, ";", 1);
           if(character_matches == 0)
           {
-            end_of_business_filename = end_of_business_filename + 1;
+            //
+            //end_of_business_filename = end_of_business_filename + 1;
             //list_of_businesses_dot_text_index = list_of_businesses_dot_text_index + 1;
             
+            //extract filename
             char * business_filename = 0;
             unsigned int filename_length = end_of_business_filename - start_of_business_filename;
-            while(business_filename == 0){ business_filename = (char *)malloc((filename_length * sizeof(char))+1); }
+            while(business_filename == 0){ business_filename = (char *)malloc((filename_length+1) * sizeof(char)); }
             memset(business_filename, '\0', (filename_length+1));
             fseek(list_of_businesses_dot_text, start_of_business_filename, SEEK_SET);
             fread(business_filename, 1, filename_length, list_of_businesses_dot_text);
-            printf("%s \n", business_filename);
-            keep_reading_character = 0;
-            free(business_filename);
+         
+            //store filename to be used later.
+              //allocate.
+              list_of_business_records[list_of_business_records_index].string_buffer = 0;
+              while(list_of_business_records[list_of_business_records_index].string_buffer == 0){ list_of_business_records[list_of_business_records_index].string_buffer = (char *)malloc((filename_length+1) * sizeof(char)); }
+              memset(list_of_business_records[list_of_business_records_index].string_buffer, '\0', (filename_length+1));
+              list_of_business_records[list_of_business_records_index].string_buffer_memory_size = (filename_length+1);
+             
+              //store
+              strcat(list_of_business_records[list_of_business_records_index].string_buffer, business_filename);
+              
+            //next segment
+              //start past delimeter.
+              end_of_business_filename = end_of_business_filename + 2;
+              start_of_business_filename = end_of_business_filename;
+              
+              //read past the delimeter.
+              fread(character, 1, 2, list_of_businesses_dot_text);
+              
+              //break out of parse by character loop.
+              keep_reading_character = 0;
+              
+              //delete,free temporary variables.
+              free(business_filename);
+              
           }else if(character_matches != 0)
           {
             end_of_business_filename = end_of_business_filename + 1;
@@ -469,6 +492,7 @@ int main()
    
   return 0;
 }
+
 
 
 
