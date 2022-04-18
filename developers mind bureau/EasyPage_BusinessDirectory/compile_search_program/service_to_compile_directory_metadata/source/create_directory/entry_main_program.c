@@ -12,7 +12,8 @@
 
 struct business_name_and_identification {
   unsigned long int identification_number;
-  struct string * business_name;
+  struct string * business_search_name;
+  struct string * business_filename;
 };
 
 struct business_id_and_per_character_location {
@@ -24,9 +25,18 @@ int main()
 {
   int output = 0;
  
+  //define root path folder to not yet compiled content.
+  char * root_folder_path_list_of_businesses = "/var/www/business_directory_content/list_of_businesses/";
+  char * absolute_path_and_filename = 0;
+  unsigned short int absolute_path_and_filename_string_length = 0;
+ 
   //get list of business filenames.
-  char * absolute_file_path_directory_list_of_businesses = "/var/www/business_directory_content/list_of_businesses/list_of_businesses.text";
-  FILE * list_of_businesses_dot_text = fopen(absolute_file_path_directory_list_of_businesses, "r");
+  absolute_path_and_filename_string_length = strlen(root_folder_path_list_of_businesses)+23;
+  while(absolute_path_and_filename == 0){ absolute_path_and_filename = (char *)malloc((absolute_path_and_filename_string_length+1) * sizeof(char)); } 
+  memset(absolute_path_and_filename, '\0', absolute_path_and_filename_string_length+1); 
+  strcat(absolute_path_and_filename, root_folder_path_list_of_businesses);
+  strcat(absolute_path_and_filename, "list_of_businesses.text");
+  FILE * list_of_businesses_dot_text = fopen(absolute_path_and_filename, "r");
   
     //determine total delemiters. (to estimate exact memory requirements, and ensuing knowable progress as opposed to coninutous work without knowing progress)
     unsigned long int list_of_business_records_total = extract_list_of_business_filenames_to_parseable_ram_step_one_determine_total_delmiters(list_of_businesses_dot_text);
@@ -73,8 +83,20 @@ int main()
       }
       
       fclose(list_of_businesses_dot_text);
-   
-   
+      
+  //sort business names from a to z.
+    unsigned long int business_identification_number = 0;
+    
+    char * character_table = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+    //parse each character within the business name and assign it a number value per character.
+    list_of_business_records_index = 0;
+    while(list_of_business_records_index < list_of_business_records_total)
+    {
+      //
+    
+      //next business to assign characters number values.
+      list_of_business_records_index = list_of_business_records_index + 1;
+    }
   /* 
   //sort business names from a to z.
     //get list of the business names.
