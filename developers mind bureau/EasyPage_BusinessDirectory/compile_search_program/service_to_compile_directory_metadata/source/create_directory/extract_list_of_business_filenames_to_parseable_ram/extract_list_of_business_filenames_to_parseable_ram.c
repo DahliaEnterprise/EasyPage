@@ -1,5 +1,67 @@
+unsigned long int extract_list_of_business_filenames_to_parseable_ram_step_one_determine_total_delmiters(FILE * list_of_businesses_dot_text)
+{
+  unsigned long int output = -1;
+  
+  long int total_characters = 0;
+  if(list_of_businesses_dot_text != NULL)
+  {
+    fseek(list_of_businesses_dot_text, 0, SEEK_END);
+    total_characters = ftell(list_of_businesses_dot_text);
+    fseek(list_of_businesses_dot_text, 0, SEEK_SET);
+   
+    //determine total new lines. ";" is the delimter.
+    char character[2] = "\0\0";
+    unsigned long int total_delimeters = 0;
+    unsigned long int list_of_businesses_dot_text_index = 0;
+    while(list_of_businesses_dot_text_index < total_characters)
+    {
+     fread(character, 1, 1, list_of_businesses_dot_text);
+     int character_matches = strncmp(character, ";", 1);
+     if(character_matches == 0)
+     {
+       total_delimeters = total_delimeters + 1;
+     }
+    
+      //next character within index.
+      list_of_businesses_dot_text_index = list_of_businesses_dot_text_index + 1;
+    }
+    
+    output = total_delimeters;
+  }
+  
+  return output;
+}
 
-int extract_list_of_business_filenames_to_parseable_ram(struct string * list_of_business_records, unsigned long int * list_of_business_records_total)
+short int extract_list_of_business_filenames_to_parseable_ram_step_two_dash_a_determine_length_of_next_business_name(FILE * list_of_businesses_dot_text)
+{
+  short int output = -1;
+  
+  char * character = 0;  while(character == 0){ character = (char *)malloc(2 * sizeof(char)); }  memset(character, '\0', 2);
+  
+  //keep reading until end of file or delmiter found.
+  short int length = 0;
+  unsigned short int keep_reading_character = 1;
+  while(keep_reading_character == 1)
+  {
+    character[0] = '\0';
+    fread(character, 1, 1, list_of_businesses_dot_text);
+    int character_matches = strncmp(character, ";", 1);
+    if(character_matches == 0)
+    {
+      length = length + 1;
+      keep_reading_character = 0;
+      output = length;
+    }else{
+      length = length + 1;
+    }
+  }
+  
+  return output;
+}
+
+
+/*
+int extract_list_of_business_filenames_to_parseable_ram(char ** list_of_business_records, char ** list_of_business_records_string_buffer_length, unsigned long int * list_of_business_records_total)
 {
   int output = -1;
   
@@ -39,8 +101,8 @@ int extract_list_of_business_filenames_to_parseable_ram(struct string * list_of_
       fseek(list_of_businesses_dot_text, 0, SEEK_SET);
       
       //allocate as many string structures as their are total delemiters
-      while(list_of_business_records == 0){ list_of_business_records = (struct string *)malloc(total_delimeters * sizeof(struct string)); }
-    
+      while(*list_of_business_records == 0){ list_of_business_records = (char *)malloc(total_delimeters * sizeof(char *)); }
+    /*
       //for each business filename, store that file name into the list of business records.
       unsigned int start_of_business_filename = 0;
       unsigned int end_of_business_filename = 0;
@@ -66,14 +128,14 @@ int extract_list_of_business_filenames_to_parseable_ram(struct string * list_of_
          
             //store filename to be used later.
               //allocate.
-              list_of_business_records[list_of_business_records_index].string_buffer = 0;
-              while(list_of_business_records[list_of_business_records_index].string_buffer == 0){ list_of_business_records[list_of_business_records_index].string_buffer = (char *)malloc((filename_length+1) * sizeof(char)); }
-              memset(list_of_business_records[list_of_business_records_index].string_buffer, '\0', (filename_length+1));
-              list_of_business_records[list_of_business_records_index].string_buffer_memory_size = (filename_length+1);
+              list_of_business_records[list_of_business_records_index]->string_buffer = 0;
+              while(list_of_business_records[list_of_business_records_index]->string_buffer == 0){ list_of_business_records[list_of_business_records_index]->string_buffer = (char *)malloc((filename_length+1) * sizeof(char)); }
+              memset(list_of_business_records[list_of_business_records_index]->string_buffer, '\0', (filename_length+1));
+              list_of_business_records[list_of_business_records_index]->string_buffer_memory_size = (filename_length+1);
              
               //store
-              strcat(list_of_business_records[list_of_business_records_index].string_buffer, business_filename);
-              printf("%s\n", list_of_business_records[list_of_business_records_index].string_buffer);
+              strcat(list_of_business_records[list_of_business_records_index]->string_buffer, business_filename);
+              printf("%s\n", list_of_business_records[list_of_business_records_index]->string_buffer);
             //next segment
               //start past delimeter.
               end_of_business_filename = end_of_business_filename + 2;
@@ -102,7 +164,7 @@ int extract_list_of_business_filenames_to_parseable_ram(struct string * list_of_
     fclose(list_of_businesses_dot_text);
    
    output = 1;
-    
+   
   }else if(list_of_businesses_dot_text == NULL)
   {
     output = -2;
@@ -110,3 +172,4 @@ int extract_list_of_business_filenames_to_parseable_ram(struct string * list_of_
   
   return output;
 }
+*/
