@@ -56,95 +56,26 @@ int main()
             list_of_business_records[list_of_business_records_index].string_buffer = 0;
             while(list_of_business_records[list_of_business_records_index].string_buffer == 0){ list_of_business_records[list_of_business_records_index].string_buffer = (char *)malloc((length_of_next_filename_of_business+1) * sizeof(char)); }
             memset(list_of_business_records[list_of_business_records_index].string_buffer, '\0', (length_of_next_filename_of_business+1));
+            list_of_business_records[list_of_business_records_index].string_buffer_memory_size = (length_of_next_filename_of_business+1);
             
             //read then copy from storage to list.
-            fread(list_of_business_records[list_of_business_records_index].string_buffer, 1, length_of_next_filename_of_business, list_of_businesses_dot_text);
+            fread(list_of_business_records[list_of_business_records_index].string_buffer, 1, (length_of_next_filename_of_business-1), list_of_businesses_dot_text);
          
-            printf("short print: %s\n", list_of_business_records[list_of_business_records_index].string_buffer);
+            printf("%s\n", list_of_business_records[list_of_business_records_index].string_buffer);
           
+            //read past the delimeter, prepares for the next round.
+            char character[1];
+            fread(character, 1, 1, list_of_businesses_dot_text);
+              
           
         //next extract next record.
         list_of_business_records_index = list_of_business_records_index + 1;
       }
-      /*
-      unsigned int start_of_business_filename = 0;
-      unsigned int end_of_business_filename = 0;
-      unsigned long int list_of_business_records_index = 0;
-      unsigned long int list_of_businesses_dot_text_index = 0;
-      char * character = 0;  while(character == 0){ character = (char *)malloc(2 * sizeof(char)); }  memset(character, '\0', 2);
-      while(list_of_business_records_index < list_of_business_records_total)
-      {
-        
-        //keep reading until end of file or delmiter found.
-        unsigned short int keep_reading_character = 1;
-        while(keep_reading_character == 1)
-        {
-          character[0] = '\0';
-          fread(character, 1, 1, list_of_businesses_dot_text);
-          int character_matches = strncmp(character, ";", 1);
-          if(character_matches == 0)
-          {
-             //extract filename
-            char * business_filename = 0;
-            unsigned int filename_length = end_of_business_filename - start_of_business_filename;
-            while(business_filename == 0){ business_filename = (char *)malloc((filename_length+1) * sizeof(char)); }
-            memset(business_filename, '\0', (filename_length+1));
-            fseek(list_of_businesses_dot_text, start_of_business_filename, SEEK_SET);
-            fread(business_filename, 1, filename_length, list_of_businesses_dot_text);
-         
-            //store filename to be used later.
-              //allocate.
-              list_of_business_records[list_of_business_records_index].string_buffer = 0;
-              while(list_of_business_records[list_of_business_records_index].string_buffer == 0){ list_of_business_records[list_of_business_records_index].string_buffer = (char *)malloc((filename_length+1) * sizeof(char)); }
-              memset(list_of_business_records[list_of_business_records_index].string_buffer, '\0', (filename_length+1));
-              list_of_business_records[list_of_business_records_index].string_buffer_memory_size = (filename_length+1);
-             
-              //store
-              strcat(list_of_business_records[list_of_business_records_index].string_buffer, business_filename);
-              printf("%s\n", list_of_business_records[list_of_business_records_index].string_buffer);
-              
-            //next segment
-              //start past delimeter.
-              end_of_business_filename = end_of_business_filename + 2;
-              start_of_business_filename = end_of_business_filename;
-              
-              //read past the delimeter.
-              fread(character, 1, 2, list_of_businesses_dot_text);
-              
-              //break out of parse by character loop.
-              keep_reading_character = 0;
-              
-              //delete,free temporary variables.
-              free(business_filename);
-              
-          }else if(character_matches != 0)
-          {
-            //next character in search of ";" delimeter.
-            end_of_business_filename = end_of_business_filename + 1;
-            
-          }
-        }
-        
-        //next extract next record.
-        list_of_business_records_index = list_of_business_records_index + 1;
-      }
-      free(character);
-      */
+      
       fclose(list_of_businesses_dot_text);
    
    
-  /* todo remove this old code block
-  char * list_of_business_records;
-  char * list_of_business_records_string_buffer_length;
-  unsigned long int list_of_business_records_total = 0;
-  int extract_list_of_filenames_return_code = extract_list_of_business_filenames_to_parseable_ram(&list_of_business_records, &list_of_business_records_string_buffer_length, &list_of_business_records_total);
-  if(extract_list_of_filenames_return_code != 1)
-  {
-   return -2;
-  }
-  
-  printf("%d\n", list_of_business_records_total);
-  
+  /* 
   //sort business names from a to z.
     //get list of the business names.
     char * root_folder_path_list_of_businesses = "/var/www/business_directory_content/list_of_businesses/";
