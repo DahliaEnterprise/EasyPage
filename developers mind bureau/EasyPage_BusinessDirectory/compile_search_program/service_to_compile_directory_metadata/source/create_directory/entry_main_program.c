@@ -38,6 +38,7 @@ int main()
   strcat(absolute_path_and_filename, root_folder_path_list_of_businesses);
   strcat(absolute_path_and_filename, "list_of_businesses.text");
   FILE * list_of_businesses_dot_text = fopen(absolute_path_and_filename, "r");
+  free(absolute_path_and_filename);
   
     //determine total delemiters. (to estimate exact memory requirements, and ensuing knowable progress as opposed to coninutous work without knowing progress)
     unsigned long int list_of_business_records_total = extract_list_of_business_filenames_to_parseable_ram_step_one_determine_total_delmiters(list_of_businesses_dot_text);
@@ -109,8 +110,8 @@ int main()
         business_file[list_of_business_records_index].business_filename = 0;
         while(business_file[list_of_business_records_index].business_filename == 0){ business_file[list_of_business_records_index].business_filename = (struct string *)malloc(sizeof(struct string)); } memset(business_file[list_of_business_records_index].business_filename, '\0', sizeof(struct string));
        
-        business_file[list_of_business_records_index].business_filename.string_buffer = 0;
-        while(business_file[list_of_business_records_index].business_filename.string_buffer == 0){ business_file[list_of_business_records_index].business_filename.string_buffer = (char *)malloc((strlen(list_of_business_records[list_of_business_records_index].string_buffer)+1) * sizeof(char)); } memset( list_of_business_records[list_of_business_records_index].string_buffer , '\0', (list_of_business_records[list_of_business_records_index].string_buffer+1));
+        business_file[list_of_business_records_index].business_filename->string_buffer = 0;
+        while(business_file[list_of_business_records_index].business_filename->string_buffer == 0){ business_file[list_of_business_records_index].business_filename->string_buffer = (char *)malloc((strlen(list_of_business_records[list_of_business_records_index].string_buffer)+1) * sizeof(char)); } memset( business_file[list_of_business_records_index].business_filename->string_buffer , '\0', strlen(list_of_business_records[list_of_business_records_index].string_buffer)+1);
         list_of_business_records[list_of_business_records_index].string_buffer_memory_size = (strlen(list_of_business_records[list_of_business_records_index].string_buffer)+1);
         
         //allocate and define sort information.
@@ -121,6 +122,15 @@ int main()
           business_file_sort_information[list_of_business_records_index].per_character_sort_id = 0;
           while(business_file_sort_information[list_of_business_records_index].per_character_sort_id == 0){ business_file_sort_information[list_of_business_records_index].per_character_sort_id = (unsigned short int *)malloc(strlen(list_of_business_records[list_of_business_records_index].string_buffer) * sizeof(unsigned short int)); } memset(business_file_sort_information[list_of_business_records_index].per_character_sort_id, '\0', strlen(list_of_business_records[list_of_business_records_index].string_buffer));
         
+          //open business file to define "per character sort id".
+          absolute_path_and_filename = 0;
+          absolute_path_and_filename_string_length = strlen(root_folder_path_list_of_businesses)+strlen(list_of_business_records[list_of_business_records_index].string_buffer);
+          while(absolute_path_and_filename == 0){ absolute_path_and_filename = (char *)malloc((absolute_path_and_filename_string_length+1) * sizeof(char)); } 
+          memset(absolute_path_and_filename, '\0', absolute_path_and_filename_string_length+1); 
+          strcat(absolute_path_and_filename, root_folder_path_list_of_businesses);
+          strcat(absolute_path_and_filename, list_of_business_records[list_of_business_records_index].string_buffer);
+          //FILE * list_of_businesses_dot_text = fopen(absolute_path_and_filename, "r");
+          printf("new: %s\n", absolute_path_and_filename);
           
         
         //next business to assign characters number values.
