@@ -1,1 +1,0 @@
-unsigned short int produce_available_index_of_list_of_client_connection_slots(unsigned short int * list_of_flags_indicating_active_clients, unsigned short int size_of_concurrent_connections);
