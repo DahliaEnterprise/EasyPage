@@ -1,17 +1,17 @@
 <?php
-  $page_to_show = 0; //zero means show directory listing; one shows search results; two means show error occurred instead of the requested page.
+  $page_to_show = 0; 
+  //zero means show directory listing; one shows search results; two means show error occurred instead of the requested page.
   $database_error_return_code = 0;
   
   $servername = "localhost";
-  $username = "username";
-  $password = "password";
+  $username = "root";
+  $password = "fuckthat";
 
   //Create connection
   $conn = new mysqli($servername, $username, $password);
 
   //Check connection
-  if($conn->connect_error)
-  {
+  if($conn->connect_error) {
     $database_error_return_code = 1;
   }
   
@@ -21,9 +21,15 @@
   }
   
   //attempt to produce directory listing.
+  $page_error = 0;
   if($page_to_show == 0)
   {
-    $sql_query = "SELECT `id` FROM `compiled_directory_page` 
+    $sql_query = "SELECT `display_title`, `sort_placement`, `display_description`, `associated_business_attribute_id` FROM `compiled_directory_page` ORDER BY `sort_placement` ASC";
+    $sql_result = $conn->query($sql_query);
+    if($sql_result->num_rows <= 0)
+    {
+      $page_error = 1;
+    }
   }
   
 ?><html>
@@ -140,6 +146,22 @@
   <div class="horizontal_spacer_oneem">&nbsp;</div>
    
   <div id="directory_heading">Directory</div>
+  
+<?php
+  $letters_posted = "";
+  while($row = $result->fetch_assoc())
+  {
+    //append first letter of sort placement to "letters_posted" if non existant.
+    
+      //if first time letter posted, create a heading for the letter.
+      
+    
+    //echo a link to the business.
+    echo '<a href="#">'.$row["display_title"].'</a>';
+    echo '<div style="height:10px;width:99%;">&nbsp;</div>';
+  }
+  ?>
+  
   <div class="horizontal_spacer_threeem">&nbsp;</div>
  </body>
 </html>
