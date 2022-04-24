@@ -1,37 +1,31 @@
 <?php
-  $page_to_show = 0; 
-  //zero means show directory listing; one shows search results; two means show error occurred instead of the requested page.
-  $database_error_return_code = 0;
-  
-  $servername = "localhost";
-  $username = "root";
-  $password = "password";
 
-  //Create connection
-  $conn = new mysqli($servername, $username, $password);
 
-  //Check connection
-  if($conn->connect_error) {
-    $database_error_return_code = 1;
-  }
+$host = '';
+$db   = '';
+$user = '';
+$pass = '';
+$charset = 'utf8';
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
+try {
+     $connection = new PDO($dsn, $user, $pass, $options);
+} catch (\PDOException $e) {
+     throw new \PDOException($e->getMessage(), (int)$e->getCode());
+}
+
+$sql_query_as_string = "";
+if(isset($_GET['search']) == false)
+{
+  $sql_query_as_string = "SELECT * FROM business_generic_data ORDER BY business_sort_name ASC;";
+}else{
   
-  if($database_error_return_code == 1)
-  {
-    $page_to_show = 2;
-  }
-  
-  //attempt to produce directory listing.
-  $page_error = 0;
-  if($page_to_show == 0)
-  {
-    $sql_query = "SELECT `display_title`, `sort_placement`, `display_description`, `associated_business_attribute_id` FROM `compiled_directory_page` ORDER BY `sort_placement` ASC";
-    $sql_result = $conn->query($sql_query);
-    if($sql_result->num_rows <= 0)
-    {
-      $page_error = 1;
-    }
-  }
-  
+}
 ?><html>
  <head>
   <title>Business Directory, Shasta Exchange</title>
@@ -50,11 +44,6 @@
   #product_title {
     font-size: 3em;
     text-align:center;
-  }
-  
-  #directory_heading {
-    font-size: 3em;
-    text-align: center;
   }
   
   #view_directory_button_div {
@@ -99,7 +88,33 @@
     margin: 0 0.5em 0.5em 0.5em;
   }
   
-    #directory_heading {
+  #directory_heading {
+    font-size: 4em;
+    background: black;
+    color: white;
+    text-align:center;
+    padding: 0.1em 0 0.1em 0;
+    margin: 0 0.5em 0.5em 0.5em;
+  }
+  
+  .business_information {
+    padding: 0.1em 0 0.1em 1.5em;
+    margin: 0 0.5em 0.5em 0.5em;
+    text-align: left;
+  }
+  .business_name {
+    font-size: 4em;
+    text-decoration: none;
+    text-align: left;
+    color: #480355;
+    font-weight: bold;
+  }
+  
+  .business_description {
+    font-size: 2.5em;
+  }
+  
+  .directory_firstletter_heading {
     font-size: 4em;
     background: black;
     color: white;
@@ -149,16 +164,29 @@
   
 <?php
   $letters_posted = "";
-  while($row = $result->fetch_assoc())
+  foreach($connection->query($sql_query_as_string) as $row)
   {
     //append first letter of sort placement to "letters_posted" if non existant.
-    
-      //if first time letter posted, create a heading for the letter.
+      //dont show the first appearance letter heading.(show some of the directory before showing a letter headinng for orientation).
+      if(strlen($letters_posted) > 1){
+        if(str_contains($letters_posted, $row["business_sort_name"][0]) == false)
+        {
+          echo '<div class="directory_firstletter_heading">'.strtoupper($row["business_sort_name"][0]).'</div>';
+        }
+      }
       
+    //declare first letter heading has been used in some way.
+    if(str_contains($letters_posted, $row["business_sort_name"][0]) == false)
+    {
+      $letters_posted = $letters_posted.$row["business_sort_name"][0];
+    }
     
     //echo a link to the business.
-    echo '<a href="#">'.$row["display_title"].'</a>';
+    echo '<div class="business_information">';
+    echo '<a href="#" class="business_name">'.$row["business_name"].'</a>';
+    echo '<div class="business_description">'.$row["business_display_description"].'</div>';
     echo '<div style="height:10px;width:99%;">&nbsp;</div>';
+    echo '</div>';
   }
   ?>
   
