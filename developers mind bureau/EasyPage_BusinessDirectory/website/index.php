@@ -22,7 +22,7 @@ try {
 $sql_query_as_string = "";
 if(isset($_GET['search']) == false)
 {
-  $sql_query_as_string = "SELECT * FROM business_generic_data ORDER BY business_sort_name ASC;";
+  $sql_query_as_string = "SELECT `id`,`business_name`,`business_sort_name`, `business_display_description` FROM `business_generic_data` ORDER BY `business_sort_name` ASC;";
 }else{
   
 }
@@ -168,7 +168,7 @@ if(isset($_GET['search']) == false)
   {
     //append first letter of sort placement to "letters_posted" if non existant.
       //dont show the first appearance letter heading.(show some of the directory before showing a letter headinng for orientation).
-      if(strlen($letters_posted) > 1){
+      if(strlen($letters_posted) >= 1){
         if(str_contains($letters_posted, $row["business_sort_name"][0]) == false)
         {
           echo '<div class="directory_firstletter_heading">'.strtoupper($row["business_sort_name"][0]).'</div>';
@@ -183,7 +183,7 @@ if(isset($_GET['search']) == false)
     
     //echo a link to the business.
     echo '<div class="business_information">';
-    echo '<a href="#" class="business_name">'.$row["business_name"].'</a>';
+    echo '<a href="/business.php?id='.$row["id"].'" class="business_name">'.$row["business_name"].'</a>';
     echo '<div class="business_description">'.$row["business_display_description"].'</div>';
     echo '<div style="height:10px;width:99%;">&nbsp;</div>';
     echo '</div>';
@@ -193,3 +193,4 @@ if(isset($_GET['search']) == false)
   <div class="horizontal_spacer_threeem">&nbsp;</div>
  </body>
 </html>
+
