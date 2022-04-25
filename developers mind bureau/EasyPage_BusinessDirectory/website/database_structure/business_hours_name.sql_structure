@@ -1,0 +1,5 @@
+CREATE TABLE `business_hours_name` (
+  `id` int(11) NOT NULL,
+  `hours_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
