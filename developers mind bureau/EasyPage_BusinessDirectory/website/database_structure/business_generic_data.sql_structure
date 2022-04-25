@@ -1,0 +1,7 @@
+CREATE TABLE `business_generic_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `business_name` varchar(31) DEFAULT NULL,
+  `business_sort_name` varchar(31) DEFAULT NULL,
+  `business_display_description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
