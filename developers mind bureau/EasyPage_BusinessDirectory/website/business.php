@@ -14,7 +14,7 @@ try {
      throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
 
-$sql_query_as_string = "";
+$sql_query_business_information_as_string = "";
 $integer_from_string = 0;
 if(isset($_GET['id']) == true)
 {
@@ -29,14 +29,27 @@ if(isset($_GET['id']) == true)
   {
     //convert/ensure base ten number interpretation.
     $integer_from_string = intval($_GET['id'], 10);
-    $sql_query_as_string = "SELECT `id`,`business_name`,`business_sort_name`, `business_display_description` FROM `business_generic_data` WHERE `id` = ? LIMIT 0,1;";
+    $sql_query_business_information_as_string = "SELECT `id`,`business_name`,`business_sort_name`, `business_display_description` FROM `business_generic_data` WHERE `id` = ? LIMIT 0,1;";
   }
 }
 
 //obtain business information.
-$query_in_progress = $connection->prepare($sql_query_as_string);
+$query_in_progress = $connection->prepare($sql_query_business_information_as_string);
 $query_in_progress->execute([$integer_from_string]);
 $business_information = $query_in_progress->fetch();
+
+//obtain all the columns within the "business_hours_day_name".
+$sql_query_business_hours_day_name = "SELECT day_name FROM business_hours_day_name ORDER BY sort_order ASC";
+$query_in_progress_business_hours_day_name = $connection->prepare($sql_query_business_hours_day_name);
+$query_in_progress_business_hours_day_name->execute();
+//todo: create a multi dimensional array by continually calling fetch.
+$business_hours_day_name = $query_in_progress_business_hours_day_name->fetch();
+
+
+//obtain all the columns within the "business_hours_name".
+  
+//obtain all the "hours".
+  
 
 ?><html>
  <head>
@@ -135,12 +148,7 @@ $business_information = $query_in_progress->fetch();
   <div id="business_display_description"><?php echo $business_information["business_display_description"];?></div>
   
 <?php
-  //obtain all the columns within the "business_hours_day_name".
-  
-  //obtain all the columns within the "business_hours_name".
-  
-  //obtain all the "hours".
-  
+
 ?>
   <div id="hours_heading">Business Hours</div>
   
