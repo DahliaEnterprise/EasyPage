@@ -1,10 +1,10 @@
 <?php
 
 
-$host = '127.0.0.1';
-$db   = 'shastaexchange';
-$user = 'shastaexchange';
-$pass = '4630831dd6567c972f630b7858f2f1b2f808e8f80716c5f52059ea32c9476d43';
+$host = '';
+$db   = '';
+$user = '';
+$pass = '';
 $charset = 'utf8';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
