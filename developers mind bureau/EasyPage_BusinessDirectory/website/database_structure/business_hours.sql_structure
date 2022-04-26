@@ -1,9 +1,1 @@
-CREATE TABLE `business_hours` (
-  `id` int(11) NOT NULL,
-  `hours_name_id` int(11) DEFAULT NULL,
-  `hours_name_id_sort_order` int(11) DEFAULT NULL,
-  `day_name_id` int(11) DEFAULT NULL,
-  `day_name_id_sort_order` int(11) DEFAULT NULL,
-  `hours` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE business_hours (id int(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY (id), hours_name_id int(11), day_name_id int(11), hours VARCHAR(255));
