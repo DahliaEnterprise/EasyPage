@@ -1,11 +1,6 @@
 <?php
 
-
-$host = '';
-$db   = '';
-$user = '';
-$pass = '';
-$charset = 'utf8';
+include "./database.php";
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $options = [
@@ -38,14 +33,14 @@ if(isset($_GET['id']) == true)
   }
 }
 
-//render information.
+//obtain business information.
 $query_in_progress = $connection->prepare($sql_query_as_string);
 $query_in_progress->execute([$integer_from_string]);
 $business_information = $query_in_progress->fetch();
 
 ?><html>
  <head>
-  <title>Business Directory, Shasta Exchange</title>
+  <title><?php echo $business_information["business_name"]; ?>, Business Information, Shasta Exchange</title>
   
   <style>
   * {
