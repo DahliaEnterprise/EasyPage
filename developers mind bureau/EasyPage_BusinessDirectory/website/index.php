@@ -1,11 +1,6 @@
 <?php
 
-
-$host = '';
-$db   = '';
-$user = '';
-$pass = '';
-$charset = 'utf8';
+include "./database.php";
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $options = [
@@ -34,6 +29,10 @@ if(isset($_GET['search']) == false)
   * {
      padding: 0;
      margin: 0;
+  }
+  
+  body {
+   background-color: #FAFAFF;
   }
 	
   #doing_business_as_heading {
@@ -193,4 +192,5 @@ if(isset($_GET['search']) == false)
   <div class="horizontal_spacer_threeem">&nbsp;</div>
  </body>
 </html>
+
 
