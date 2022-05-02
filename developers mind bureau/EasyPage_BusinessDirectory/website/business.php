@@ -39,16 +39,59 @@ $query_in_progress->execute([$integer_from_string]);
 $business_information = $query_in_progress->fetch();
 
 //obtain all the columns within the "business_hours_day_name".
-$sql_query_business_hours_day_name = "SELECT day_name FROM business_hours_day_name ORDER BY sort_order ASC";
+$business_hours_day_name = [];
+$business_hours_day_name_index = 0;
+
+$sql_query_business_hours_day_name = "SELECT id, day_name FROM business_hours_day_name ORDER BY sort_order ASC;";
 $query_in_progress_business_hours_day_name = $connection->prepare($sql_query_business_hours_day_name);
 $query_in_progress_business_hours_day_name->execute();
-//todo: create a multi dimensional array by continually calling fetch.
-$business_hours_day_name = $query_in_progress_business_hours_day_name->fetch();
+$continue_fetching_day_name = 1;
+while($continue_fetching_day_name == 1)
+{
+	$business_hours_day_name_fetch = $query_in_progress_business_hours_day_name->fetch();
+	
+	//stop while-loop?
+	if($business_hours_day_name_fetch == false)
+	{
+		$continue_fetching_day_name = 0;
+	}else{
+		$business_hours_day_name[$business_hours_day_name_index]["id"] = $business_hours_day_name_fetch["id"];
+		$business_hours_day_name[$business_hours_day_name_index]["day_name"] = $business_hours_day_name_fetch["day_name"];
+		
+		$business_hours_day_name_index = $business_hours_day_name_index + 1;
+	}
+}
 
 
 //obtain all the columns within the "business_hours_name".
-  
+$business_hours_name = [];
+$business_hours_name_index = 0;
+
+$sql_query_business_hours_name = "SELECT id, hours_name FROM business_hours_name ORDER BY sort_order ASC;";
+$query_in_progress_business_hours_name = $connection->prepare($sql_query_business_hours_name);
+$query_in_progress_business_hours_name->execute();
+$continue_fetching_hours_name = 1;
+while($continue_fetching_hours_name == 1)
+{
+	$business_hours_name_fetch = $query_in_progress_business_hours_name->fetch();
+	
+	//stop while-loop?
+	if($business_hours_name_fetch == false)
+	{
+		$continue_fetching_hours_name = 0;
+	}else{
+		$business_hours_name[$business_hours_name_index]["id"] = $business_hours_name_fetch["id"];
+		$business_hours_name[$business_hours_name_index]["hours_name"] = $business_hours_name_fetch["hours_name"];
+		
+		$business_hours_name_index = $business_hours_name_index + 1;
+	}
+}
+
+
+
 //obtain all the "hours".
+
+
   
 
 ?><html>
