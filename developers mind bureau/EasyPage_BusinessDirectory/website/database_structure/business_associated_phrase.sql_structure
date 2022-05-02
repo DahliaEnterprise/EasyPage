@@ -1,0 +1,1 @@
+CREATE TABLE business_associated_phrase (id bigint unsigned not null auto_increment, PRIMARY KEY (id), business_generic_data_id int not null, search_phrases_id int unsigned not null);
