@@ -120,7 +120,7 @@ while($continue_fetching_business_hours == 1)
     $business_hours_index = $business_hours_index + 1;
   }
 }
-var_dump($business_hours);
+
 //close query/connection.
 $query_in_progress_business_hour = null;
 
