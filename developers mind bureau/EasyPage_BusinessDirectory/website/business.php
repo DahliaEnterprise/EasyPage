@@ -29,14 +29,14 @@ if(isset($_GET['id']) == true)
   if($infiltration_detected == 0)
   {
     //convert/ensure base ten number interpretation.
-    $$business_generic_data_id = intval($_GET['id'], 10);
+    $business_generic_data_id = intval($_GET['id'], 10);
     $sql_query_business_information_as_string = "SELECT `id`,`business_name`,`business_sort_name`, `business_display_description` FROM `business_generic_data` WHERE `id` = ? LIMIT 0,1;";
   }
 }
 
 //obtain business information.
 $query_in_progress = $connection->prepare($sql_query_business_information_as_string);
-$query_in_progress->execute([$$business_generic_data_id]);
+$query_in_progress->execute([$business_generic_data_id]);
 $business_information = $query_in_progress->fetch();
 
 //obtain all the columns within the "business_hours_day_name".
@@ -141,8 +141,8 @@ $connection = null;
     font-size: 5em;
     text-align:center;
   }
-	
-  #product_title {
+  
+  #product_title_subheading_as_business_directory {
     font-size: 3em;
     text-align:center;
   }
@@ -158,12 +158,12 @@ $connection = null;
   
   #business_display_description {
     font-size: 3em;
-    padding: 0.1em 0 0.1em 0.2em;
-    margin: 0 0.5em 2.5em 0.5em;
+    padding: 0.1em 1em 0.1em 1em;
+    margin: 0 0em 2.5em 0;
     text-align: left;
   }
   
-  #hours_heading {
+  .hours_heading {
     font-size: 4em;
     background: black;
     color: white;
@@ -171,31 +171,31 @@ $connection = null;
     padding: 0.1em 0 0.1em 0;
     margin: 0 0.5em 0.5em 0.5em;
   }
+  
+  .day_and_hours {
+    font-size: 3em;
+    text-align:left;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    margin: 0 0.67em 0 0.67em;
+    background-color: #f7f7f7;
+    
+  }
+  /*
+  .day_and_hours_record {
+    padding: 0 0 0.5em 0;
+    border-bottom: 1px solid #F7F7F7;
+  }*/
   
   .business_information {
     padding: 0.1em 0 0.1em 1.5em;
     margin: 0 0.5em 0.5em 0.5em;
     text-align: left;
   }
-  .business_name {
-    font-size: 4em;
-    text-decoration: none;
-    text-align: left;
-    color: #480355;
-    font-weight: bold;
-  }
   
-  .business_description {
-    font-size: 2.5em;
-  }
   
-  .directory_firstletter_heading {
-    font-size: 4em;
-    background: black;
-    color: white;
-    text-align:center;
-    padding: 0.1em 0 0.1em 0;
-    margin: 0 0.5em 0.5em 0.5em;
+  .horizontal_spacer_halfem {
+   margin: 0.25em;
+   padding: 0.25em;
   }
   
   .horizontal_spacer_oneem {
@@ -213,7 +213,7 @@ $connection = null;
  </head>
  <body>
   <div id="doing_business_as_heading" onMouse>The Shasta Exchange</div>
-  <div id="product_title">Business Directory</div>
+  <div id="product_title_subheading_as_business_directory">Business Directory</div>
   
   <div class="horizontal_spacer_oneem">&nbsp;</div>
  
@@ -224,14 +224,58 @@ $connection = null;
   <div id="business_display_description"><?php echo $business_information["business_display_description"];?></div>
   
 <?php
-
+  //for each "business hours type":
+  $business_hours_name_index = 0;
+  $business_hours_name_total = count($business_hours_name);
+  while($business_hours_name_index < $business_hours_name_total)
+  {
 ?>
-  <div id="hours_heading">Business Hours</div>
+  <div class="hours_heading"><?php echo $business_hours_name[$business_hours_name_index]["hours_name"]; ?></div>
   
 <?php
+    //for each "business day":
+    $business_hours_day_name_index = 0;
+    $business_hours_day_name_total = count($business_hours_day_name);
+    while($business_hours_day_name_index < $business_hours_day_name_total)
+    {
+      //for each hours matches with a day, we are already in the days cycle, find the matching hour(s) to display.
+      $business_hours_index = 0;
+      $business_hours_total = count($business_hours);
+      $continue_finding_match = 1;
+      while($continue_finding_match == 1)
+      {
+        if($business_hours[$business_hours_index]["day_name_id"] ==  $business_hours_day_name[$business_hours_day_name_index]["id"])
+        {
+          $continue_finding_match = 0;
+        }else{
+          $business_hours_index = $business_hours_index + 1;
+          //stop potentially infinite loop in during the condition of the database records not set appropriately.
+          if($business_hours_index >= $business_hours_total)
+          {
+            $continue_finding_match = -1;
+          }
+        }
+      }
+      
+      //display day and hours if all data is present to be able to display day and hours.
+      if($continue_finding_match == 0)
+      {
+?>
+  <div class="day_and_hours">
+    <div class="day_and_hours_record"><?php echo $business_hours_day_name[$business_hours_day_name_index]["day_name"]; ?>: <?php echo $business_hours[$business_hours_index]["hours"];?></div>
+  </div>
 
-
-  ?>
+<?php
+      }
+      
+      $business_hours_day_name_index = $business_hours_day_name_index + 1;
+    }
+?>
+<div class="horizontal_spacer_halfem">&nbsp;</div>
+<?php
+    $business_hours_name_index = $business_hours_name_index + 1;
+  }
+?>
   
   <div class="horizontal_spacer_threeem">&nbsp;</div>
  </body>
