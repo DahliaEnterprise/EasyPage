@@ -3,5 +3,7 @@ CREATE TABLE `business_generic_data` (
   `business_name` varchar(31) DEFAULT NULL,
   `business_sort_name` varchar(31) DEFAULT NULL,
   `business_display_description` varchar(255) DEFAULT NULL,
+  `business_address` varchar(127) DEFAULT NULL,
+  `business_phone_number` varchar(31) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+)
