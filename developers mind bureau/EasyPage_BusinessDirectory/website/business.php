@@ -7,6 +7,7 @@ $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_EMULATE_PREPARES   => false,
+    PDO::ATTR_PERSISTENT => false
 ];
 try {
      $connection = new PDO($dsn, $user, $pass, $options);
@@ -15,7 +16,7 @@ try {
 }
 
 $sql_query_business_information_as_string = "";
-$integer_from_string = 0;
+$business_generic_data_id = integer_from_string = 0;
 if(isset($_GET['id']) == true)
 {
   $infiltration_detected = 1;
@@ -28,14 +29,14 @@ if(isset($_GET['id']) == true)
   if($infiltration_detected == 0)
   {
     //convert/ensure base ten number interpretation.
-    $integer_from_string = intval($_GET['id'], 10);
+    $$business_generic_data_id = intval($_GET['id'], 10);
     $sql_query_business_information_as_string = "SELECT `id`,`business_name`,`business_sort_name`, `business_display_description` FROM `business_generic_data` WHERE `id` = ? LIMIT 0,1;";
   }
 }
 
 //obtain business information.
 $query_in_progress = $connection->prepare($sql_query_business_information_as_string);
-$query_in_progress->execute([$integer_from_string]);
+$query_in_progress->execute([$$business_generic_data_id]);
 $business_information = $query_in_progress->fetch();
 
 //obtain all the columns within the "business_hours_day_name".
@@ -62,6 +63,9 @@ while($continue_fetching_day_name == 1)
 	}
 }
 
+//close query/connection.
+$query_in_progress_business_hours_day_name = null;
+
 
 //obtain all the columns within the "business_hours_name".
 $business_hours_name = [];
@@ -87,12 +91,41 @@ while($continue_fetching_hours_name == 1)
 	}
 }
 
+//close query/connection.
+$query_in_progress_business_hours_name = null;
+
 
 
 //obtain all the "hours".
+$business_hours = [];
+$business_hours_index = 0;
 
-
+$sql_query_business_hours = "SELECT hours_name_id, day_name_id, hours FROM business_hours WHERE business_generic_data_id = ?;";
+$query_in_progress_business_hour = $connection->prepare($sql_query_business_hours);
+$query_in_progress_business_hour->execute([$business_generic_data_id]);
+$continue_fetching_business_hours = 1;
+while($continue_fetching_business_hours == 1)
+{
+  $business_hours_fetch = $query_in_progress_business_hour->fetch();
   
+  //stop while-loop?
+  while($business_hours_fetch == false)
+  {
+    $continue_fetching_business_hours = 0;
+  }else{
+    $business_hours[$business_hours_index]["hours_name_id"] = $business_hours_fetch["hours_name_id"];
+    $business_hours[$business_hours_index]["day_name_id"] = $business_hours_fetch["day_name_id"];
+    $business_hours[$business_hours_index]["hours"] = $business_hours_fetch["hours"];
+    
+    $business_hours_index = $business_hours_index + 1;
+  }
+}
+var_dump($business_hours);
+//close query/connection.
+$query_in_progress_business_hour = null;
+
+//close pdo(database) connection
+$connection = null;
 
 ?><html>
  <head>
