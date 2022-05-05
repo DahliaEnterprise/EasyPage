@@ -127,6 +127,22 @@ $query_in_progress_business_hour = null;
 //close pdo(database) connection
 $connection = null;
 
+
+//hours types to display.
+$enabled_hours_type_by_id = [];
+$business_hours_name_index = 0;
+$business_hours_name_total = count($business_hours);
+while($business_hours_name_index < $business_hours_name_total)
+{
+  $integer_from_possible_string = intval($business_hours[$business_hours_name_index]["hours_name_id"]);
+  if(in_array($integer_from_possible_string, $enabled_hours_type_by_id) == false)
+  {
+    array_push($enabled_hours_type_by_id, $integer_from_possible_string);
+  }
+  
+  $business_hours_name_index = $business_hours_name_index + 1;
+}
+
 ?><html>
  <head>
   <title><?php echo $business_information["business_name"]; ?>, Business Information, Shasta Exchange</title>
@@ -180,11 +196,7 @@ $connection = null;
     background-color: #f7f7f7;
     
   }
-  /*
-  .day_and_hours_record {
-    padding: 0 0 0.5em 0;
-    border-bottom: 1px solid #F7F7F7;
-  }*/
+
   
   .business_information {
     padding: 0.1em 0 0.1em 1.5em;
@@ -229,6 +241,9 @@ $connection = null;
   $business_hours_name_total = count($business_hours_name);
   while($business_hours_name_index < $business_hours_name_total)
   {
+    //show only if enabled.
+    if(in_array(intval($business_hours_name[$business_hours_name_index]["id"]), $enabled_hours_type_by_id) == true)
+    {
 ?>
   <div class="hours_heading"><?php echo $business_hours_name[$business_hours_name_index]["hours_name"]; ?></div>
   
@@ -286,6 +301,7 @@ $connection = null;
 ?>
 <div class="horizontal_spacer_halfem">&nbsp;</div>
 <?php
+    }
     $business_hours_name_index = $business_hours_name_index + 1;
   }
 ?>
