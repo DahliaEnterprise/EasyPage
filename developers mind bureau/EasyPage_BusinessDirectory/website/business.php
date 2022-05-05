@@ -16,7 +16,7 @@ try {
 }
 
 $sql_query_business_information_as_string = "";
-$business_generic_data_id = integer_from_string = 0;
+$business_generic_data_id = 0;
 if(isset($_GET['id']) == true)
 {
   $infiltration_detected = 1;
@@ -109,7 +109,7 @@ while($continue_fetching_business_hours == 1)
   $business_hours_fetch = $query_in_progress_business_hour->fetch();
   
   //stop while-loop?
-  while($business_hours_fetch == false)
+  if($business_hours_fetch == false)
   {
     $continue_fetching_business_hours = 0;
   }else{
