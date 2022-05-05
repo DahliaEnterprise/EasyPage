@@ -244,10 +244,22 @@ $connection = null;
       $continue_finding_match = 1;
       while($continue_finding_match == 1)
       {
-        if($business_hours[$business_hours_index]["day_name_id"] ==  $business_hours_day_name[$business_hours_day_name_index]["id"])
+        $next_index = 0;
+        //ignore non relavent business hours type("office", "delivery", "etc").
+        if($business_hours[$business_hours_index]["hours_name_id"] == $business_hours_name[$business_hours_name_index]["id"])
         {
-          $continue_finding_match = 0;
+          if($business_hours[$business_hours_index]["day_name_id"] ==  $business_hours_day_name[$business_hours_day_name_index]["id"])
+          {
+            $continue_finding_match = 0;
+          }else{
+            $next_index = 1;
+          }
         }else{
+          $next_index = 1;
+        }
+        
+        if($next_index == 1)
+        {
           $business_hours_index = $business_hours_index + 1;
           //stop potentially infinite loop in during the condition of the database records not set appropriately.
           if($business_hours_index >= $business_hours_total)
@@ -266,6 +278,7 @@ $connection = null;
   </div>
 
 <?php
+     
       }
       
       $business_hours_day_name_index = $business_hours_day_name_index + 1;
