@@ -7,6 +7,7 @@ $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_EMULATE_PREPARES   => false,
+    PDO::ATTR_PERSISTENT => false
 ];
 try {
      $connection = new PDO($dsn, $user, $pass, $options);
@@ -210,30 +211,9 @@ try {
       echo '</div>';
     }
   }
-  /*foreach($connection->query($sql_query_as_string) as $row)
-  {
-    //append first letter of sort placement to "letters_posted" if non existant.
-      //dont show the first appearance letter heading.(show some of the directory before showing a letter headinng for orientation).
-      if(strlen($letters_posted) >= 1){
-        if(str_contains($letters_posted, $row["business_sort_name"][0]) == false)
-        {
-          echo '<div class="directory_firstletter_heading">'.strtoupper($row["business_sort_name"][0]).'</div>';
-        }
-      }
-      
-    //declare first letter heading has been used in some way.
-    if(str_contains($letters_posted, $row["business_sort_name"][0]) == false)
-    {
-      $letters_posted = $letters_posted.$row["business_sort_name"][0];
-    }
-    
-    //echo a link to the business.
-    echo '<div class="business_information">';
-    echo '<a href="/directory/business.php?id='.$row["id"].'" class="business_name">'.$row["business_name"].'</a>';
-    echo '<div class="business_description">'.$row["business_display_description"].'</div>';
-    echo '<div style="height:10px;width:99%;">&nbsp;</div>';
-    echo '</div>';
-  }*/
+  
+  $query_in_progress_list_all_businesses = null;
+  $connection = null;
   ?>
   
   <div class="horizontal_spacer_threeem">&nbsp;</div>
