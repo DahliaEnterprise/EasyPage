@@ -10,17 +10,10 @@ $options = [
 ];
 try {
      $connection = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-     throw new \PDOException($e->getMessage(), (int)$e->getCode());
+} catch (PDOException $e) {
+     throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
 
-$sql_query_as_string = "";
-if(isset($_GET['search']) == false)
-{
-  $sql_query_as_string = "SELECT `id`,`business_name`,`business_sort_name`, `business_display_description` FROM `business_generic_data` ORDER BY `business_sort_name` ASC;";
-}else{
-  
-}
 ?><html>
  <head>
   <title>Business Directory, Shasta Exchange</title>
@@ -137,7 +130,7 @@ if(isset($_GET['search']) == false)
   <script>
    function initiate_manual_submit()
    {
-     window.location.href = '/index.php?search='+document.getElementById("search_phrase_input").value;
+     window.location.href = '/directory/search.php?phrases='+document.getElementById("search_phrase_input").value;
    }
   </script>
   
@@ -163,7 +156,45 @@ if(isset($_GET['search']) == false)
   
 <?php
   $letters_posted = "";
-  foreach($connection->query($sql_query_as_string) as $row)
+  
+  $sql_query_list_all_businesses = "SELECT `id`,`business_name`,`business_sort_name`, `business_display_description` FROM `business_generic_data` ORDER BY `business_sort_name` ASC;";
+  $query_in_progress_list_all_businesses = $connection->prepare($sql_query_list_all_businesses);
+  $query_in_progress_list_all_businesses->execute();
+  $continue_fetching_list_all_businesses = 1;
+  while($continue_fetching_list_all_businesses == 1)
+  {
+    $business_generic_data = $query_in_progress_list_all_businesses->fetch();
+    
+    //stop while-loop
+    if($business_generic_data == false)
+    {
+      $continue_fetching_list_all_businesses = 0;
+    }else{
+       //append first letter of sort placement to "letters_posted" if non existant.
+       //dont show the first appearance letter heading.(show some of the directory before showing a letter headinng for orientation).
+       if(strlen($letters_posted) >= 1){
+         if(str_contains($letters_posted, $business_generic_data["business_sort_name"][0]) == false)
+         {
+           echo '<div class="directory_firstletter_heading">'.strtoupper($business_generic_data["business_sort_name"][0]).'</div>';
+         }
+       }
+      
+      //declare first letter heading has been used in some way.
+      if(str_contains($letters_posted, $business_generic_data["business_sort_name"][0]) == false)
+      { 
+        $letters_posted = $letters_posted.$business_generic_data["business_sort_name"][0];
+      }
+    
+    
+      //echo a link to the business.
+      echo '<div class="business_information">';
+      echo '<a href="/directory/business.php?id='.$business_generic_data["id"].'" class="business_name">'.$business_generic_data["business_name"].'</a>';
+      echo '<div class="business_description">'.$business_generic_data["business_display_description"].'</div>';
+      echo '<div style="height:10px;width:99%;">&nbsp;</div>';
+      echo '</div>';
+    }
+  }
+  /*foreach($connection->query($sql_query_as_string) as $row)
   {
     //append first letter of sort placement to "letters_posted" if non existant.
       //dont show the first appearance letter heading.(show some of the directory before showing a letter headinng for orientation).
@@ -182,15 +213,13 @@ if(isset($_GET['search']) == false)
     
     //echo a link to the business.
     echo '<div class="business_information">';
-    echo '<a href="/business.php?id='.$row["id"].'" class="business_name">'.$row["business_name"].'</a>';
+    echo '<a href="/directory/business.php?id='.$row["id"].'" class="business_name">'.$row["business_name"].'</a>';
     echo '<div class="business_description">'.$row["business_display_description"].'</div>';
     echo '<div style="height:10px;width:99%;">&nbsp;</div>';
     echo '</div>';
-  }
+  }*/
   ?>
   
   <div class="horizontal_spacer_threeem">&nbsp;</div>
  </body>
 </html>
-
-
