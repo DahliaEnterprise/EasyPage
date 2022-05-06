@@ -31,11 +31,27 @@ try {
   #doing_business_as_heading {
     font-size: 5em;
     text-align:center;
+    color:#000000;
+  }
+  
+  .doing_business_as_heading_a {
+    text-decoration: none;
+    color:#000000;
+  }
+	
+  .doing_business_as_heading_a:hover {
+    text-decoration: none;
+    color:#000000;
   }
 	
   #product_title {
     font-size: 3em;
     text-align:center;
+  }
+  
+  .product_title_a {
+    color:#000000;
+    text-decoration: none;
   }
   
   #view_directory_button_div {
@@ -137,8 +153,8 @@ try {
 
  </head>
  <body>
-  <div id="doing_business_as_heading">The Shasta Exchange</div>
-  <div id="product_title">Business Directory</div>
+  <div id="doing_business_as_heading"><a href="http://shastaexchange.com" class="doing_business_as_heading_a">The Shasta Exchange</a></div>
+  <div id="product_title"><a href="http://shastadirectory.com" class="product_title_a">Business Directory</a></div>
   
   <div class="horizontal_spacer_oneem">&nbsp;</div>
   
