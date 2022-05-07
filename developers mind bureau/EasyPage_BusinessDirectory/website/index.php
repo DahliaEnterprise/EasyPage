@@ -147,7 +147,7 @@ try {
   <script>
    function initiate_manual_submit()
    {
-     window.location.href = '/directory/search.php?phrases='+document.getElementById("search_phrase_input").value;
+     window.location.href = '/search.php?phrases='+document.getElementById("search_phrase_input").value;
    }
   </script>
   
@@ -205,13 +205,14 @@ try {
     
       //echo a link to the business.
       echo '<div class="business_information">';
-      echo '<a href="/directory/business.php?id='.$business_generic_data["id"].'" class="business_name">'.$business_generic_data["business_name"].'</a>';
+      echo '<a href="/business.php?id='.$business_generic_data["id"].'" class="business_name">'.$business_generic_data["business_name"].'</a>';
       echo '<div class="business_description">'.$business_generic_data["business_display_description"].'</div>';
       echo '<div style="height:10px;width:99%;">&nbsp;</div>';
       echo '</div>';
     }
   }
   
+  //close connection.
   $query_in_progress_list_all_businesses = null;
   $connection = null;
   ?>
