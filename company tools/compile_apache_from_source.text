@@ -79,4 +79,14 @@ configure: summary of build options:
     C preprocessor: x86_64-linux-gnu-gcc -E
 ********
 
+Run make to create the installation directives
+Make
+
+Make is not found
+*********
+bash: make: command not found
+*********
+
+Using apt install make.
+apt install make
 
