@@ -1,6 +1,10 @@
 Create directory to contain changes and files created during the compilation from source of apache2
 mkdir apache2_build_from_environment
 
+Make the apache2_build_from_environment folder the current directory.
+cd ./apache2_build_from_environment
+
+
 Go to the apache2 download page:
 https://httpd.apache.org/download.cgi#verify
 
