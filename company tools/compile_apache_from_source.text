@@ -54,4 +54,12 @@ See `config.log' for more details
 Using apt to install gcc 
 apt install gcc
 
+Configure complained libpcre not available.
+*******
+No terminal partial snapshot available
+*******
+
+Using apt to install libpcre 
+apt install libpcre3-dev
+
 
