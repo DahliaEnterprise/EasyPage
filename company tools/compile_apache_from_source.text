@@ -101,3 +101,7 @@ make install
 **********
 Lengthy terminal outputs not intended for our viewing, usually intended for the developers if they made a configure script error
 ***********
+
+
+This configureation did not have static libraries enabled so altering your installation of your system will effect apache2 httpd if it relies on those libraries, this is usually seen when a apt remove occurs for a seemingly innocent program such as xmlreader(for example).
+Enable static libraries to ensure the libraries come with the program although you might be required more install work to accomplish that with little to no benefits.
