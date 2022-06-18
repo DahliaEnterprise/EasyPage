@@ -15,6 +15,8 @@ wget https://dlcdn.apache.org/httpd/httpd-2.4.54.tar.bz2
 Extract files into current folder.
 tar -xvf ./httpd-2.4.54.tar.bz2
 
+Make httpd-2.4.54 the current directory.
+cd ./httpd-2.4.54
 
 Set optimizations flags that are picked up/used during the configure and thus the make process command(this will heavily obfuscate the binary and allow alternative decision making not specified by the apache2 developers however as long as no malicious injections occur the apache2 binary will operate exactly as coded by the developers, it just allows more room for injection, just don't allow anyone to login to the OS and those possible injections are not accessible)
 CC="pgcc" CFLAGS="-O2"
