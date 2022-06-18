@@ -1,3 +1,8 @@
+Using a Debian system,
+lsb_release -a
+Shows Debian 11 code name bullseye
+Apt update and apt upgrade show nothing to change.
+
 Create directory to contain changes and files created during the compilation from source of apache2
 mkdir apache2_build_from_environment
 
