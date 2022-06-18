@@ -28,3 +28,17 @@ CC="pgcc" CFLAGS="-O2"
 
 Run ./configure for the first time on the presumably fresh machine.
 ./configure
+
+
+Configure stops with no Apache portable runtime library.
+******
+configure: 
+checking for APR... no
+configure: error: APR not found.  Please read the documentation.
+******
+
+
+Using apt to install development files and run time files for Apache portable runtime library.
+apt install libaprutil1-dev
+
+
