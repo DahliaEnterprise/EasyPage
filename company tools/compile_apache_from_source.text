@@ -42,3 +42,16 @@ Using apt to install development files and run time files for Apache portable ru
 apt install libaprutil1-dev
 
 
+Configure stops with no compiler program
+******
+checking for gcc... x86_64-linux-gnu-gcc
+checking whether the C compiler works... no
+configure: error: in `/root/apache2_build_from_environment/httpd-2.4.54':
+configure: error: C compiler cannot create executables
+See `config.log' for more details
+******
+
+Using apt to install gcc 
+apt install gcc
+
+
