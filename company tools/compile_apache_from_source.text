@@ -90,3 +90,14 @@ bash: make: command not found
 Using apt install make.
 apt install make
 
+Run make
+Make
+**********
+Lengthy terminal outputs not intended for our viewing, usually intended for the developers if they made a configure script error
+***********
+
+Run make install to place the compiled files through out the system directories
+make install
+**********
+Lengthy terminal outputs not intended for our viewing, usually intended for the developers if they made a configure script error
+***********
