@@ -24,3 +24,32 @@ cd ./php-8.1.7
 
 Run the configure script with php supporting MySQL connectivity.
 ./configure --with-apxs2=/usr/local/apache2/bin/apxs --with-pdo-mysql
+
+
+Configure output terminal complaining libxml does not exist.
+*******
+checking for libxml-2.0 >= 2.9.0... no
+configure: error: Package requirements (libxml-2.0 >= 2.9.0) were not met:
+
+No package 'libxml-2.0' found
+*******
+
+
+Using apt to install libxml 2.0 
+apt install libxml2-dev
+
+
+Runing configure script
+*****
+checking for sqlite3 >= 3.7.7... no
+configure: error: Package requirements (sqlite3 >= 3.7.7) were not met:
+
+No package 'sqlite3' found
+******
+
+
+Although sqlite3 has many problems with character encoding, as in your database can become corrupted and thus become unuseable and non recoverable data and crash, it appears using the --without-sqlite3 doesn't register within the configure script so we are going to go ahead and compile with sqlite3 and remember never to use it for fun or business as either can mess with your head of your abilities of how good of a php coder you may or may not be.
+
+apt install libsqlite3-dev
+
+
