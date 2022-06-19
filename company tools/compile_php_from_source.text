@@ -15,3 +15,12 @@ wget https://www.php.net/distributions/php-8.1.7.tar.gz
 
 Unpack compressed file
 tar -xvf php-8.1.7.tar.gz
+
+
+
+Change directory into the extract folder containing the php files.
+cd ./php-8.1.7
+
+
+Run the configure script with php supporting MySQL connectivity.
+./configure --with-apxs2=/usr/local/apache2/bin/apxs --with-pdo-mysql
