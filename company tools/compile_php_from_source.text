@@ -9,3 +9,9 @@ mkdir php_build_from_environment
 Download php source from
 https://www.php.net/downloads.php
 
+wget https://www.php.net/distributions/php-8.1.7.tar.gz
+
+
+
+Unpack compressed file
+tar -xvf php-8.1.7.tar.gz
