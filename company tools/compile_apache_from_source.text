@@ -27,8 +27,6 @@ Set optimizations flags that are picked up/used during the configure and thus th
 CC="pgcc" CFLAGS="-O2"
 
 Run ./configure for the first time on the presumably fresh machine.
-./configure
-
 ./configure –enable-ssl –enable-so –enable-http2
 
 Configure stops with no Apache portable runtime library.
@@ -64,7 +62,25 @@ Using apt to install libpcre
 apt install libpcre3-dev
 
 Run configure,
-./configure
+
+./configure –enable-ssl –enable-so –enable-http2
+
+
+Configure stops due to OpenSSL being not the known to the script latest version.
+********
+
+checking whether to enable mod_ssl... checking dependencieschecking for OpenSSL... checking for user-provided OpenSSL base directory... none
+checking for OpenSSL version >= 0.9.8a... FAILED
+configure: WARNING: OpenSSL version is too old
+no
+checking whether to enable mod_ssl... configure: error: mod_ssl has been requested but can not be built due to prerequisite failures
+
+********
+
+
+Using apt to install OpenSSL development files.
+apt install libssl-dev
+
 
 Configure terminal output shows no errors/complaints and thus the configure process is considered valid to the fullest extent of our knowledge.
 ********
