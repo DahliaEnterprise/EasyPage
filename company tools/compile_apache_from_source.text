@@ -29,6 +29,7 @@ CC="pgcc" CFLAGS="-O2"
 Run ./configure for the first time on the presumably fresh machine.
 ./configure
 
+./configure –enable-ssl –enable-so –enable-http2
 
 Configure stops with no Apache portable runtime library.
 ******
