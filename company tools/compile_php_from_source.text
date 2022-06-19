@@ -1,0 +1,11 @@
+Continuing from the Apache 2 compile directions.
+
+cd ..
+
+cd ..
+
+mkdir php_build_from_environment
+
+Download php source from
+https://www.php.net/downloads.php
+
