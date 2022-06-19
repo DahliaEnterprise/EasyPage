@@ -53,3 +53,13 @@ Although sqlite3 has many problems with character encoding, as in your database 
 apt install libsqlite3-dev
 
 
+Running configure script
+******
+configure: error: Package requirements (zlib) were not met:
+No package 'zlib' found
+******
+
+
+Using apt to install zlib 
+apt install zlib1g-dev
+
