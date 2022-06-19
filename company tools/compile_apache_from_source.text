@@ -82,8 +82,26 @@ Using apt to install OpenSSL development files.
 apt install libssl-dev
 
 
+
+Configure terminal output shows nghttp2 is not available
+********
+
+checking for nghttp2... checking for user-provided nghttp2 base directory... none
+checking for nghttp2 version >= 1.2.1... FAILED
+configure: WARNING: nghttp2 version is too old
+no
+checking whether to enable mod_http2... configure: error: mod_http2 has been requested but can not be built due to prerequisite failures
+*********
+
+
+Using apt to install nghttp2
+apt install libnghttp2-dev
+
+
+
 Configure terminal output shows no errors/complaints and thus the configure process is considered valid to the fullest extent of our knowledge.
 ********
+
 configure: summary of build options:
 
     Server Version: 2.4.54
@@ -94,6 +112,8 @@ configure: summary of build options:
     LDFLAGS:           
     LIBS:             
     C preprocessor: x86_64-linux-gnu-gcc -E
+
+
 ********
 
 Run make to create the installation directives
