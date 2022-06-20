@@ -63,3 +63,14 @@ No package 'zlib' found
 Using apt to install zlib 
 apt install zlib1g-dev
 
+
+Running configure script,
+
+make
+
+make install
+
+
+
+Copy php.ini-development to the system location
+cp ./php.ini-development /usr/local/lib/php.ini
