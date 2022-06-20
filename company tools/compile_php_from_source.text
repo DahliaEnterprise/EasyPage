@@ -76,5 +76,9 @@ Copy php.ini-development to the system location
 cp ./php.ini-development /usr/local/lib/php.ini
 
 
+Tell apache2 to enable php shared library. Add this to the Apache httpd.conf file in the modules section
+LoadModule php_module modules/libphp.so
+
+
 Copy shared library to apache2 modules(when the php module is enabled using the httpd.conf in the apache2 folder the shared library php.so makes it so Apache will run php functions compiled from c code are invoked by the apache2 functions compiled in c code).
-8.1.7# cp /root/php_build_from_environment/php-8.1.7/libs/libphp.so /usr/local/apache2/modules/libphp.so
+cp /root/php_build_from_environment/php-8.1.7/libs/libphp.so /usr/local/apache2/modules/libphp.so
