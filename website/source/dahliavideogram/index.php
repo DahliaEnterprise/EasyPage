@@ -163,19 +163,45 @@
       &nbsp;&nbsp;&nbsp;&nbsp;Medium quality frames are sent over the network, which is defined as every pixel per even column of every row is delivered; This is depicted within the following photo.
       <img src="/dahliavideogram/image/exact_data_sent_from_service/medium_quality_or_phase_one_sent_by_server.jpeg" style="width:90%;" />
       
-      <br/><br/>
+      <br/><br/>  <br/><br/>
       
       Let us say that perhaps for the intentions of conveying and understanding is that the dahlia video gram transmitted low quality and medium quality as one group of data or might also be described as sending one stream segment; <br/><br/>This is something that is never done and should not be done as this increases buffer time or more precisely increases the amount of time the viewer would have to wait for the video begin playing with otherwise low quality and high fidelity video playing; However let us say that this did happen, it would be as depicted within the following photo.
       
        <img src="/dahliavideogram/image/demonstrated_client_view/phantom_combined_low_and_medium_quality_photo.jpeg" style="width:90%;" />
        
        
-          <br/><br/>   
+          <br/><br/>     <br/><br/>
           
-          The client will view medium quality as shown(continued below) within the demonstrated photo when the viewer decides to play the video and the low quality frames have buffered and so have the medium quality frames have buffered. using a bi directional communication the states of the  client can be alerted to the service allowing the service to prioritize continuous low qualitu frames or the alternative transmiting low quality and medium qualitu segments(while the video is paused for example) this then can allow for the network to buffer high qualitu frames that are about to play while the viewer is enjoying the buffered low and medium combined framed data. <br/><br/>
+          The client will view medium quality as shown(continued below) within the demonstrated photo when the viewer decides to play the video and the low quality frames have buffered and so have the medium quality frames have buffered. 
+          
+           <img src="/dahliavideogram/image/demonstrated_client_view/phase_two_client_view.jpeg" style="width:90%;" />
+           
+             <br/><br/> 
+             
+             The above photo is a demonstration on the stretching of the pixels into the empty spaces occurs, however the production version of this technology will utilize a blending method that will take the surrounding colors of the empty space and mix those colors to fill the empty spaces instead. The following photo shows the output of pixels after they have been stretched. As you can see this looks almost exactly like the source photo(shown in the high quality section below).
+           
+            <img src="/dahliavideogram/image/demonstrated_client_view/phase_two_client_view_pixel_layout.jpeg" style="width:90%;" />
+          
+           <br/><br/>     <br/><br/>
+          
+          Using a bi directional communication the states of the  client can be alerted to the service allowing the service to prioritize continuous low quality frames or the alternative transmiting low quality and medium qualitu segments(while the video is paused for example) this then can allow for the network to buffer high qualitu frames that are about to play while the viewer is enjoying the buffered low and medium combined framed data. <br/><br/>
           Remember this mode of video viewing is intended to relieve frustrations of waiting and a supposed precomputed means of working with unstable networks and or low bandwidth situations. Another way to put it is dial up users would be able to enjoy motion pictures with objectively the only frowned upon operation of the system being low quality, which is expected however not being able ro watch a video for an entire day is not expected by dialup users for example.
        
      </div>
+     
+     
+    <div style="margin: 3em;">&nbsp;</div>
+    <div class="menu_header">
+     High Quality Video Streaming
+    </div>
+    <div class="blog_introduction">
+      &nbsp;&nbsp;&nbsp;&nbsp;High quality stream will essentialy alert the service not to allocate bi directional communication logic on the server side and likewise the client will not iterate through bi directional communication logic. The service will then send a low quality frame, a medium quality frame and then a high quality frame.    
+      <br/><br/> Since service and the users benefit from the video feed being split into pieces based on categories of quality by means of being able to send an entire low quality frame to each client then send and entire medium quality frame to each client and then send and entire high quality frame to each client. 
+       <br/><br/> 
+      This paradigm is based on sending recognizeable data all while reducing file and or ram-memory reads by focusing on sending one frame to multiple clients and then moving along; This is forseen as the most efficent and effective way to send data with out relying on formulas to reconstruct the data and effectively accomplishing shasta exchanges mission of delivering raw data and thus the video stream is a more credible source than using compression based video streams.
+      
+     </div>
+     
     
     <div style="margin:3em;"></div> 
     <div style="margin:0.5em;text-align:center; color:#ffffff; font-size:2.5em;">Page created by Shane Bryan Betz</div>
