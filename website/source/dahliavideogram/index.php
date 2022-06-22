@@ -155,6 +155,28 @@
     </div>
     
     
+    <div style="margin: 3em;">&nbsp;</div>
+    <div class="menu_header">
+     Medium Quality Video Streaming
+    </div>
+    <div class="blog_introduction">
+      &nbsp;&nbsp;&nbsp;&nbsp;Medium quality frames are sent over the network, which is defined as every pixel per even column of every row is delivered; This is depicted within the following photo.
+      <img src="/dahliavideogram/image/exact_data_sent_from_service/medium_quality_or_phase_one_sent_by_server.jpeg" style="width:90%;" />
+      
+      <br/><br/>
+      
+      Let us say that perhaps for the intentions of conveying and understanding is that the dahlia video gram transmitted low quality and medium quality as one group of data or might also be described as sending one stream segment; <br/><br/>This is something that is never done and should not be done as this increases buffer time or more precisely increases the amount of time the viewer would have to wait for the video begin playing with otherwise low quality and high fidelity video playing; However let us say that this did happen, it would be as depicted within the following photo.
+      
+       <img src="/dahliavideogram/image/demonstrated_client_view/phantom_combined_low_and_medium_quality_photo.jpeg" style="width:90%;" />
+       
+       
+          <br/><br/>   
+          
+          The client will view medium quality as shown(continued below) within the demonstrated photo when the viewer decides to play the video and the low quality frames have buffered and so have the medium quality frames have buffered. using a bi directional communication the states of the  client can be alerted to the service allowing the service to prioritize continuous low qualitu frames or the alternative transmiting low quality and medium qualitu segments(while the video is paused for example) this then can allow for the network to buffer high qualitu frames that are about to play while the viewer is enjoying the buffered low and medium combined framed data. <br/><br/>
+          Remember this mode of video viewing is intended to relieve frustrations of waiting and a supposed precomputed means of working with unstable networks and or low bandwidth situations. Another way to put it is dial up users would be able to enjoy motion pictures with objectively the only frowned upon operation of the system being low quality, which is expected however not being able ro watch a video for an entire day is not expected by dialup users for example.
+       
+     </div>
+    
     <div style="margin:3em;"></div> 
     <div style="margin:0.5em;text-align:center; color:#ffffff; font-size:2.5em;">Page created by Shane Bryan Betz</div>
     <div style="margin:6em;"></div>
