@@ -127,15 +127,34 @@
     </div>
     <div style="margin: 3em;">&nbsp;</div>
     <div class="menu_header">
-     What you can expect from our blog
+     Dahlia Video Gram Presentation
     </div>
     <div class="blog_introduction">
-     &nbsp;&nbsp;&nbsp;&nbsp;Dahlia Video Gram technology is a prescribed method for transporting video and audio data in a manner that complete audio is delivered per requested segment of playback while the video playback will have different means of quality based on speed of delivery limited by the transportation method(network, tcp, udp, raw sockets). <br/><br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;Dahlia Video Gram technology is a prescribed method for transporting video and audio data in a manner that complete audio is delivered per requested segment of playback while the video playback will have different means of quality based on speed of delivery limited by the transportation method(network, tcp, udp, raw sockets). <br/><br/>
      Video pixels are choosen by a predetermined formula and then streamed from lowest quality, medium quality, and high quality. To be clear the lowest quality of the video is streamed first for also a predetermined segment, such as one minute is buffered. Then more pixel data is streamed for those same one minute of the video file, then more pixel data is streamed for those same one minute of the video file. this allows for almost immediate playback with the downside of low quality playing for the first few seconds, while the medium quality begins to play as it is loaded and so on with the high quality.  <br/><br/>
      The purpose is to precent fatigue in the workplace and or during times of personal entertainment. A most specific use would be for users browsing an encyclopedia on a slow network; Users would be forced to wait for a full and complete segment of audio to load (from five seconds to a minute) allowing for the user to know if that is something they are interested in. If they are not interested they dont have to wait for the video(low quality portion) to load, then can exit the page or move along. Granted if the user is interested then the buffering mechism will load the low quality portion allowing them to "recognize" what is happening, the user is then able to select which autoplay option they prefer or they can select high quality(or medium quality only) forcing the play back  to pause the video and audio until the select only wuality is full buffered for a selected segment of five seconds to a minute. <br/><br/>
      The other quality option is variable network medium quality and variable network high quality. this will only begin playback when medium quality is available while delivering highquality pixel data. providing an experience that feels like your watching 720p most of the time however the playback it self will instead of becoming paused to load 720p will play the already loaded 520p data.  <br/><br/>
      As you may have guessed this is extremely critical for live streaming and bi directional communication for poor communities and or during environmental disasters of interrupted networking conditions.
+    
     </div>
+    
+    
+    <div style="margin: 3em;">&nbsp;</div>
+    <div class="menu_header">
+     Low Quality Video Streaming
+    </div>
+    <div class="blog_introduction">
+      &nbsp;&nbsp;&nbsp;&nbsp;Low quality frames are sent over the network, which is defined as every other pixel per column and row is delivered; This is depicted within the following photo.
+      <img src="/dahliavideogram/image/exact_data_sent_from_service/low_quality_or_phase_one_sent_by_server.jpeg" style="width:90%;" />
+      
+      <br/><br/>
+      
+      Due to pixels being so small this tiny amount of data the user would not be able perceive that there is anything to be viewed. I would like to note that although the data is tiny and the pixels are too small to see within their own positions spaced out that it's actually been found its enough to recognize objects and match those objects with a imagined model derived from highquality and high fidelity audio streams;   <br/><br/>Therefore, the pixels are stretched to allow taking advtange of this opportunity object recognition(using the human mind, not artificial intelligence). This stretching makes objects appeared blurred when the source video is 520p or less and the when the source video is HD(720p or 1080p) the low quality video feels like a 520p video with low network delivery times that are similar to 320p raw rgb video network deivery times. This stretching is depicted within the following image.
+      
+      <img src="/dahliavideogram/image/demonstrated_client_view/phase_one_client_view.jpeg" style="width:90%;" />
+    </div>
+    
+    
     <div style="margin:3em;"></div> 
     <div style="margin:0.5em;text-align:center; color:#ffffff; font-size:2.5em;">Page created by Shane Bryan Betz</div>
     <div style="margin:6em;"></div>
