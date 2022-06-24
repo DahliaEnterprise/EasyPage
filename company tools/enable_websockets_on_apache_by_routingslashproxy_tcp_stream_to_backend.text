@@ -1,4 +1,7 @@
-Within the httpd.conf page,
+Work in progress,
+Currently developing a websockets application to determine if this will be useful at not activating "firewalls".
+
+ Within the httpd.conf page,
 
 Uncomment load module mod_proxy.so
 
