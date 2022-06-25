@@ -1,0 +1,2 @@
+#optimized for network speed but with fullest color as possible
+vncserver -depth 16 -geometry 720x1280 -SecurityTypes none -QualityLevel 5 -PreferredEncoding ZRLE -CompressLevel 9
