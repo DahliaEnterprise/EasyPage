@@ -9,5 +9,9 @@
     </div> 
  
     <div class="easy_page_header">
-     <a href="" class="shasta_exchange_navigation">Dahlia Video Gram</a>
+     <a href="/dahliavideogram/" class="shasta_exchange_navigation">Dahlia Video Gram</a>
+    </div>
+    
+     <div class="easy_page_header">
+     <a href="/password_generator/" class="shasta_exchange_navigation">Password Generator</a>
     </div>
