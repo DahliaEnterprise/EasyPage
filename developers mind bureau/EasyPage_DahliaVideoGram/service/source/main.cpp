@@ -6,44 +6,39 @@
 #include <strings.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include <fcntl.h>
 
-int  main()
+
+#include "/root/dahliavideogram/baseline_and_supposedly_static_biditectional_communication/service/source/tcp/tcp_start_service.h"
+#include "/root/dahliavideogram/baseline_and_supposedly_static_biditectional_communication/service/source/tcp/client_management/list_of_clients.h"
+
+
+#include "/root/dahliavideogram/baseline_and_supposedly_static_biditectional_communication/service/source/tcp/tcp_start_service.c"
+#include "/root/dahliavideogram/baseline_and_supposedly_static_biditectional_communication/service/source/tcp/client_management/list_of_clients.c"
+
+
+int main()
 {
-	int service_socket_filedescriptor;
-	service_socket_filedescriptor = socket(AF_INET, SOCK_STREAM, 0);
-	if(service_socket_filedescriptor == -1)
-	{
-		return -1;
-	}
+	tcp_start_service();
 	
-	struct sockaddr_in server_address;
-	bzero(&server_address, sizeof(server_address)); 
-	server_address.sin_family = AF_INET; 
-  server_address.sin_addr.s_addr = htonl(INADDR_ANY); 
-  server_address.sin_port = htons(8080); 
+	tcp_list_of_clients_initialize();
 
-	int bind_success = bind(service_socket_filedescriptor, (struct sockaddr *)&server_address, sizeof(server_address));
-	if(bind_success != 0)
-	{
-		return -2;
-	}
-	
-	int listen_success = listen(service_socket_filedescriptor, 5);
-	
-	struct sockaddr_in client_address;
-	int client_address_length = sizeof(client_address);
-	
-	int client_file_descriptor = accept(service_socket_filedescriptor, (struct sockaddr *)&client_address, &client_address_length); 
-  char buffer[4095];
+	//Main loop(manager loop(?))
 	int keep_running = 1;
 	while(keep_running == 1)
 	{
-		printf("reading\n");
-		bzero(buffer, 2);
-		read(client_file_descriptor, buffer, 1);
-		buffer[1] = '\0';
-		printf(buffer);
-		printf("\n");
+		//thread these four operations?
+		
+		
+		//manage a new client connection
+		tcp_list_of_clients_handle_new_client();
+		
+		//execute actions pushed to the actions item list
+		
+		//read from list of client sockets into their respective buffers
+		
+		//write to list of client sockets from their respective buffers.
+		
 	}
 	
 	
