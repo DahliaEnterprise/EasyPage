@@ -5,11 +5,17 @@ void tcp_list_of_clients_initialize()
 	tcp_list_of_clients_total_clients_memory = 127;
 	tcp_list_of_clients_total_clients_memory_available = tcp_list_of_clients_total_clients_memory;
 	
-	tcp_list_of_clients_slot_available = (int *)malloc(tcp_list_of_clients_total_clients_memory_available * sizeof(int));
-	memset(tcp_list_of_clients_slot_available, 0, tcp_list_of_clients_total_clients_memory_available);
+	tcp_list_of_clients_slot_available = 0;
+	while(tcp_list_of_clients_slot_available == 0){ tcp_list_of_clients_slot_available = (int *)malloc(tcp_list_of_clients_total_clients_memory_available * sizeof(int));}
+	int index = 0;
+	while(index < tcp_list_of_clients_total_clients_memory_available){ tcp_list_of_clients_slot_available[index] = 0; }
 	
 	tcp_concurrent_clients = (struct list_of_clients *)malloc(tcp_list_of_clients_total_clients_memory_available * sizeof(struct list_of_clients ) );
 	
+	
+	tcp_list_of_clients_incoming_transmission_buffer = 0;
+  while(tcp_list_of_clients_incoming_transmission_buffer == 0){ tcp_list_of_clients_incoming_transmission_buffer = (char*)malloc(2 * sizeof(char)); }
+	memset(tcp_list_of_clients_incoming_transmission_buffer, '\0', 2);
 }
 
 int tcp_list_of_clients_get_available_index()
@@ -34,6 +40,8 @@ int tcp_list_of_clients_get_available_index()
 
 void tcp_list_of_clients_handle_new_client()
 {
+	struct sockaddr_in * new_client_address;
+	
 	int new_client_file_descriptor = accept(service_socket_filedescriptor, (struct sockaddr *)&new_client_address, &client_address_length); 
 	if(new_client_file_descriptor > -1)
 	{
@@ -53,8 +61,13 @@ void tcp_list_of_clients_handle_new_client()
 				
 				//place client within the list of clients array.
 				tcp_list_of_clients_slot_available[available_slot_index] = 1;
-				tcp_concurrent_clients[available_slot_index].client_address = (struct sockaddr *)new_client_address;
+				tcp_concurrent_clients[available_slot_index].client_address = (struct sockaddr_in *)new_client_address;
 				tcp_concurrent_clients[available_slot_index].client_file_descriptor = (int)new_client_file_descriptor;
+				
+				tcp_concurrent_clients[available_slot_index].message_received = (char *)malloc((1024*1024) * sizeof(char));
+				tcp_concurrent_clients[available_slot_index].message_received_max_length = (1024*1024);
+				memset(tcp_concurrent_clients[available_slot_index].message_received, '\0', (1024*1024));
+				
 				
 		}else if(tcp_list_of_clients_total_clients_memory_available <= 0)
 		{
@@ -70,3 +83,21 @@ void tcp_list_of_clients_handle_new_client()
 	}
 }
 
+
+void tcp_list_of_clients_handle_incoming_transmission()
+{
+	int index = 0;
+	while(index < tcp_list_of_clients_total_clients_memory)
+	{
+		//skip logic block if no client exist on this slot.
+		if(tcp_list_of_clients_slot_available[index] == 1)
+		{
+			
+		   tcp_list_of_clients_incoming_transmission_buffer[0] = '\0';
+			/*int read_success = read(tcp_concurrent_clients[index].client_file_descriptor, tcp_list_of_clients_incoming_transmission_buffer, 1);
+			printf("t %d\n", read_success);
+			*/
+		}
+		index = index + 1;
+	}
+}
