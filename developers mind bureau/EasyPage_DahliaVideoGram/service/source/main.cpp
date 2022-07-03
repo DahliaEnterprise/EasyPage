@@ -26,19 +26,19 @@ int main()
 	//Main loop(manager loop(?))
 	int keep_running = 1;
 	while(keep_running == 1)
-	{
-		//thread these four operations?
-		
+  {
 		
 		//manage a new client connection
-		tcp_list_of_clients_handle_new_client();
+	tcp_list_of_clients_handle_new_client();
 		
 		//execute actions pushed to the actions item list
+		//todo
 		
 		//read from list of client sockets into their respective buffers
+		tcp_list_of_clients_handle_incoming_transmission();
 		
 		//write to list of client sockets from their respective buffers.
-		
+	
 	}
 	
 	
