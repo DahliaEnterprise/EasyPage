@@ -8,7 +8,7 @@ void tcp_list_of_clients_initialize()
 	tcp_list_of_clients_slot_available = 0;
 	while(tcp_list_of_clients_slot_available == 0){ tcp_list_of_clients_slot_available = (int *)malloc(tcp_list_of_clients_total_clients_memory_available * sizeof(int));}
 	int index = 0;
-	while(index < tcp_list_of_clients_total_clients_memory_available){ tcp_list_of_clients_slot_available[index] = 0; }
+	while(index < tcp_list_of_clients_total_clients_memory_available){ tcp_list_of_clients_slot_available[index] = 0; index = index + 1;}
 	
 	tcp_concurrent_clients = (struct list_of_clients *)malloc(tcp_list_of_clients_total_clients_memory_available * sizeof(struct list_of_clients ) );
 	
@@ -43,6 +43,9 @@ void tcp_list_of_clients_handle_new_client()
 	struct sockaddr_in * new_client_address;
 	
 	int new_client_file_descriptor = accept(service_socket_filedescriptor, (struct sockaddr *)&new_client_address, &client_address_length); 
+	//immediatly set the client socket to non blocking.
+		fcntl(new_client_file_descriptor, F_SETFL, O_NONBLOCK);
+		
 	if(new_client_file_descriptor > -1)
 	{
 		//immediatly set the client socket to non blocking.
@@ -92,11 +95,16 @@ void tcp_list_of_clients_handle_incoming_transmission()
 		//skip logic block if no client exist on this slot.
 		if(tcp_list_of_clients_slot_available[index] == 1)
 		{
-			
-		   tcp_list_of_clients_incoming_transmission_buffer[0] = '\0';
-			/*int read_success = read(tcp_concurrent_clients[index].client_file_descriptor, tcp_list_of_clients_incoming_transmission_buffer, 1);
-			printf("t %d\n", read_success);
-			*/
+		  tcp_list_of_clients_incoming_transmission_buffer[0] = '\0';
+			int read_success = read(tcp_concurrent_clients[index].client_file_descriptor, tcp_list_of_clients_incoming_transmission_buffer, 1);
+			if(read_success > 0)
+			{
+		  	//printf("t %s\n", tcp_list_of_clients_incoming_transmission_buffer);
+				int string_length = strlen(tcp_concurrent_clients[index].message_received);
+				strncpy(tcp_concurrent_clients[index].message_received+string_length, tcp_list_of_clients_incoming_transmission_buffer, 1);
+				
+				printf("%s\n", tcp_concurrent_clients[index].message_received);
+			}
 		}
 		index = index + 1;
 	}
