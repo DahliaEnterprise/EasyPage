@@ -7,8 +7,12 @@ gtk_threepointzero_headers="-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-sp
 glib_gio_twopointzero="-I/usr/include/glib-2.0/gio"
 glib_gobject_twopointerk="-I/usr/include/glib-2.0/gobject"
 
+opengl_gl="-I/usr/include/GL/"
+
 #link objects with compile process
 link_gtk_threepointzero="-lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -lharfbuzz -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0"
 
+link_opengl="-lGL -lGLU -lglut"
+
 #compile
-cc -std=c17 ./../source/main.c -o main $link_gtk_threepointzero $gtk_threepointzero_headers $glib_gio_twopointzero $glib_gobject_twopointerk
+cc -std=c17 $link_opengl ./../source/main.c -o main $link_gtk_threepointzero $gtk_threepointzero_headers $glib_gio_twopointzero $glib_gobject_twopointerk $opengl_gl $link_opengl
