@@ -22,14 +22,47 @@ using glm::rotate;*/
 /* the GtkGLArea widget */
 static GtkWidget *gl_area = NULL;
 
+static const GLfloat triangle_vertex_position[] = { 0.0, 0.5, 0.0, 1.0, 0.0, 0.0, 1.0,
+                                 										 -0.5, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0,
+                                 										 0.5, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0};
 
+																										 
+GLuint triangle_vertex_shader;
 
-static GLuint position_buffer;
-static GLuint program;
+																										 
+GLuint create_vertex_shader(GLchar vertex_source)
+{
+	GLuint output = 0;
+	
+	GLunint shader;
+	shader = glCreateShader(GL_VERTEX_SHADER);
+	
+	glShaderSource(shader, 1, &vertex_source, 0);
+	
+	glCompileShader(shader);
+	
+	glGetShaderiv (shader, GL_COMPILE_STATUS, &status);
+  if (status == GL_FALSE)
+  {
+    int log_len;
+    char *buffer;
+    glGetShaderiv (shader, GL_INFO_LOG_LENGTH, &log_len);
+    buffer = (char*)g_malloc (log_len + 1);
+    glGetShaderInfoLog (shader, log_len, NULL, buffer);
+    g_warning ("Compile failure in %s shader:\n%s",
+               type == GL_VERTEX_SHADER ? "vertex" : "fragment",
+               buffer);
+    g_free (buffer);
+    glDeleteShader (shader);
+    return 0;
+  }
+	
+	output = shader;
+	
+	return output;
+}
 
-/* We need to set up our state when we realize the GtkGLArea widget */
-static void
-realize (GtkWidget *widget)
+static void realize (GtkWidget *widget)
 {
 /*  GdkGLContext *context;
   gtk_gl_area_make_current (GTK_GL_AREA (widget));
@@ -38,16 +71,17 @@ realize (GtkWidget *widget)
   context = gtk_gl_area_get_context (GTK_GL_AREA (widget));
   init_buffers (&position_buffer, NULL);
   init_shaders (&program);
-
+*/
   glEnable(GL_CULL_FACE);
   glFrontFace(GL_CCW);  
   glCullFace(GL_BACK);
-  glEnable(GL_DEPTH_TEST);*/
+  glEnable(GL_DEPTH_TEST);
+	
+	triangle_vertex_shader = create_vertex_shader(GLchar vertex_source);
+	
 }
 
-/* We should tear down the state when unrealizing */
-static void
-unrealize (GtkWidget *widget)
+static void unrealize (GtkWidget *widget)
 {
   /*gtk_gl_area_make_current (GTK_GL_AREA (widget));
 
@@ -59,18 +93,16 @@ unrealize (GtkWidget *widget)
 }
 
 
-static gboolean render (GtkGLArea    *area,
-        GdkGLContext *context)
+static gboolean render (GtkGLArea *area, GdkGLContext *context)
 {
-  glClearColor (0, 0, 0, 0);
+  glClearColor (255, 0, 0, 0);
   glClear (GL_COLOR_BUFFER_BIT);
   return TRUE;
 }
 
 
 
-static void activate (GtkApplication* app,
-          gpointer        user_data)
+static void activate (GtkApplication* app, gpointer user_data)
 {
   GtkWidget * window;
 
