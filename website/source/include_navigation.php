@@ -1,4 +1,4 @@
-  <div class="menu_header">
+ <div class="menu_header">
      Navigate
     </div>
         <div class="easy_page_header">
@@ -14,4 +14,8 @@
     
      <div class="easy_page_header">
      <a href="/password_generator/" class="shasta_exchange_navigation">Password Generator</a>
+    </div>
+    
+     <div class="easy_page_header">
+     <a href="/nature_cpu_project/" class="shasta_exchange_navigation">Nature CPU</a>
     </div>
