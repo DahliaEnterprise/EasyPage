@@ -18,35 +18,37 @@
   
     
     <link rel="stylesheet" href="/include_stylesheet.css"/>
+	
+		<script type="text/javascript">
+			function form_type_changed()
+			{
+				//hide all
+				let form_ids = ["div_list_tables", "div_list_databases", "div_list_tables", "div_list_columns"];
+				let index = 0;
+				
+				while(index < form_ids.length)
+				{
+					document.getElementById(form_ids[index]).style.display = "none";
+				  index = index + 1;
+				}
+				
+				//show selected
+				document.getElementById(document.getElementById("form_type").value).style.display = "block";
+			}
+		</script>
   </head>
-  <body>
+  <body onLoad="form_type_changed()">
    <?php 
-    usleep(rand(1000, 3000));
-    $allow_software_usage = 0;
-    $token = "";
-		if(isset($_POST["token"]) == true)
-		{
-				 $token = $_POST["token"];
-		}
-    $token_to_match = "";
-   
-   if(isset($_POST["password"]) == true)
-   {
-   	if(hash_equals($_POST["password"], "") == true)
-   	{
-   	  usleep(rand(500, 3000));
-          if(isset($_POST["username"]) == true)
-					{
-						 if($_POST["username"]	== "xenland")
-             {
-            
-              $token = $token_to_match;
-              $allow_software_usage = 1;
-           
-          		}
-					}
-   	}
-   }
+	 
+	 include('./include_authorization.php');
+	 
+	 if(isset($_POST["token"]) == true)
+	 {
+			if(hash_equals($_POST["token"], $token_to_match) == true)
+			{
+				$allow_software_usage = 1;
+			}
+	 }
  
    if($allow_software_usage == 0)
    {
@@ -65,27 +67,120 @@
      </div>
      </form>
     </div>
-    <div style="margin:3em;"></div> 
-		<form action="https://www.paypal.com/donate" method="post" target="_top">
-<input type="hidden" name="hosted_button_id" value="ML2XZ27UANAL8" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-</form>
-
 		
+
    <?php
-   }else{
+			}else
+			{
+		 
    ?>
    <div style="margin: 3em;">&nbsp;</div>
     <div class="menu_header">
      Salsa Database Manager 
     </div>
     <div class="about_the_company">
-     <a href="#">List databases</a>
+			<select name="form_type" id="form_type" onchange="form_type_changed();" style="font-size:1em">
+					<option value="div_list_databases">List Databases</option>
+					<option value="div_list_tables">List Tables</option>
+					<option value="div_list_columns">List columns</option>
+					<option value="div_select_results">Select Statement</option>
+					
+				</select>
+				<div style="margin:1em 0 1em 0;"><hr/></div>
+				
+					<div id="div_list_databases" style="display:none;">
+						
+				<form action="manage_database.php" method="post">
+					
+				<input type="text" placeholder="Database Username" name="database_username" <?php if(isset($_POST["database_username"])){ echo 'value="'.$_POST["database_username"].'"';} ?> style="font-size:1em;"/>
+				<input type="password" placeholder="Database password" name="database_password" <?php if(isset($_POST["database_password"])){ echo 'value="'.$_POST["database_password"].'"';} ?> style="font-size:1em;"/>
+				<input type="database" placeholder="Database" name="database_name" <?php if(isset($_POST["database_name"])){ echo 'value="'.$_POST["database_name"].'"';} ?> style="font-size:1em;"/>
+				<input type="hidden" name="token" value="<?php echo $token; ?>"/>
+				<input type="hidden" name="actiontype" value="listDatabases"/>
+			  <input type="submit" value="Request List Databases" style="font-size:1em;" />
+				
+			</form>
+		</div>
+		
+			
+			<div id="div_list_tables" style="display:none;">
+			<form action="manage_database.php" method="post">
+			<input type="text" placeholder="Database Username" name="database_username" <?php if(isset($_POST["database_username"])){ echo 'value="'.$_POST["database_username"].'"';} ?> style="font-size:1em;"/>
+			<input type="password" placeholder="Database password" name="database_password" <?php if(isset($_POST["database_password"])){ echo 'value="'.$_POST["database_password"].'"';} ?> style="font-size:1em;"/>
+			<input type="database" placeholder="Database" name="database_name" <?php if(isset($_POST["database_name"])){ echo 'value="'.$_POST["database_name"].'"';} ?> style="font-size:1em;"/>
+			<input type="hidden" name="token" value="<?php echo $token; ?>"/>
+			<input type="hidden" name="actiontype" value="showTables"/>
+		  <input type="submit" value="Request List of Tables" style="font-size:1em;" />
+			
+			</form>
+			</div>
+				
+					
+						<div id="div_list_columns" style="display:none;">
+							
+			<form action="manage_database.php" method="post">
+			<input type="text" placeholder="Database Username" name="database_username" <?php if(isset($_POST["database_username"])){ echo 'value="'.$_POST["database_username"].'"';} ?> style="font-size:1em;"/>
+			<input type="password" placeholder="Database password" name="database_password" <?php if(isset($_POST["database_password"])){ echo 'value="'.$_POST["database_password"].'"';} ?> style="font-size:1em;"/>
+			<input type="text" placeholder="Database" name="database_name" <?php if(isset($_POST["database_name"])){ echo 'value="'.$_POST["database_name"].'"';} ?> style="font-size:1em;"/>
+			<input type="text" placeholder="Table Name" name="table_name" <?php if(isset($_POST["table_name"])){ echo 'value="'.$_POST["table_name"].'"';} ?> style="font-size:1em;"/>
+			<input type="hidden" name="token" value="<?php echo $token; ?>"/>
+			<input type="hidden" name="actiontype" value="showColumns"/>
+		  <input type="submit" value="Request List of Columns" style="font-size:1em;" />
+				
+		</form>
+	</div>
+			
+					<div id="div_select_results" style="display:none;">
+						
+				<form action="manage_database.php" method="post">
+			<input type="text" placeholder="Database Username" name="database_username" <?php if(isset($_POST["database_username"])){ echo 'value="'.$_POST["database_username"].'"';} ?> style="font-size:1em;"/>
+			<input type="password" placeholder="Database password" name="database_password" <?php if(isset($_POST["database_password"])){ echo 'value="'.$_POST["database_password"].'"';} ?> style="font-size:1em;"/>
+			<input type="text" placeholder="Database" name="database_name" <?php if(isset($_POST["database_name"])){ echo 'value="'.$_POST["database_name"].'"';} ?> style="font-size:1em;"/>
+			<input type="text" placeholder="SELECT * FROM table_name" name="select_query" <?php if(isset($_POST["select_query"])){ echo 'value="'.$_POST["select_query"].'"';} ?> style="font-size:1em;"/>
+			<input type="hidden" name="token" value="<?php echo $token; ?>"/>
+			<input type="hidden" name="actiontype" value="showSelectResults"/>
+		  <input type="submit" value="Request Result" style="font-size:1em;" />
+				
+		</form>
+		<br/><br/>
     </div>
-    
+		</div>
+		
+		 <div style="margin: 3em;">&nbsp;</div>
+    <div class="menu_header">
+     Result 
+	 </div>
+		 <div class="about_the_company">
+		<?php
+			
+			if(isset($_POST["database_password"]) == true)
+			{
+				if(isset($_POST["actiontype"]) == true)
+				{
+				if($_POST["actiontype"] == "listDatabases")
+					{
+						include("./include_results_listdatabases.php");
+					}else if($_POST["actiontype"] == "showTables")
+					{
+					 
+						include("./include_show_tables.php");
+					}else if($_POST["actiontype"] == "showColumns")
+					{
+						include("./include_show_columns.php");
+					}else if($_POST["actiontype"] == "showSelectResults")
+					{
+						include("./include_show_select_results.php");
+			
+					}
+				}
+		 }
+		 
+		 ?>
+    </div>
+		<?php } //closing allow_software_usage ?>
     <div style="margin:3em;"></div> 
-    <?php } ?>
+	
+    
     <div style="text-align:center;">
 		<form action="https://www.paypal.com/donate" method="post" target="_top">
 <input type="hidden" name="hosted_button_id" value="ML2XZ27UANAL8" />
