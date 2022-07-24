@@ -25,8 +25,9 @@
       <h2 id="business_elevator_pitch">Digital based printed media</h2>
     </div>
     
-   
+     <?php include('/usr/local/apache2/htdocs/include_header_flag.php'); ?>
       <?php include('./../include_navigation.php'); ?>
+      <?php include('/usr/local/apache2/htdocs/software/include_secondary_navigation.php'); ?>
     <div style="margin: 3em;">&nbsp;</div>
     <div class="menu_header">
      Nature CPU

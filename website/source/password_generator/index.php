@@ -149,21 +149,23 @@ function compute()
       <h2 id="business_elevator_pitch">Digital based printed media</h2>
     </div>
     
-   
+     <?php include('/usr/local/apache2/htdocs/include_header_flag.php'); ?>
     <?php include('./../include_navigation.php'); ?>
+    <?php include('/usr/local/apache2/htdocs/software/include_secondary_navigation.php'); ?>
     <div style="margin: 3em;">&nbsp;</div>
     <div class="menu_header">
-     Repeat input X times, then hash 5000 times.
+     Password Generation Form
     </div>
     <div class="blog_introduction">
-    &nbsp;&nbsp;&nbsp;&nbsp;Input a password that you will remember, then select a number you will also remember. The password generator will create a line of text that is your password repeating as many times as the number you inputted, it will then take this lengthy line of text and input it automatically into what is called a "hash" program; A hash program has many uses, this particular use is to produce a reproduceable randomized password based on your predictable password.
-    This hash program uses Javascript and does not have any actions of sending any data to Shasta Exchange. All data is on the ram memory of your current device(or more preceisly the device accessing this), the only way your input password will leak is if you keep this page open with your data not yet cleared.
+    &nbsp;&nbsp;&nbsp;&nbsp;Input a password that you will remember, then select a number you will also remember. The password generator will create a line of text that is your password repeating as many times as the number you inputted.
+    <br/><br/>
+    The time to compute is depednant upon a higher number, although in theory anything under one milliom should not take longer than five seconds.
     <br/><br/>
     <hr/><br/><br/>
     
     <form action="javascript:preventDefault();">
     <h3>A memorable pass phrase</h3>
-     <input id="password_input_one"  style="height:2em;font-size:100%;" />
+     <input id="password_input_one"  type="password" style="height:2em;font-size:100%;" />
     
      <br/><br/>
         <h3>pick and remember this number between one hundred and one million</h3>
@@ -174,6 +176,19 @@ function compute()
     <div id="password_result">Your password will appear here</div>
     </div>
     
+      <div style="margin: 3em;">&nbsp;</div>
+    <div class="menu_header">
+     How this helps you.
+    </div>
+    <div class="blog_introduction">
+    &nbsp;&nbsp;&nbsp;&nbsp;This software is capable of being retrieved online and is executed on your computer hardware using the JavaScript language, contained within the confines of your web browser and thus incapable of producing longterm and shortterm damages to your device. This method of delivery is nessecary due to it being crucial for password generation to occur only the user' device
+    <br/><br/>
+    Password generation occurs by computing a result derived from a sha256 program, however inheritly this is not safe due to the invention of rainbow tables and bruteforcing; A password generated from one run of sha256 can be quickly searched through a precomputed database of all possibilities or likely possibilities.
+       <br/><br/>
+       The first solution to deflect rainbowtables and bruteforcenis to understand that there is a threshhold of efficacy; That is to say most people generating a rainbow table will have to confront that most people dont want to buy a rainbow table that is greater than 50gigabytes to download which is usually a database of every sha256 result from a password guess of one character length to about seven character lengths. To be clear anything longer then eight characters becomes a database that grows exponentially per additional guessable character length. 
+         <br/><br/>
+       Thus a long password is the solution, however humans want to remember short passwords so the solutiom is to memorize a short password and a number, this number will repeat your password as many-times as the number you inputted(and memorized), and then that long password is ran through the sha256 program that many times(up to 5000 times). This produces a reproduceable password that is 64 characters, so now you get to keep your input password(such as your childs birthday) safe(in most cases throughout your life) <i>and</i> your password that you give your company and or website that is sixty four characters long will also be unguessable through guessing randomly at a rate of one guess per three seconds.
+    </div>
     
  
     <div style="margin:3em;"></div> 
