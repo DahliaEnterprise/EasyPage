@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QDirIterator>
+unsigned short int continue_search_loop;
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
@@ -25,12 +26,30 @@ int main(int argc, char *argv[])
         unsigned short int error = mainop->initialize(argc, argv);
         if(error == 0)
         {
-            mainop->search_loop();
+             continue_search_loop = 1;
+            while(continue_search_loop == 1)
+            {
+                mainop->search_loop();
+            }
+
+            delete mainop;
+        }else if(error == 2)
+        {
+            qDebug() << "End of instructions";
+        }else if(error == 3)
+        {
+            qDebug() << "not enough inputs.";
+        }else if(error == 4)
+        {
+            qDebug() << "base directory is not a directory";
+        }else if(error == 5)
+        {
+            qDebug() << "base directory is empty";
         }else{
-            qDebug() << "init error occured";
+            qDebug() << "base directory is not a directoru.";
         }
 
-        delete mainop;
+
         //make a seperator line within the terminal
         qDebug() << "";
     }

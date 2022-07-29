@@ -13,60 +13,49 @@ unsigned short int main_operation::initialize(int argc, char *argv[])
 
     QString recursive_string("recursive");
 
-    folder_and_file_check = new QFileInfo();
-
-    requested_base_is_directory = 0;
-
-    unsigned short int change_occured = 0;
-
 
     //determine run prechecks to prevent catstraphic user envoked damages (what other wise would have been )produced by this apps.
-    int index = 1;
-    while(index < argc)
+    int user_instructions = strncmp(argv[1], "instructions", 12);
+    if(user_instructions== 0)
     {
-        change_occured = 0;
-        //qDebug() << argv[index] << index << "\n";
-        if(index < (argc-1))
+        qDebug() << "";
+        qDebug() << "shastafind options \"directory to search\" \"search phrase\"";
+        qDebug() << "";
+        qDebug() << "recursive search through folders inside of folders.";
+
+        error =2;
+    }else{
+        //check if at least two arguments we entered.
+        if(argc <= 2)
         {
-             if(recursive_enabled == 0)
-             {//this is a speedup check if statement
-                 if(QString(argv[index]).compare(recursive_string, Qt::CaseInsensitive) == 0)
-                 {
-                   recursive_enabled = 1;
-                   change_occured = 1;
-                   qDebug() << "recursive enabled";
+            error = 3;
+
+        }else if(argc >= 3)
+        {
+           //
+           user_requested_base_directory = QString();
+           user_requested_base_directory.append(QString("%1").arg(argv[1]));
+           QFileInfo * is_dir = new QFileInfo();
+           is_dir->setFile(user_requested_base_directory);
+           if(is_dir->isDir() == false)
+           {
+               error = 4;
+           }else{
+               trail_current_index = new QVector<QFileInfo>();
+               QDir filesandfolders;
+               filesandfolders.setPath(user_requested_base_directory);
+               filesandfolders.setFilter(QDir::Dirs | QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot | QDir::NoDot);
+               QList<QFileInfo> list = filesandfolders.entryInfoList();
+               if(list.size() == 0)
+               {
+                   error = 5;
+               }else if(list.size() > 0)
+               {
+                   trail_current_index->append(list.at(0));
+
                }
-            }
+           }
         }
-
-        if(change_occured == 0)
-        {
-            if(index == (argc-2))
-            {
-                //check iffolder and does exist.
-                folder_and_file_check->setFile(QString("%1").arg(argv[index]));
-                if(folder_and_file_check->isDir() == true)
-                {
-                    requested_base_is_directory = 1;
-                }else{
-                    index = argc;
-                    error = 1;
-                }
-            }
-        }
-
-        if(change_occured == 0)
-        {
-            //if last one, then this is the "search query"
-            if(index == (argc-1))
-            {
-                qDebug() << "";
-                query = argv[index];
-                qDebug() << "found query: " << query;
-                qDebug() << "";
-            }
-        }
-        index = index +1;
     }
 
     return error;
@@ -74,16 +63,27 @@ unsigned short int main_operation::initialize(int argc, char *argv[])
 
 void main_operation::search_loop()
 {
-    direct_trail = new QVector<char *>();
-
-    unsigned short int keep_looping = 1;
-    while(keep_looping == 1)
+    //
+    QFileInfo tail = trail_current_index->at(trail_current_index->size()-1);
+    if(tail.isDir() == true)
     {
-        //if direct trail is empty, then get first ditectory, then go to deepest folder search if recursive is enabled.
-        if(direct_trail->count() == 0)
-        {
-            //just the first folder
+        qDebug() << tail.absoluteFilePath();
 
+        QDir filesandfolders;
+        filesandfolders.setPath(tail.absoluteFilePath());
+        filesandfolders.setFilter(QDir::Dirs | QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot | QDir::NoDot);
+        QList<QFileInfo> list = filesandfolders.entryInfoList();
+        if(list.size() == 0)
+        {
+            qDebug() <<  "folder empty";
+        }else if(list.size() > 0)
+        {
+            //
+            QFileInfo item = list.at(0);
+            trail_current_index->append(item);
+            qDebug() << item.absoluteFilePath();
         }
     }
 }
+
+
