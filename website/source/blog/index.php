@@ -26,6 +26,7 @@
     
      <?php include('/usr/local/apache2/htdocs/include_header_flag.php'); ?>
     <?php include('/usr/local/apache2/htdocs/include_navigation.php'); ?>
+      <?php include('/usr/local/apache2/htdocs/blog/include_secondary_navigation.php'); ?>
     <div style="margin: 3em;">&nbsp;</div>
     <div class="menu_header">
      What you can expect from our blog
