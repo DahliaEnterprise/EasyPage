@@ -29,12 +29,14 @@
      <?php include('/usr/local/apache2/htdocs/software/include_secondary_navigation.php'); ?>
     <div style="margin: 3em;">&nbsp;</div>
     <div class="menu_header">
-     Directory Database Management
+     Directory Database Software
     </div>
     <div class="about_the_company">
      &nbsp;&nbsp;&nbsp;&nbsp;The Directory Database Manager is a minimal database manager for systems that have PHP capabilities and is designed to be provided with  and receive updates only relating to nessecary features.
      <br/><br/>
-     The PHP based software is available for personal and commercial usage, authorized for one user per ownership per device. Modifying the software on your own machine is not authorized with this purchase(configuration is not considered modifying). Instructions will be provided through common sense and tutorials.
+     The PHP based software is available for personal and commercial usage, authorized for one user per ownership per device. Modifying the software on your own machine is not authorized with this purchase(configuration is not considered modifying). Instructions will be provided through common sense navigation(intuitive interaction) and tutorials.
+       <br/><br/>
+       Purchases are transferable to one entity(or person) to be used by one person per one device, these conditions must transfer with the owner for valid resale.
     </div>
     <div style="margin:3em;"></div> 
        <div class="about_the_company">

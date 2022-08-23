@@ -130,9 +130,9 @@ function compute()
 		index = index + 1;
 	
 	}
-	
+	if(rounds > 5000){ rounds = 5000;}
 	index = 0;
-	while(index <= 5000)
+	while(index <= rounds)
 	{
 		last_result = sha256(last_result);
 		
@@ -161,6 +161,7 @@ function compute()
     <br/><br/>
     The time to compute is depednant upon a higher number, although in theory anything under one milliom should not take longer than five seconds.
     <br/><br/>
+    larger numbers may take slightly longer to compute and is used to concat your input pass phrase that many times as a defense against rainbow tables(customer data leaks may not affect you in most cases due to this large and randomized salt).  <br/><br/>
     <hr/><br/><br/>
     
     <form action="javascript:preventDefault();">
@@ -169,11 +170,33 @@ function compute()
     
      <br/><br/>
         <h3>pick and remember this number between one hundred and one million</h3>
-        <div>larger numbers may take slightly longer to compute and is used to concat your input pass phrase that many times as a defense against rainbow tables(customer data leaks may not affect you in most cases due to this large and randomized salt).</div>
+       
      <textarea id="password_hash_multiplier"  style="font-size:100%;">100</textarea>
      <a href="javascript: void();" onMouseUp="compute();">Generate Reproduceable Passphrase</a>
     </form> 
     <div id="password_result">Your password will appear here</div>
+    </div>
+    
+     <div style="margin: 3em;">&nbsp;</div>
+    <div class="menu_header">
+     Pseudo Code
+    </div>
+    <div class="blog_introduction" style="font-family: 'Courier New', monospace; font-size:1em;">
+    let index = 0;<br/>
+    let combined_string ="";<br/>
+    while(index < large_number_to_memorize)<br/>
+    {<br/>
+    	combined_string = combined_string + combined_string;
+    <br/>
+    }<br/>
+    if(rounds > 5000){ rounds = 5000;}<br/>
+    index = 0;<br/>
+    while(index <= rounds)<br/>
+    {<br/>
+	combined_string  = sha256(combined_string );<br/>
+	index = index + 1;<br/>
+}<br/>
+    
     </div>
     
       <div style="margin: 3em;">&nbsp;</div>
