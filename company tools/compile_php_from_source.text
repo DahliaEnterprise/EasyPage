@@ -82,3 +82,8 @@ LoadModule php_module modules/libphp.so
 
 Copy shared library to apache2 modules(when the php module is enabled using the httpd.conf in the apache2 folder the shared library php.so makes it so Apache will run php functions compiled from c code are invoked by the apache2 functions compiled in c code).
 cp /root/php_build_from_environment/php-8.1.7/libs/libphp.so /usr/local/apache2/modules/libphp.so
+
+Edit http.conf to handle.php file extensions 
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+</FilesMatch>
