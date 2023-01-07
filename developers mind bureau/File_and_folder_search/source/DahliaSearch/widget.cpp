@@ -38,9 +38,22 @@ void Widget::initalize()
 
             searchresults_tableview = new QTableView(nullptr);
             container_layout_for_searchresults_tableview->addWidget(searchresults_tableview);
+            myModel = new QStandardItemModel();
+            QStandardItem *item1 = new QStandardItem("Test");
+
+           // set the item to the model
+           myModel->setItem(0,0,item1);
+            searchresults_tableview->setModel(myModel);
+    QObject::connect(search_by_text_bar_button, SIGNAL(pressed()), this, SLOT(search_activated()));
 }
 
 void Widget::set_head(head * set_ptr_to_head)
 {
     ptr_to_head_of_body = set_ptr_to_head;
+}
+
+void Widget::search_activated()
+{
+    search_by_text_bar_button->setDisabled(true);
+    ptr_to_head_of_body->queue_search(search_root_location_lineedit->text(), search_by_text_bar_lineedit->text());
 }

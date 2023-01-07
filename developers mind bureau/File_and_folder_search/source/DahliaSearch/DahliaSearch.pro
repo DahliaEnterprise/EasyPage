@@ -11,10 +11,12 @@ CONFIG += c++17
 SOURCES += \
     head.cpp \
     main.cpp \
+    traverse_files_and_folders.cpp \
     widget.cpp
 
 HEADERS += \
     head.h \
+    traverse_files_and_folders.h \
     widget.h
 
 # Default rules for deployment.

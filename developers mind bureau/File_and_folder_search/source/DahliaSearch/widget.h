@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QTableView>
+#include <QStandardItemModel>
 
 class Widget : public QWidget
 {
@@ -35,5 +36,10 @@ public:
         QWidget * container_widget_for_searchresults_tableview;
         QBoxLayout * container_layout_for_searchresults_tableview;
             QTableView * searchresults_tableview;
+            QStandardItemModel * myModel;
+
+private slots:
+    void search_activated();
+
 };
 #endif // WIDGET_H
