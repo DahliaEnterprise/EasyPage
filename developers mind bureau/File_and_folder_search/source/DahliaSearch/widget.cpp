@@ -28,9 +28,6 @@ void Widget::initalize()
             search_by_text_bar_lineedit = new QLineEdit(QString("Search"), nullptr);
             container_layout_for_search_options->addWidget(search_by_text_bar_lineedit);
 
-            search_by_text_bar_button = new QPushButton(QString("Search"), nullptr);
-            container_layout_for_search_options->addWidget(search_by_text_bar_button);
-
         container_widget_for_searchresults_tableview = new QWidget();
         container_layout_for_searchresults_tableview = new QBoxLayout(QBoxLayout::TopToBottom);
         container_widget_for_searchresults_tableview->setLayout(container_layout_for_searchresults_tableview);
@@ -44,16 +41,29 @@ void Widget::initalize()
            // set the item to the model
            myModel->setItem(0,0,item1);
             searchresults_tableview->setModel(myModel);
-    QObject::connect(search_by_text_bar_button, SIGNAL(pressed()), this, SLOT(search_activated()));
+
+        button_begin_search = new QPushButton(QString("Begin Search"), nullptr);
+        layout->addWidget(button_begin_search);
+
+    QObject::connect(button_begin_search, SIGNAL(pressed()), this, SLOT(search_activated()));
+
 }
 
 void Widget::set_head(head * set_ptr_to_head)
 {
     ptr_to_head_of_body = set_ptr_to_head;
+    QObject::connect(ptr_to_head_of_body, SIGNAL(sig_result(int)), this, SLOT(result(int)));
 }
 
 void Widget::search_activated()
 {
-    search_by_text_bar_button->setDisabled(true);
+    button_begin_search->setDisabled(true);
+    search_root_location_lineedit->setDisabled(true);
+    search_by_text_bar_lineedit->setDisabled(true);
     ptr_to_head_of_body->queue_search(search_root_location_lineedit->text(), search_by_text_bar_lineedit->text());
+}
+
+void Widget::result(int number)
+{
+    qDebug() << number;
 }

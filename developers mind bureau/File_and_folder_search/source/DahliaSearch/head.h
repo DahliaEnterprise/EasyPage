@@ -20,6 +20,10 @@ private:
     traverse_files_and_folders * traverse;
 
 signals:
+    void sig_result(int number);
+
+private slots:
+    void result(int number);
 
 };
 

@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include <QTableView>
 #include <QStandardItemModel>
+#include <QDebug>
 
 class Widget : public QWidget
 {
@@ -31,15 +32,17 @@ public:
         QWidget * container_widget_for_search_options;
         QBoxLayout * container_layout_for_search_options;
             QLineEdit * search_by_text_bar_lineedit;
-            QPushButton * search_by_text_bar_button;
 
         QWidget * container_widget_for_searchresults_tableview;
         QBoxLayout * container_layout_for_searchresults_tableview;
             QTableView * searchresults_tableview;
             QStandardItemModel * myModel;
 
+        QPushButton * button_begin_search;
+
 private slots:
     void search_activated();
+    void result(int);
 
 };
 #endif // WIDGET_H

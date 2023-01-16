@@ -11,11 +11,13 @@ CONFIG += c++17
 SOURCES += \
     head.cpp \
     main.cpp \
+    searchthread.cpp \
     traverse_files_and_folders.cpp \
     widget.cpp
 
 HEADERS += \
     head.h \
+    searchthread.h \
     traverse_files_and_folders.h \
     widget.h
 

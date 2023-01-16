@@ -14,6 +14,11 @@ void head::queue_search(QString root_location, QString search_option)
     search_text.clear();
     search_text.append(search_option);
 
-
+    QObject::connect(traverse, SIGNAL(sig_result(int)), this, SLOT(result(int)));
     traverse->search(base_root_folder, search_text);
+}
+
+void head::result(int number)
+{
+    emit sig_result(number);
 }
