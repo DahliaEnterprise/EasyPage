@@ -53,6 +53,7 @@ void Widget::set_head(head * set_ptr_to_head)
 {
     ptr_to_head_of_body = set_ptr_to_head;
     QObject::connect(ptr_to_head_of_body, SIGNAL(sig_result(int)), this, SLOT(result(int)));
+    QObject::connect(ptr_to_head_of_body, SIGNAL(sig_finished_work()), this, SLOT(finished_work()));
 }
 
 void Widget::search_activated()
@@ -65,5 +66,12 @@ void Widget::search_activated()
 
 void Widget::result(int number)
 {
-    qDebug() << number;
+    //qDebug() << number;
+}
+
+void Widget::finished_work()
+{
+    button_begin_search->setDisabled(false);
+    search_root_location_lineedit->setDisabled(false);
+    search_by_text_bar_lineedit->setDisabled(false);
 }

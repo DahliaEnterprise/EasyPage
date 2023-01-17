@@ -43,6 +43,7 @@ public:
 private slots:
     void search_activated();
     void result(int);
+    void finished_work();
 
 };
 #endif // WIDGET_H

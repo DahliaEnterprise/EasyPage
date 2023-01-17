@@ -5,17 +5,25 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QDirIterator>
+#include <QDir>
 
 class traverse_files_and_folders : public QObject
 {
     Q_OBJECT
 public:
-    explicit traverse_files_and_folders(QObject *parent = nullptr);
-    void search(QString base_root_folder, QString search_text);
+    explicit traverse_files_and_folders();
+
+    void search(QString set_base_root_folder, QString set_search_text);
 
 private:
     SearchThread * search_thread;
     QThread q_thread;
+
+    QDirIterator * directory_iterator;
+
+    QString base_root_folder;
+    QString search_text;
 
 signals:
     //private
@@ -23,6 +31,7 @@ signals:
 
     //public
     void sig_result(int);
+    void finished_work();
 
 private slots:
     void result(int);

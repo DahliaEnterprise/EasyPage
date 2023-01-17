@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QDebug>
 
+
 class head : public QObject
 {
     Q_OBJECT
@@ -17,13 +18,16 @@ private:
     QString base_root_folder;
     QString search_text;
 
+
     traverse_files_and_folders * traverse;
 
 signals:
     void sig_result(int number);
+    void sig_finished_work();
 
 private slots:
     void result(int number);
+    void finished_work();
 
 };
 
